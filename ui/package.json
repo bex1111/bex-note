@@ -12,12 +12,14 @@
     "@vavt/cm-extension": "^1.11.1",
     "@vavt/v3-extension": "^4.0.0",
     "core-js": "^3.8.3",
+    "md-editor-v3": "^6.0.1",
     "primevue": "^4.4.1",
     "vue": "^3.2.13"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@babel/plugin-transform-private-methods": "^7.27.1",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
