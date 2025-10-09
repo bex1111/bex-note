@@ -1,14 +1,17 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <ActionsHeader></ActionsHeader>
+  <MarkdownEditor/>
 </template>
 
 <script>
 import MarkdownEditor from './components/MarkdownEditor.vue'
+import ActionsHeader from "@/components/ActionsHeader.vue";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld: MarkdownEditor
+    ActionsHeader,
+    MarkdownEditor
   }
 }
 </script>

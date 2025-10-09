@@ -1,24 +1,4 @@
-# bex-note
+# UI
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Lib configuration
+[Markdown editor](https://imzbf.github.io/md-editor-v3/en-US/api#%F0%9F%94%A6%20previewTheme)
