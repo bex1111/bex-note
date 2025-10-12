@@ -1,7 +1,7 @@
 const {handleFileDelete} = require('./fileDelete');
 const fs = require('fs/promises');
-const environmentProvider = require('./environmentProvider');
-const validator = require('./validator');
+const environmentProvider = require('../environmentProvider');
+const validator = require('../validator');
 
 // Use a temp directory for tests
 describe('handleFileDelete', () => {
@@ -9,20 +9,20 @@ describe('handleFileDelete', () => {
     const testTitle = 'TestFolder/test title';
     const testFilePath = `${tempDir}/TestFolder/test title.md`;
 
-    beforeAll(async () => {
-        jest.spyOn(environmentProvider, 'getFolderEnv').mockImplementation(() => tempDir);
+    beforeEach(async () => {
+        try {
+            await fs.rm(tempDir, {recursive: true, force: true});
+        } catch {
+        }
+        jest.clearAllMocks();
+        jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
         jest.spyOn(validator, 'validateTitle').mockImplementation(() => {
         });
     });
 
     afterEach(async () => {
-        expect(environmentProvider.getFolderEnv).toHaveBeenCalled();
+        expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
-        jest.clearAllMocks();
-        try {
-            await fs.unlink(testFilePath);
-        } catch {
-        }
     });
 
     it('deletes file and returns success', async () => {

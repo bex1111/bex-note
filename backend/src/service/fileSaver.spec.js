@@ -1,17 +1,22 @@
 const {handleFileSave} = require('./fileSaver');
 const fs = require('fs/promises');
-const environmentProvider = require('./environmentProvider');
-const validator = require("./validator");
+const environmentProvider = require('../environmentProvider');
+const validator = require("../validator");
 
 
 describe('handleFileSave', () => {
-    afterEach(() => {
+    const tempDir = './temp';
+    beforeEach(async () => {
         jest.clearAllMocks();
+        try {
+            await fs.rm(tempDir, {recursive: true, force: true});
+        } catch {
+        }
     });
 
 
     it('calls writeFile with correct arguments and returns success', async () => {
-        jest.spyOn(environmentProvider, 'getFolderEnv').mockImplementation(() => './temp');
+        jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
         jest.spyOn(validator, 'validateTitle').mockImplementation(() => {
         });
 
@@ -25,7 +30,7 @@ describe('handleFileSave', () => {
         const fileContent = await fs.readFile(testFilePath, 'utf-8');
         expect(fileContent).toBe(testContent);
 
-        expect(environmentProvider.getFolderEnv).toHaveBeenCalled();
+        expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
     });
 });

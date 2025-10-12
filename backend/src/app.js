@@ -1,12 +1,12 @@
-const { handleFileSave } = require('./fileSaver');
-const { handleFileDelete } = require('./fileDelete');
+const { handleFileSave } = require('./service/fileSaver');
+const { handleFileDelete } = require('./service/fileDelete');
 const express = require('express')
 const app = express()
 const port = 3000
-const path = require('path')
+const environmentProvider = require('./environmentProvider');
 
 app.use(express.json());
-app.use(express.static('./public'));
+app.use(express.static(environmentProvider.getStaticFileForWebEnv()));
 
 app.use('/api/save', async (req, res) => {
     try {

@@ -1,7 +1,7 @@
-const environmentProvider = require('./environmentProvider');
+const environmentProvider = require('../environmentProvider');
 const fs = require('fs').promises;
 const path = require('path');
-const validator = require("./validator");
+const validator = require("../validator");
 
 
 const handleError = (err) => {
@@ -13,7 +13,7 @@ const handleError = (err) => {
 
 const handleFileDelete = async (title) => {
     validator.validateTitle(title);
-    const folderEnv = environmentProvider.getFolderEnv();
+    const folderEnv = environmentProvider.getSavingLocationEnv();
     const filePath = path.join(folderEnv, `${title}.md`);
     try {
         await fs.unlink(filePath);
