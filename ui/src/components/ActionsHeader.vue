@@ -1,12 +1,23 @@
 <script setup>
-import { ref } from 'vue';
+const files = [
+  {label: 'file1.mdsdfskhdfaiusdbfashdvFGHAWEV UWVEUYDFVS/SDFDFGSDFGSDFG/ADFSD/FGSDFGSDF', value: 'file1.mdsdfskhdfaiusdbfashdvFGHAWEV UWVEUYDFVS/SDFDFGSDFGSDFG/ADFSD/FGSDFGSDF'},
+  {label: 'file2.md', value: 'file2.md'},
+  {label: 'notes.txt', value: 'notes.txt'},
+];
 
-const files = ref([
-  { label: 'file1.mddsjfgndskjfgbadkjsbfkjhedbfkhsdbfkhgbdkfbgdakjsfbakjsdbfjhsdfbhvbdahjkfv/dfgadbhjfgasvf', value: 'file1.md' },
-  { label: 'file2.md', value: 'file2.md' },
-  { label: 'notes.txt', value: 'notes.txt' },
-]);
-const selectedFile = ref(null);
+import {defineEmits, onMounted, ref, watch} from 'vue';
+const selectedFile = ref(files[0].value);
+
+const emit = defineEmits(['selectFile']);
+
+onMounted(() => {
+  emit('selectFile', files[0].value);
+})
+
+watch(selectedFile, (newVal) => {
+  emit('selectFile', newVal);
+});
+
 </script>
 
 <template>
@@ -16,12 +27,13 @@ const selectedFile = ref(null);
     </template>
     <template #center>
       <prime-select
-        v-model="selectedFile"
-        :options="files"
-        optionLabel="label"
-        optionValue="value"
-        filter
-        placeholder="Select a file"
+          v-model="selectedFile"
+          :options="files"
+          optionLabel="label"
+          optionValue="value"
+          filter
+          fluid
+          placeholder="Select a file"
       />
     </template>
     <template #end>

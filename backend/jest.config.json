@@ -1,0 +1,10 @@
+{
+  "testEnvironment": "node",
+  "moduleFileExtensions": ["js", "json"],
+  "transform": {},
+  "verbose": true,
+  "collectCoverage": true,
+  "coverageDirectory": "coverage",
+  "testMatch": ["**/*.spec.js", "**/*.test.js"]
+}
+

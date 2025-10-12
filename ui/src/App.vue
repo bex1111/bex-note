@@ -1,19 +1,12 @@
 <template>
-  <ActionsHeader></ActionsHeader>
-  <MarkdownEditor/>
+
+  <MarkdownEditor :selectedFile="selectedFile"/>
 </template>
 
-<script>
-import MarkdownEditor from './components/MarkdownEditor.vue'
-import ActionsHeader from "@/components/ActionsHeader.vue";
+<script setup>
 
-export default {
-  name: 'App',
-  components: {
-    ActionsHeader,
-    MarkdownEditor
-  }
-}
+
+import MarkdownEditor from "./components/MarkdownEditor.vue";
 </script>
 
 <style>
