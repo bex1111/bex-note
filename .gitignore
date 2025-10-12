@@ -4,6 +4,8 @@ ui/.DS_Store
 ui/node_modules
 ui/dist
 
+backend/coverage
+backend/node_modules
 
 # local env files
 .env.local

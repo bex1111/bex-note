@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Barna Barak",
+  "type": "commonjs",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "jest",
+    "serve": "node src/app.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "jest": "^30.2.0"
+  }
+}
