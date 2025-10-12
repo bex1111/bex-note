@@ -5,7 +5,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 const environmentProvider = require('./environmentProvider');
-const {isAuthorized, unauthorizedResponse} = require('./middleware/auth');
+const {isAuthorized, unauthorizedResponse, authorize} = require('./middleware/auth');
 
 const internalServerError = (res, error) => {
     console.log(error)
@@ -15,18 +15,22 @@ const internalServerError = (res, error) => {
 app.use(express.json());
 app.use(express.static(environmentProvider.getStaticFileForWebEnv()));
 
-const authMiddleware = (req, res, next) => {
+app.use('/api/internal', (req, res, next) => {
     const token = req.headers['x-auth-token'];
     if (!token || !isAuthorized(token)) {
         return res.status(unauthorizedResponse.status)
             .json(unauthorizedResponse.body);
     }
     next();
-}
+});
 
-app.use('/api/internal/', authMiddleware);
+app.post('/api/authorize', (req, res) => {
+    const {username, password} = req.body;
+    const result = authorize(username, password);
+    res.status(result.status).json(result.body);
+});
 
-app.use('/api/internal/save', async (req, res) => {
+app.post('/api/internal/save', async (req, res) => {
     try {
         const {title, content} = req.body;
         const result = await handleFileSave(title, content);
@@ -40,7 +44,7 @@ app.use('/api/internal/save', async (req, res) => {
     }
 });
 
-app.use('/api/internal/delete', async (req, res) => {
+app.delete('/api/internal/delete', async (req, res) => {
     try {
         const {title} = req.body;
         const result = await handleFileDelete(title);
@@ -54,7 +58,7 @@ app.use('/api/internal/delete', async (req, res) => {
     }
 });
 
-app.use('/api/internal/list', async (req, res) => {
+app.get('/api/internal/list', async (req, res) => {
     try {
         const result = await handleFileList();
         res.status(result.status).json(result.body);

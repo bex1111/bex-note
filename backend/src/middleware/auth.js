@@ -9,7 +9,6 @@ const isAuthorized = (token) => {
 
 const unauthorizedResponse = {status: 403, body: {error: 'Unauthorized'}};
 
-
 const authorize = (username, password) => {
     if (environmentProvider.getUsernameEnv() === username &&
         environmentProvider.getUserPasswordEnv() === password) {
@@ -22,4 +21,3 @@ const authorize = (username, password) => {
 
 
 module.exports = {isAuthorized, authorize, unauthorizedResponse};
-
