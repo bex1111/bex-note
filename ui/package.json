@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "vitest --run"
   },
   "dependencies": {
     "@primeuix/themes": "^1.2.5",
@@ -13,6 +14,7 @@
     "@vavt/v3-extension": "^4.0.0",
     "core-js": "^3.8.3",
     "md-editor-v3": "^6.0.1",
+    "primeicons": "^7.0.0",
     "primevue": "^4.4.1",
     "vue": "^3.2.13"
   },
