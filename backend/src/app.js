@@ -13,7 +13,7 @@ const internalServerError = (res, error) => {
 }
 
 app.use(express.json());
-app.use(express.static(environmentProvider.getStaticFileForWebEnv()));
+// app.use(express.static(environmentProvider.getStaticFileForWebEnv()));
 
 app.use('/api/internal', (req, res, next) => {
     const token = req.headers['x-auth-token'];
@@ -30,7 +30,7 @@ app.post('/api/authorize', (req, res) => {
     res.status(result.status).json(result.body);
 });
 
-app.post('/api/internal/save', async (req, res) => {
+app.post('/api/internal/note/save', async (req, res) => {
     try {
         const {title, content} = req.body;
         const result = await handleFileSave(title, content);
@@ -44,7 +44,7 @@ app.post('/api/internal/save', async (req, res) => {
     }
 });
 
-app.delete('/api/internal/delete', async (req, res) => {
+app.delete('/api/internal/note/delete', async (req, res) => {
     try {
         const {title} = req.body;
         const result = await handleFileDelete(title);
@@ -58,7 +58,7 @@ app.delete('/api/internal/delete', async (req, res) => {
     }
 });
 
-app.get('/api/internal/list', async (req, res) => {
+app.get('/api/internal/note/list', async (req, res) => {
     try {
         const result = await handleFileList();
         res.status(result.status).json(result.body);
