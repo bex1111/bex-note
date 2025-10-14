@@ -1,4 +1,4 @@
-const { hanldeFileContent } = require('./fileContent');
+const { handleFileContent } = require('./fileContent');
 const { handleFileSave } = require('./fileSaver');
 const fs = require('fs/promises');
 const environmentProvider = require('../environmentProvider');
@@ -21,7 +21,7 @@ describe('handleFileContent', () => {
         const testContent = 'Test content for reading';
         await handleFileSave(testTitle, testContent);
 
-        const result = await hanldeFileContent(testTitle);
+        const result = await handleFileContent(testTitle);
         expect(result).toEqual({ body: { content: testContent }, status: 200 });
         expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
@@ -31,8 +31,8 @@ describe('handleFileContent', () => {
         jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
         jest.spyOn(validator, 'validateTitle').mockImplementation(() => {});
 
-        const result = await hanldeFileContent('NonExistentFile');
-        expect(result).toEqual({ body: { message: 'File not found' }, status: 404 });
+        const result = await handleFileContent('NonExistentFile');
+        expect(result).toEqual({ body: { error: 'File not found' }, status: 404 });
     });
 });
 

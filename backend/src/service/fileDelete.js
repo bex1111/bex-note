@@ -2,24 +2,23 @@ const environmentProvider = require('../environmentProvider');
 const fs = require('fs').promises;
 const path = require('path');
 const validator = require("../validator");
+const {createInternalServerErrorResponse, createFileNotFoundResponse} = require("./response");
 
 
-const handleError = (err) => {
-    if (err.code === 'ENOENT') {
-        return {body: {error: 'File not found'}, status: 404};
-    }
-    throw err;
-}
-
-const handleFileDelete = async (title) => {
+const handle = async (title) => {
     validator.validateTitle(title);
     const folderEnv = environmentProvider.getSavingLocationEnv();
     const filePath = path.join(folderEnv, `${title}.md`);
+
+    await fs.unlink(filePath);
+    return {body: {message: 'File deleted successfully'}, status: 200};
+}
+
+const handleFileDelete = async (title) => {
     try {
-        await fs.unlink(filePath);
-        return {body: {message: 'File deleted successfully'}, status: 200};
-    } catch (err) {
-        return handleError(err);
+        return await handle(title);
+    } catch (error) {
+        return createFileNotFoundResponse(error);
     }
 };
 

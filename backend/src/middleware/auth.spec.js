@@ -1,7 +1,8 @@
-const {isAuthorized, authorize, unauthorizedResponse} = require('./auth');
+const {isAuthorized, authorize, unauthorizedResponse, checkAuthorize} = require('./auth');
 const environmentProvider = require('../environmentProvider');
 
 describe('auth.js integration', () => {
+    const unauthorizedResponse = {status: 403, body: {error: 'Unauthorized'}};
     beforeEach(() => {
         jest.clearAllMocks();
     });
@@ -36,14 +37,14 @@ describe('auth.js integration', () => {
         expect(environmentProvider.getUsernameEnv).toHaveBeenCalledTimes(numberOfTestSet);
     });
 
-    it('isAuthorized returns true for a valid token', () => {
+    it('checkAuthorize returns null for a valid token', () => {
         jest.spyOn(environmentProvider, 'getUsernameEnv').mockReturnValue('user');
         jest.spyOn(environmentProvider, 'getUserPasswordEnv').mockReturnValue('pass');
         const {body: {token}} = authorize('user', 'pass');
-        expect(isAuthorized(token)).toBe(true);
+        expect(checkAuthorize(token)).toBeNull();
     });
 
-    it('isAuthorized returns false for an invalid token', () => {
-        expect(isAuthorized('not-a-token')).toBe(false);
+    it('checkAuthorize returns with response for an invalid token', () => {
+        expect(checkAuthorize('not-a-token')).toEqual(unauthorizedResponse);
     });
 });

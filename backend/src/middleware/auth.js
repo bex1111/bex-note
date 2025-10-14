@@ -1,13 +1,17 @@
 const crypto = require('crypto');
 const environmentProvider = require('../environmentProvider');
 
+const unauthorizedResponse = {status: 403, body: {error: 'Unauthorized'}};
 let validTokens = [];
 
-const isAuthorized = (token) => {
-    return validTokens.includes(token);
+const checkAuthorize = (token) => {
+    if (!token || !validTokens.includes(token)) {
+        return unauthorizedResponse;
+    }
+    return null;
 };
 
-const unauthorizedResponse = {status: 403, body: {error: 'Unauthorized'}};
+
 
 const authorize = (username, password) => {
     if (environmentProvider.getUsernameEnv() === username &&
@@ -20,4 +24,4 @@ const authorize = (username, password) => {
 }
 
 
-module.exports = {isAuthorized, authorize, unauthorizedResponse};
+module.exports = {authorize,checkAuthorize};

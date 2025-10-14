@@ -8,7 +8,6 @@ import Card from 'primevue/card';
 import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
 import Fluid from 'primevue/fluid';
-import Panel from 'primevue/panel';
 import Dialog from 'primevue/dialog';
 import Aura from '@primeuix/themes/aura';
 import 'primeicons/primeicons.css'
@@ -34,7 +33,6 @@ app.component('prime-card', Card);
 app.component('prime-input', InputText);
 app.component('prime-float-label', FloatLabel);
 app.component('prime-fluid', Fluid);
-app.component('prime-panel', Panel);
 app.component('prime-dialog', Dialog);
 
 app.mount('#app')

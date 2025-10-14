@@ -1,6 +1,7 @@
 const fs = require('fs').promises;
 const environmentProvider = require('../environmentProvider');
 const path = require('path');
+const {createInternalServerErrorResponse} = require("./response");
 
 const removeTheFistSlashOrDotSlash = (text) => {
     return text.replace(/^\.?\//, '');
@@ -14,16 +15,15 @@ const createFileNameList = (files) => {
         .map(file => removeTheFistSlashOrDotSlash(file))
         .map(file => file.replace(/\.md$/, ''))
         .sort()
-        .map(file => ({filename:file}))
+        .map(file => ({filename: file}))
 }
 
 
-const handleError = (err) => {
-    if (err.code === 'ENOENT') {
-        // Folder does not exist, return empty list
+const handleError = (error) => {
+    if (error.code === 'ENOENT') {
         return {status: 200, body: []};
     }
-    throw err;
+    return createInternalServerErrorResponse(error)
 }
 
 const createResponse = (files) => {
