@@ -1,6 +1,8 @@
 <script setup>
 import {deleteNote, saveNote} from "../api/bex-note";
 
+const emit = defineEmits(['createNew'])
+
 const props = defineProps({
   selectedTitle: String,
   title: String,
@@ -21,6 +23,10 @@ const handleSaveNote = async () => {
     await saveNote(props.title, props.content);
   }
 }
+
+const handleCreateNew = () => {
+  emit('createNew');
+}
 </script>
 
 <template>
@@ -29,6 +35,7 @@ const handleSaveNote = async () => {
       <span class="header-title">Bex Note</span>
     </template>
     <template #end>
+      <prime-button icon="pi pi-plus" severity="secondary" class="mr-2" text @click="handleCreateNew"/>
       <prime-button icon="pi pi-save" severity="secondary" class="mr-2" text @click="handleSaveNote"/>
       <prime-button icon="pi pi-trash" severity="danger" class="mr-2" text @click="handleDeleteNote"/>
     </template>

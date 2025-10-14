@@ -6,6 +6,7 @@ const app = express()
 const port = 3000
 const environmentProvider = require('./environmentProvider');
 const {isAuthorized, unauthorizedResponse, authorize} = require('./middleware/auth');
+const {getFileContent} = require("./service/fileContent");
 
 const internalServerError = (res, error) => {
     console.log(error)
@@ -65,6 +66,11 @@ app.get('/api/internal/note/list', async (req, res) => {
     } catch (error) {
         internalServerError(res);
     }
+});
+
+app.get('/api/internal/note/content', async (req, res) => {
+        const result = await handleFileContent();
+        res.status(result.status).json(result.body);
 });
 
 app.listen(port, () => {

@@ -25,19 +25,27 @@ export const deleteNote = async (title) => {
         headers: {
             'x-auth-token': tokenStore.token
         },
-        data: { title }
+        data: {title}
     });
     return response.data;
 }
 
-export const saveNote = async (title,content) => {
-    const response = await axios.delete('http://localhost:1080/api/internal/note/save', {
+export const saveNote = async (title, content) => {
+    const response = await axios.post('http://localhost:1080/api/internal/note/save', {
         headers: {
             'x-auth-token': tokenStore.token
         },
-        data: { title, content }
+        data: {title, content}
     });
     return response.data;
 }
 
-
+export const getContent = async (title) => {
+    const response = await axios.get('http://localhost:1080/api/internal/note/content', {
+        headers: {
+            'x-auth-token': tokenStore.token
+        },
+        data: {title}
+    });
+    return response.data;
+}

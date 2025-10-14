@@ -1,5 +1,5 @@
 <template>
-  <MdEditor v-model="text"
+  <MdEditor v-model="content"
             language="en-Us"
             :toolbars="toolbar"
   />
@@ -8,8 +8,23 @@
 <script setup>
 import {MdEditor} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
+import {toRef, watch} from "vue";
+import {getContent} from "../api/bex-note";
 
-const text = defineModel()
+const props = defineProps({
+  title: String
+})
+const selectedTitleRef = toRef(props, 'title');
+const content = defineModel()
+
+watch(selectedTitleRef, async (newVal) => {
+  if (newVal) {
+    let newContent = await getContent(props.title);
+    content.value = newContent.content;
+  }
+})
+
+
 const toolbar = [
   'revoke',
   'next',

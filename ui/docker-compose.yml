@@ -5,7 +5,6 @@ services:
     ports:
       - 1080:1080
     environment:
-#      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mocks.json
     volumes:
       - type: bind

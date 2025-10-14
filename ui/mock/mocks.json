@@ -38,11 +38,118 @@
     },
     "httpResponse": {
       "body": [
-        {"filename": "test1"},
-        {"filename": "test2"},
-        {"filename": "sdfsdf/test3"},
-        {"filename": "asdsdfsdf/sdfsdfsdf/test4"}
+        {
+          "filename": "test1"
+        },
+        {
+          "filename": "test2"
+        },
+        {
+          "filename": "sdfsdf/test3"
+        },
+        {
+          "filename": "asdsdfsdf/sdfsdfsdf/test4"
+        }
       ],
+      "headers": [
+        {
+          "name": "Access-Control-Allow-Origin",
+          "values": [
+            "*"
+          ]
+        },
+        {
+          "name": "Access-Control-Allow-Methods",
+          "values": [
+            "GET",
+            "POST",
+            "OPTIONS"
+          ]
+        },
+        {
+          "name": "Access-Control-Allow-Headers",
+          "values": [
+            "Content-Type",
+            "Authorization"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/api/internal/note/content",
+    },
+    "httpResponse": {
+      "body": {
+        "content": "## test1\n\nThis is a test note.\n\n- item1\n- item2\n- item3"
+      },
+      "headers": [
+        {
+          "name": "Access-Control-Allow-Origin",
+          "values": [
+            "*"
+          ]
+        },
+        {
+          "name": "Access-Control-Allow-Methods",
+          "values": [
+            "GET",
+            "POST",
+            "OPTIONS"
+          ]
+        },
+        {
+          "name": "Access-Control-Allow-Headers",
+          "values": [
+            "Content-Type",
+            "Authorization"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/api/internal/note/save"
+    },
+    "httpResponse": {
+      "body": {
+        "status": "saved"
+      },
+      "headers": [
+        {
+          "name": "Access-Control-Allow-Origin",
+          "values": [
+            "*"
+          ]
+        },
+        {
+          "name": "Access-Control-Allow-Methods",
+          "values": [
+            "GET",
+            "POST",
+            "OPTIONS"
+          ]
+        },
+        {
+          "name": "Access-Control-Allow-Headers",
+          "values": [
+            "Content-Type",
+            "Authorization"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/api/internal/note/delete"
+    },
+    "httpResponse": {
+      "body": {
+        "status": "deleted"
+      },
       "headers": [
         {
           "name": "Access-Control-Allow-Origin",
