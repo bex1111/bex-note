@@ -11,7 +11,7 @@ const handle = async (title) => {
     const filePath = path.join(folderEnv, `${title}.md`);
 
     await fs.unlink(filePath);
-    return {body: {message: 'File deleted successfully'}, status: 200};
+    return {body: {message: 'Note deleted successfully'}, status: 200};
 }
 
 const handleFileDelete = async (title) => {

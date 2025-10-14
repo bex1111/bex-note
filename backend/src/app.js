@@ -1,11 +1,14 @@
 const {handleFileSave} = require('./service/fileSaver');
 const {handleFileDelete} = require('./service/fileDelete');
 const {handleFileList} = require('./service/fileList');
+const {handleFileContent} = require('./service/fileContent');
 const express = require('express')
+
 const app = express()
 const port = 3000
 const environmentProvider = require('./environmentProvider');
 const { authorize,checkAuthorize} = require('./middleware/auth');
+const {validateAllEnvSet} = require("./environmentProvider");
 
 
 app.use(express.json());
@@ -43,11 +46,18 @@ app.get('/api/internal/note/list', async (req, res) => {
     res.status(result.status).json(result.body);
 });
 
-app.get('/api/internal/note/content', async (req, res) => {
-    const result = await handleFileContent();
+app.post('/api/internal/note/content', async (req, res) => {
+    const {title} = req.body;
+    const result = await handleFileContent(title);
     res.status(result.status).json(result.body);
 });
 
-app.listen(port, () => {
-    console.log(`Bex-note started ${port}`)
-})
+validateAllEnvSet();
+
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Bex-note started ${port}`)
+    });
+}
+
+module.exports = app;

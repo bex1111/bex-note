@@ -13,7 +13,7 @@ const handle = async (title, content) => {
     await fs.mkdir(path.dirname(filePath), {recursive: true});
     await fs.writeFile(filePath, content, 'utf8');
 
-    return {body: {message: 'File saved successfully'}, status: 200};
+    return {body: {message: 'Note saved successfully'}, status: 200};
 }
 
 const handleFileSave = async (title, content) => {

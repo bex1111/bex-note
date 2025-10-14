@@ -18,8 +18,8 @@ tokenStore.$subscribe(async (mutation) => {
   <prime-select
       v-model="selectedFile"
       :options="files"
-      optionLabel="filename"
-      optionValue="filename"
+      optionLabel="title"
+      optionValue="title"
       filter
       placeholder="Select a file"
       fluid

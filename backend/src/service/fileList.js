@@ -15,7 +15,7 @@ const createFileNameList = (files) => {
         .map(file => removeTheFistSlashOrDotSlash(file))
         .map(file => file.replace(/\.md$/, ''))
         .sort()
-        .map(file => ({filename: file}))
+        .map(file => ({title: file}))
 }
 
 
