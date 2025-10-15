@@ -6,6 +6,7 @@ ui/dist
 
 backend/coverage
 backend/node_modules
+backend/dist
 
 # local env files
 .env.local
