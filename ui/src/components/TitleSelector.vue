@@ -1,6 +1,6 @@
 <script setup>
 const selectedNote = defineModel();
-const props=defineProps({
+defineProps({
   notes:Array
 })
 
