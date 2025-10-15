@@ -21,7 +21,7 @@ watch(selectedTitleRef, (newVal) => {
 <template>
   <prime-fluid style=" margin-top: 0.75rem;">
     <prime-float-label variant="in">
-      <label for="in_label">Give a title, like: Folder/awesome title, awsome title)</label>
+      <label for="in_label">Give a title, like: Folder/Awesome title, Awesome title)</label>
       <prime-input id="in_label" v-model="title" type="text"/>
     </prime-float-label>
   </prime-fluid>

@@ -44,11 +44,16 @@ const createNew = () => {
 
 const refreshNotes = async () => {
   notes.value = await getNoteList();
-  if (notes.value.includes(title.value)) {
+  if (!selectedTitle.value)
+  {
+    selectedTitle.value=title.value;
+  }
+  else if (notes.value.some(note=>note.title===title.value)) {
     selectedTitle.value = title.value;
   } else {
     selectedTitle.value = null;
     title.value = null;
+    content.value = null;
   }
 }
 

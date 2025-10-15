@@ -10,15 +10,19 @@ import FloatLabel from 'primevue/floatlabel';
 import Fluid from 'primevue/fluid';
 import Dialog from 'primevue/dialog';
 import Aura from '@primeuix/themes/aura';
+import Tooltip from 'primevue/tooltip';
+import Toast from 'primevue/toast';
 import 'primeicons/primeicons.css'
 import { createPinia } from 'pinia'
 import {useAuthorizationStore} from "./store/authorization";
 import './style.css'
+import {useNotificationStore} from "@/store/notification";
 
 const app=createApp(App)
 
 const pinia = createPinia()
 app.use(pinia)
+export const notificationStore = useNotificationStore()
 export const tokenStore = useAuthorizationStore()
 
 app.use(PrimeVue,{
@@ -34,5 +38,6 @@ app.component('prime-input', InputText);
 app.component('prime-float-label', FloatLabel);
 app.component('prime-fluid', Fluid);
 app.component('prime-dialog', Dialog);
-
+app.component('prime-toast', Toast);
+app.directive('tooltip', Tooltip);
 app.mount('#app')

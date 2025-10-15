@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App.vue > matches snapshot 1`] = `
+"<div class=\\"prime-card-stub\\">
+  <div class=\\"card-title\\">
+    <div class=\\"actions-header-stub\\" data-testid=\\"actions-header\\"></div>
+  </div>
+  <div class=\\"card-subtitle\\">
+    <div class=\\"title-selector-stub\\" data-testid=\\"title-selector\\"></div>
+    <div class=\\"title-editor-stub\\" data-testid=\\"title-editor\\"></div>
+  </div>
+  <div class=\\"card-content\\">
+    <div class=\\"markdown-editor-stub\\" data-testid=\\"markdown-editor\\"></div>
+  </div>
+</div>
+<div class=\\"login-modal-stub\\" data-testid=\\"login-modal\\"></div>"
+`;

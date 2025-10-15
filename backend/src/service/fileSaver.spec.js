@@ -2,6 +2,7 @@ const {handleFileSave} = require('./fileSaver');
 const fs = require('fs/promises');
 const environmentProvider = require('../environmentProvider');
 const validator = require("../validator");
+const {createBadRequestResponse} = require("./response");
 
 
 describe('handleFileSave', () => {
@@ -17,14 +18,15 @@ describe('handleFileSave', () => {
             await fs.rm(tempDir, {recursive: true, force: true});
         } catch {
         }
-    });
-
-
-    it('calls handleFileSave with correct arguments and returns success', async () => {
         jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
         jest.spyOn(validator, 'validateTitle').mockImplementation(() => {
         });
+    });
 
+
+
+
+    it('calls handleFileSave with correct arguments and returns success', async () => {
         const result = await handleFileSave(testTitle, testContent);
         expect(result).toEqual({ status: 200});
 
@@ -36,10 +38,6 @@ describe('handleFileSave', () => {
     });
 
     it('calls handleFileSave two times with correct arguments and returns success', async () => {
-        jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
-        jest.spyOn(validator, 'validateTitle').mockImplementation(() => {
-        });
-
         const result1 = await handleFileSave(testTitle, testContent);
         expect(result1).toEqual({ status: 200});
 
@@ -58,4 +56,17 @@ describe('handleFileSave', () => {
         expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
     });
+
+    describe.each([
+        ['null', null],
+        ['undefined', undefined]
+    ])('content validation with %s content', (description, invalidContent) => {
+        it(`should handle ${description} content and return undefined due to error`, async () => {
+            const result = await handleFileSave(testTitle, invalidContent);
+
+            expect(result).toEqual({"body": {"error": "Content required"}, "status": 400});
+            expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
+        });
+    });
+
 });

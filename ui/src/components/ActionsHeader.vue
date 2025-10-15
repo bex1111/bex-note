@@ -37,9 +37,9 @@ const handleCreateNew = () => {
       <span class="header-title">Bex Note</span>
     </template>
     <template #end>
-      <prime-button icon="pi pi-plus" severity="secondary" class="mr-2" text @click="handleCreateNew"/>
-      <prime-button icon="pi pi-save" severity="secondary" class="mr-2" text @click="handleSaveNote"/>
-      <prime-button icon="pi pi-trash" severity="danger" class="mr-2" text @click="handleDeleteNote"/>
+      <prime-button v-tooltip.bottom="'New note'" icon="pi pi-plus" severity="secondary" class="mr-2" text @click="handleCreateNew"/>
+      <prime-button  v-tooltip.bottom="'Save'" icon="pi pi-save" severity="secondary" class="mr-2" text @click="handleSaveNote"/>
+      <prime-button v-tooltip.bottom="'Delete'" icon="pi pi-trash" severity="danger" class="mr-2" text @click="handleDeleteNote"/>
     </template>
   </prime-toolbar>
 </template>
