@@ -39,16 +39,16 @@
     "httpResponse": {
       "body": [
         {
-          "filename": "test1"
+          "title": "test1"
         },
         {
-          "filename": "test2"
+          "title": "test2"
         },
         {
-          "filename": "sdfsdf/test3"
+          "title": "sdfsdf/test3"
         },
         {
-          "filename": "asdsdfsdf/sdfsdfsdf/test4"
+          "title": "asdsdfsdf/sdfsdfsdf/test4"
         }
       ],
       "headers": [

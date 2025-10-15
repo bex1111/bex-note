@@ -25,9 +25,9 @@ describe('handleFileList (integration)', () => {
         expect(result).toEqual({
             status: 200,
             body: [
-                { title: 'note2' },
-                { title: 'test/note1' },
-                { title: 'test/test2/README' }
+                { title: '/test/note1' },
+                { title: '/test/test2/README' },
+                { title: 'note2' }
             ]
         });
         expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();

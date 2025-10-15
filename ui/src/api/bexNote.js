@@ -31,8 +31,9 @@ export const deleteNote = async (title) => {
 }
 
 export const saveNote = async (title, content) => {
+
     const response = await axios.post('/api/internal/note/save', {
-        data: {title, content}
+        title, content
     }, {
         headers: {
             'x-auth-token': tokenStore.token
@@ -43,7 +44,7 @@ export const saveNote = async (title, content) => {
 
 export const getContent = async (title) => {
     const response = await axios.post('/api/internal/note/content', {
-            data: {title}
+          title
         },
         {
             headers: {

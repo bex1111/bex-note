@@ -4,15 +4,17 @@ import {ref} from "vue";
 import {tokenStore} from "../main";
 import {authorize} from "../api/bexNote";
 
+const emit=defineEmits(['login'])
+
 const visible = ref(true);
 const username = ref();
 const password = ref();
 
 const closeCallback = async () => {
-  tokenStore.$patch({
-    token: await authorize(username.value, password.value)
-  });
+  let tokenObject = await authorize(username.value, password.value)
+  tokenStore.$patch(tokenObject);
   visible.value = false;
+  emit("login");
 }
 </script>
 

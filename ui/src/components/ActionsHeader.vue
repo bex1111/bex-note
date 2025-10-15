@@ -1,7 +1,7 @@
 <script setup>
 import {deleteNote, saveNote} from "../api/bexNote";
 
-const emit = defineEmits(['createNew'])
+const emit = defineEmits(['createNew','save','delete']);
 
 const props = defineProps({
   selectedTitle: String,
@@ -13,6 +13,7 @@ const handleDeleteNote = async () => {
   if (props.selectedTitle === props.title) {
     await deleteNote(props.title);
   }
+  emit('delete')
 };
 
 const handleSaveNote = async () => {
@@ -22,6 +23,7 @@ const handleSaveNote = async () => {
     await deleteNote(props.selectedTitle);
     await saveNote(props.title, props.content);
   }
+  emit('save')
 }
 
 const handleCreateNew = () => {

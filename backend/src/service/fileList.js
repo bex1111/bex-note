@@ -3,21 +3,20 @@ const environmentProvider = require('../environmentProvider');
 const path = require('path');
 const {createInternalServerErrorResponse} = require("./response");
 
-const removeTheFistSlashOrDotSlash = (text) => {
-    return text.replace(/^\.?\//, '');
-}
-
 const createFileNameList = (files) => {
-    const savingLocation = removeTheFistSlashOrDotSlash(environmentProvider.getSavingLocationEnv());
     return files
-        .filter(file => file.endsWith('.md'))
-        .map(file => file.replace(savingLocation, ''))
-        .map(file => removeTheFistSlashOrDotSlash(file))
-        .map(file => file.replace(/\.md$/, ''))
+        .filter(file => file.includes('.md'))
+        .map(file => finalNameGenerator(file))
         .sort()
         .map(file => ({title: file}))
 }
 
+const finalNameGenerator = (name) => {
+    let savingLocation = name.replace(path.normalize(environmentProvider.getSavingLocationEnv()), '')
+    let withoutExtension = savingLocation.replace('.md', '');
+    let parsedPath = withoutExtension.split(path.sep);
+    return parsedPath.length > 2 ? parsedPath.join(path.sep) : parsedPath[1];
+}
 
 const handleError = (error) => {
     if (error.code === 'ENOENT') {

@@ -1,15 +1,7 @@
 <script setup>
-import {ref} from "vue";
-import {getNoteList} from "../api/bexNote";
-import {tokenStore} from "../main";
-
-const selectedNote =  defineModel();
-const notes = ref([]);
-
-tokenStore.$subscribe(async (mutation) => {
-  if (mutation.payload && mutation.payload.token) {
-    notes.value = await getNoteList();
-  }
+const selectedNote = defineModel();
+const props=defineProps({
+  notes:Array
 })
 
 </script>

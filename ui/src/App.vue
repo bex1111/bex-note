@@ -6,17 +6,19 @@
           :title="title"
           :content="content"
           @createNew="createNew"
+          @save="refreshNotes"
+          @delete="refreshNotes"
       />
     </template>
     <template #subtitle>
-      <TitleSelector v-model="selectedTitle"/>
+      <TitleSelector v-model="selectedTitle" :notes="notes"/>
       <TitleEditor v-model="title" :selected-title="selectedTitle"/>
     </template>
     <template #content>
       <MarkdownEditor v-model="content" :title="selectedTitle"></MarkdownEditor>
     </template>
   </prime-card>
-  <LoginModal></LoginModal>
+  <LoginModal @login="refreshNotes"></LoginModal>
 </template>
 
 <script setup>
@@ -27,16 +29,30 @@ import TitleEditor from "./components/TitleEditor.vue";
 import LoginModal from "./components/LoginModal.vue";
 import TitleSelector from "./components/TitleSelector.vue";
 import {ref} from "vue";
+import {getNoteList} from "./api/bexNote";
 
 const title = ref();
 const selectedTitle = ref();
 const content = ref();
+const notes = ref([]);
 
 const createNew = () => {
-  title.value = '';
-  selectedTitle.value = '';
-  content.value = '';
+  title.value = null;
+  selectedTitle.value = null;
+  content.value = null;
 }
+
+const refreshNotes = async () => {
+  notes.value = await getNoteList();
+  if (notes.value.includes(title.value)) {
+    selectedTitle.value = title.value;
+  } else {
+    selectedTitle.value = null;
+    title.value = null;
+  }
+}
+
+
 </script>
 
 <style>

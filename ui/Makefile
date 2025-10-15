@@ -9,3 +9,5 @@ mock-restart: mock-down mock-up
 
 up:
 	npm run serve
+
+dev: mock-up up
