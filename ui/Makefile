@@ -5,3 +5,7 @@ mock-down:
 	docker compose down
 
 mock-restart: mock-down mock-up
+
+
+up:
+	npm run serve

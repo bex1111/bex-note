@@ -2,7 +2,7 @@
 
 import {ref} from "vue";
 import {tokenStore} from "../main";
-import {authorize} from "../api/bex-note";
+import {authorize} from "../api/bexNote";
 
 const visible = ref(true);
 const username = ref();

@@ -4,14 +4,14 @@ const path = require('path');
 const environmentProvider = require('../environmentProvider');
 
 describe('handleFileList (integration)', () => {
-    const tempDir = './temp'
+    const tempDir = './temp/list'
     beforeEach(async () => {
         try {
             await fs.rm(tempDir, {recursive: true, force: true});
         } catch {
         }
         jest.clearAllMocks();
-        jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => './temp');
+        jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
     });
 
     it('returns a list of .md files without extension', async () => {

@@ -1,5 +1,5 @@
 <script setup>
-import {deleteNote, saveNote} from "../api/bex-note";
+import {deleteNote, saveNote} from "../api/bexNote";
 
 const emit = defineEmits(['createNew'])
 

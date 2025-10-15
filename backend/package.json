@@ -7,6 +7,7 @@
   "type": "commonjs",
   "main": "src/app.js",
   "scripts": {
+    "build": "esbuild src/app.js --bundle --platform=node --outfile=dist/bundle.js",
     "test": "jest",
     "serve": "node src/app.js"
   },
@@ -15,6 +16,7 @@
     "jest": "^30.2.0"
   },
   "devDependencies": {
+    "esbuild": "^0.25.10",
     "supertest": "^7.1.4"
   }
 }

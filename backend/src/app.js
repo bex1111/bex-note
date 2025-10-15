@@ -32,13 +32,13 @@ app.post('/api/authorize', (req, res) => {
 app.post('/api/internal/note/save', async (req, res) => {
     const {title, content} = req.body;
     const result = await handleFileSave(title, content);
-    res.status(result.status).json(result.body);
+    res.status(result.status).end();
 });
 
 app.delete('/api/internal/note/delete', async (req, res) => {
     const {title} = req.body;
     const result = await handleFileDelete(title);
-    res.status(result.status).json(result.body);
+    res.status(result.status).end();
 });
 
 app.get('/api/internal/note/list', async (req, res) => {

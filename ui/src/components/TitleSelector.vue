@@ -1,14 +1,14 @@
 <script setup>
 import {ref} from "vue";
-import {getNoteList} from "../api/bex-note";
+import {getNoteList} from "../api/bexNote";
 import {tokenStore} from "../main";
 
-const selectedFile =  defineModel();
-const files = ref([]);
+const selectedNote =  defineModel();
+const notes = ref([]);
 
 tokenStore.$subscribe(async (mutation) => {
   if (mutation.payload && mutation.payload.token) {
-    files.value = await getNoteList();
+    notes.value = await getNoteList();
   }
 })
 
@@ -16,12 +16,12 @@ tokenStore.$subscribe(async (mutation) => {
 
 <template>
   <prime-select
-      v-model="selectedFile"
-      :options="files"
+      v-model="selectedNote"
+      :options="notes"
       optionLabel="title"
       optionValue="title"
       filter
-      placeholder="Select a file"
+      placeholder="Select a note"
       fluid
   />
 </template>

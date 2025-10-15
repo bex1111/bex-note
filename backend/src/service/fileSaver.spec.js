@@ -6,6 +6,11 @@ const validator = require("../validator");
 
 describe('handleFileSave', () => {
     const tempDir = './temp';
+
+    const testTitle = 'save/test title';
+    const testContent = 'Test content';
+    const testFilePath = './temp/save/test title.md';
+
     beforeEach(async () => {
         jest.clearAllMocks();
         try {
@@ -20,12 +25,8 @@ describe('handleFileSave', () => {
         jest.spyOn(validator, 'validateTitle').mockImplementation(() => {
         });
 
-        const testTitle = 'TestFolder/test title';
-        const testContent = 'Test content';
-        const testFilePath = './temp/TestFolder/test title.md';
-
         const result = await handleFileSave(testTitle, testContent);
-        expect(result).toEqual({body: {message: 'Note saved successfully'}, status: 200});
+        expect(result).toEqual({ status: 200});
 
         const fileContent = await fs.readFile(testFilePath, 'utf-8');
         expect(fileContent).toBe(testContent);
@@ -39,12 +40,8 @@ describe('handleFileSave', () => {
         jest.spyOn(validator, 'validateTitle').mockImplementation(() => {
         });
 
-        const testTitle = 'TestFolder/test title';
-        const testContent = 'Test content';
-        const testFilePath = './temp/TestFolder/test title.md';
-
         const result1 = await handleFileSave(testTitle, testContent);
-        expect(result1).toEqual({body: {message: 'Note saved successfully'}, status: 200});
+        expect(result1).toEqual({ status: 200});
 
         const fileContent1 = await fs.readFile(testFilePath, 'utf-8');
         expect(fileContent1).toBe(testContent);
@@ -53,7 +50,7 @@ describe('handleFileSave', () => {
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
 
         const result2 = await handleFileSave(testTitle, testContent+'2');
-        expect(result2).toEqual({body: {message: 'Note saved successfully'}, status: 200});
+        expect(result2).toEqual({ status: 200});
 
         const fileContent2 = await fs.readFile(testFilePath, 'utf-8');
         expect(fileContent2).toBe(testContent+'2');

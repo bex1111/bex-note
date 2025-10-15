@@ -9,7 +9,7 @@
 import {MdEditor} from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import {toRef, watch} from "vue";
-import {getContent} from "../api/bex-note";
+import {getContent} from "../api/bexNote";
 
 const props = defineProps({
   title: String

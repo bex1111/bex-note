@@ -4,7 +4,7 @@ const environmentProvider = require('../environmentProvider');
 const validator = require('../validator');
 
 describe('handleFileDelete', () => {
-    const tempDir = './temp';
+    const tempDir = './temp/delete';
     const testTitle = 'TestFolder/test title';
     const testFilePath = `${tempDir}/TestFolder/test title.md`;
 
@@ -28,7 +28,7 @@ describe('handleFileDelete', () => {
         await fs.mkdir(`${tempDir}/TestFolder`, {recursive: true});
         await fs.writeFile(testFilePath, 'Test content', 'utf-8');
         const result = await handleFileDelete(testTitle);
-        expect(result).toEqual({body: {message: 'Note deleted successfully'}, status: 200});
+        expect(result).toEqual({status: 200});
     });
 
     it('deletes only file when two file in a same folder', async () => {
@@ -37,10 +37,10 @@ describe('handleFileDelete', () => {
 
         await fs.mkdir(`${tempDir}/TestFolder`, {recursive: true});
         await fs.writeFile(testFilePath, 'Test content', 'utf-8');
-        await fs.writeFile( testFilePath1, expectedTestContent1, 'utf-8');
+        await fs.writeFile(testFilePath1, expectedTestContent1, 'utf-8');
 
         const result = await handleFileDelete(testTitle);
-        expect(result).toEqual({body: {message: 'Note deleted successfully'}, status: 200});
+        expect(result).toEqual({status: 200});
         const actualTestFileContent1 = await fs.readFile(testFilePath1, 'utf8');
         expect(actualTestFileContent1).toEqual(expectedTestContent1);
 

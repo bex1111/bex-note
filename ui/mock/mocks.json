@@ -1,7 +1,7 @@
 [
   {
     "httpRequest": {
-      "path": "/api/authorization"
+      "path": "/api/authorize"
     },
     "httpResponse": {
       "body": {

@@ -3,7 +3,7 @@ import {tokenStore} from '../main';
 
 
 export const getNoteList = async () => {
-    const response = await axios.get('http://localhost:1080/api/internal/note/list', {
+    const response = await axios.get('/api/internal/note/list', {
         headers: {
             'x-auth-token': tokenStore.token
         }
@@ -12,7 +12,7 @@ export const getNoteList = async () => {
 }
 
 export const authorize = async (username, password) => {
-    const response = await axios.post('http://localhost:1080/api/authorization', {
+    const response = await axios.post('/api/authorize', {
         username,
         password
     });
@@ -21,7 +21,7 @@ export const authorize = async (username, password) => {
 
 
 export const deleteNote = async (title) => {
-    const response = await axios.delete('http://localhost:1080/api/internal/note/delete', {
+    const response = await axios.delete('/api/internal/note/delete', {
         headers: {
             'x-auth-token': tokenStore.token
         },
@@ -31,21 +31,24 @@ export const deleteNote = async (title) => {
 }
 
 export const saveNote = async (title, content) => {
-    const response = await axios.post('http://localhost:1080/api/internal/note/save', {
+    const response = await axios.post('/api/internal/note/save', {
+        data: {title, content}
+    }, {
         headers: {
             'x-auth-token': tokenStore.token
-        },
-        data: {title, content}
+        }
     });
     return response.data;
 }
 
 export const getContent = async (title) => {
-    const response = await axios.get('http://localhost:1080/api/internal/note/content', {
-        headers: {
-            'x-auth-token': tokenStore.token
+    const response = await axios.post('/api/internal/note/content', {
+            data: {title}
         },
-        data: {title}
-    });
+        {
+            headers: {
+                'x-auth-token': tokenStore.token
+            }
+        });
     return response.data;
 }

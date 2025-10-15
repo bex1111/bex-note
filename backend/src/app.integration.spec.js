@@ -78,21 +78,19 @@ describe('API Integration Tests', () => {
                     title: `Test Note ${i}`,
                     content: `# Test Content ${i}`
                 };
-                const saveResponse = await request(app)
+                await request(app)
                     .post('/api/internal/note/save')
                     .set('x-auth-token', validToken)
                     .send(noteData)
                     .expect(200);
 
-                expect(saveResponse.body).toEqual({message: 'Note saved successfully'});
             }
 
-            const response = await request(app)
+           await request(app)
                 .delete('/api/internal/note/delete')
                 .set('x-auth-token', validToken)
                 .send({title: 'Test Note 2'})
                 .expect(200);
-            expect(response.body).toEqual({message: 'Note deleted successfully'});
 
             const listResponse = await request(app)
                 .get('/api/internal/note/list')
