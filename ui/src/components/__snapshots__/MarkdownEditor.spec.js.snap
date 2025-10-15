@@ -252,7 +252,7 @@ exports[`MarkdownEditor.vue > renders correctly and matches snapshot 1`] = `
             <div class=\\"cm-announced\\" aria-live=\\"polite\\"></div>
             <div tabindex=\\"-1\\" class=\\"cm-scroller\\">
               <div style=\\"tab-size: 4;\\" spellcheck=\\"false\\" autocorrect=\\"off\\" autocapitalize=\\"off\\" writingsuggestions=\\"false\\" translate=\\"no\\" contenteditable=\\"true\\" class=\\"cm-content cm-lineWrapping\\" role=\\"textbox\\" aria-multiline=\\"true\\" data-language=\\"markdown\\">
-                <div class=\\"cm-line\\">Hello Editor!</div>
+                <div class=\\"cm-line\\">initial content</div>
               </div>
               <div class=\\"cm-layer cm-layer-above cm-cursorLayer\\" aria-hidden=\\"true\\" style=\\"z-index: 150; animation-duration: 1200ms;\\"></div>
               <div class=\\"cm-layer cm-selectionLayer\\" aria-hidden=\\"true\\" style=\\"z-index: -2;\\"></div>
@@ -267,7 +267,7 @@ exports[`MarkdownEditor.vue > renders correctly and matches snapshot 1`] = `
       <div class=\\"md-editor-custom-scrollbar\\" style=\\"flex: 1 1 0%;\\">
         <div id=\\"md-editor-v-0-preview-wrapper\\" class=\\"md-editor-preview-wrapper\\">
           <div id=\\"md-editor-v-0-preview\\" class=\\"md-editor-preview default-theme md-editor-scrn\\">
-            <p data-line=\\"0\\">Hello Editor!</p>
+            <p data-line=\\"0\\">initial content</p>
           </div>
         </div>
         <!---->
@@ -280,7 +280,7 @@ exports[`MarkdownEditor.vue > renders correctly and matches snapshot 1`] = `
   </div>
   <div class=\\"md-editor-footer\\">
     <div class=\\"md-editor-footer-left\\">
-      <div class=\\"md-editor-footer-item\\"><label class=\\"md-editor-footer-label\\">Character Count:</label><span>13</span></div>
+      <div class=\\"md-editor-footer-item\\"><label class=\\"md-editor-footer-label\\">Character Count:</label><span>15</span></div>
     </div>
     <div class=\\"md-editor-footer-right\\">
       <!---->

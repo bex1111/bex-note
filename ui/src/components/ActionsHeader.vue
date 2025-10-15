@@ -12,8 +12,8 @@ const props = defineProps({
 const handleDeleteNote = async () => {
   if (props.selectedTitle === props.title) {
     await deleteNote(props.title);
+    emit('delete')
   }
-  emit('delete')
 };
 
 const handleSaveNote = async () => {
