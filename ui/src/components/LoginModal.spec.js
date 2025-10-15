@@ -14,7 +14,7 @@ vi.mock('../main', () => ({
 import {authorize} from '../api/bexNote';
 import {tokenStore} from '../main';
 
-describe('LoginModal', () => {
+describe('LoginModal.vue', () => {
 
     it('matches snapshot', () => {
         const wrapper = mount(LoginModal, {

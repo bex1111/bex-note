@@ -14,7 +14,7 @@ const createWrapper = (props) => {
     });
 }
 
-describe('ActionsHeader', () => {
+describe('ActionsHeader.vue', () => {
     it('matches snapshot', () => {
         const wrapper = mount(ActionsHeader, {
             global: {

@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TitleEditor.vue > matches snapshot 1`] = `
+"<div class=\\"prime-fluid-stub\\" style=\\"margin-top: 0.75rem;\\">
+  <div class=\\"prime-float-label-stub\\" variant=\\"in\\"><label for=\\"in_label\\">Give a title, like: Folder/awesome title, awsome title)</label>
+    <prime-input-stub id=\\"in_label\\" modelvalue=\\"initial title\\" type=\\"text\\"></prime-input-stub>
+  </div>
+</div>"
+`;
