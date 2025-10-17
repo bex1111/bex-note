@@ -1,4 +1,4 @@
-name: run-test.yml
+name: Run checks
 on:
   push:
     branches:
