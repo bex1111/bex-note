@@ -5,7 +5,7 @@ import {notificationStore, tokenStore} from '../main';
 const errorHandler = async (error) => {
     notificationStore.$patch({
         type: 'error',
-        message: error.response.data.error ? error.response.data.error : 'An unknown error occurred',
+        message: error.response.data.error
     });
     return Promise.reject(error);
 }
