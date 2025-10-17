@@ -83,7 +83,7 @@ describe('bex-note API integration tests', () => {
         test('makes correct API call', async () => {
             mock.onDelete('/api/internal/note/delete').reply(200);
 
-            const result = await deleteNote('Test Note');
+            await deleteNote('Test Note');
 
             expect(mock.history.delete).toHaveLength(1);
             expect(mock.history.delete[0].url).toBe('/api/internal/note/delete');
@@ -107,7 +107,7 @@ describe('bex-note API integration tests', () => {
         test('makes correct API call', async () => {
             mock.onPost('/api/internal/note/save').reply(200);
 
-            const result = await saveNote('Test Note', 'Test Content');
+            await saveNote('Test Note', 'Test Content');
 
             expect(mock.history.post).toHaveLength(1);
             expect(mock.history.post[0].url).toBe('/api/internal/note/save');
