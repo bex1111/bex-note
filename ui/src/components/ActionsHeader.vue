@@ -1,7 +1,8 @@
 <script setup>
 import {deleteNote, saveNote} from "../api/bexNote";
+import {notificationStore} from "../main";
 
-const emit = defineEmits(['createNew','save','delete']);
+const emit = defineEmits(['createNew', 'save', 'delete']);
 
 const props = defineProps({
   selectedTitle: String,
@@ -13,6 +14,10 @@ const handleDeleteNote = async () => {
   if (props.selectedTitle === props.title) {
     await deleteNote(props.title);
     emit('delete')
+    notificationStore.$patch({
+      type: 'warn',
+      message: `"${props.title}" deleted successfully.`
+    })
   }
 };
 
@@ -24,6 +29,10 @@ const handleSaveNote = async () => {
     await saveNote(props.title, props.content);
   }
   emit('save')
+  notificationStore.$patch({
+    type: 'success',
+    message: `"${props.title}" saved successfully.`
+  })
 }
 
 const handleCreateNew = () => {
@@ -37,9 +46,13 @@ const handleCreateNew = () => {
       <span class="header-title">Bex Note</span>
     </template>
     <template #end>
-      <prime-button v-tooltip.bottom="'New note'" icon="pi pi-plus" severity="secondary" class="mr-2" text @click="handleCreateNew"/>
-      <prime-button  v-tooltip.bottom="'Save'" icon="pi pi-save" severity="secondary" class="mr-2" text @click="handleSaveNote"/>
-      <prime-button v-tooltip.bottom="'Delete'" icon="pi pi-trash" severity="danger" class="mr-2" text @click="handleDeleteNote"/>
+      <prime-button v-tooltip.bottom="'New note'" icon="pi pi-plus"
+                    severity="secondary" class="mr-2" text
+                    @click="handleCreateNew" />
+      <prime-button v-tooltip.bottom="'Save'" icon="pi pi-save" severity="secondary" class="mr-2" text
+                    @click="handleSaveNote" :disabled="!title"/>
+      <prime-button v-tooltip.bottom="'Delete'" icon="pi pi-trash" severity="danger" class="mr-2" text
+                    @click="handleDeleteNote" :disabled="!title"/>
     </template>
   </prime-toolbar>
 </template>

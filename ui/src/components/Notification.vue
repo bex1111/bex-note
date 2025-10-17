@@ -1,9 +1,13 @@
 <script setup>
-import {notificationStore} from "@/main";
+import { useToast } from "primevue/usetoast";
+import {notificationStore} from "../main";
 
-notificationStore.$subscribe((store) => {
+const toast = useToast();
 
+notificationStore.$subscribe((_, state) => {
+  toast.add({ severity: state.type, summary: state.message, life: 5000 });
 })
+
 </script>
 
 <template>

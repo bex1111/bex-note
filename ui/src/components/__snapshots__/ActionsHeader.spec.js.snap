@@ -1,17 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ActionsHeader > matches snapshot 1`] = `
-"<div data-v-5adaa0a9=\\"\\" class=\\"prime-toolbar-stub\\"><span data-v-5adaa0a9=\\"\\" class=\\"header-title\\">Bex Note</span>
-  <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-plus\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\"></prime-button-stub>
-  <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-save\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\"></prime-button-stub>
-  <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-trash\\" severity=\\"danger\\" class=\\"mr-2\\" text=\\"\\"></prime-button-stub>
-</div>"
-`;
-
 exports[`ActionsHeader.vue > matches snapshot 1`] = `
 "<div data-v-5adaa0a9=\\"\\" class=\\"prime-toolbar-stub\\"><span data-v-5adaa0a9=\\"\\" class=\\"header-title\\">Bex Note</span>
   <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-plus\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\"></prime-button-stub>
-  <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-save\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\"></prime-button-stub>
-  <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-trash\\" severity=\\"danger\\" class=\\"mr-2\\" text=\\"\\"></prime-button-stub>
+  <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-save\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\" disabled=\\"true\\"></prime-button-stub>
+  <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-trash\\" severity=\\"danger\\" class=\\"mr-2\\" text=\\"\\" disabled=\\"true\\"></prime-button-stub>
 </div>"
 `;

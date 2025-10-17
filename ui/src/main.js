@@ -12,11 +12,13 @@ import Dialog from 'primevue/dialog';
 import Aura from '@primeuix/themes/aura';
 import Tooltip from 'primevue/tooltip';
 import Toast from 'primevue/toast';
+import ToastService from 'primevue/toastservice';
 import 'primeicons/primeicons.css'
 import { createPinia } from 'pinia'
 import {useAuthorizationStore} from "./store/authorization";
+import {useNotificationStore} from "./store/notification";
+
 import './style.css'
-import {useNotificationStore} from "@/store/notification";
 
 const app=createApp(App)
 
@@ -30,6 +32,7 @@ app.use(PrimeVue,{
         preset: Aura
     }
 });
+app.use(ToastService);
 app.component('prime-button', Button);
 app.component('prime-select', Select);
 app.component('prime-toolbar', Toolbar);

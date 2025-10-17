@@ -1,6 +1,17 @@
 import {mount} from '@vue/test-utils';
-import ActionsHeader from './ActionsHeader.vue';
 import {deleteNote} from '../api/bexNote';
+import ActionsHeader from './ActionsHeader.vue';
+import {notificationStore} from '../main'
+
+vi.mock('../main', () => ({
+    notificationStore: {
+        $patch: vi.fn()
+    }
+}));
+
+const directives = {
+    tooltip: {}
+};
 
 const createWrapper = (props) => {
     return mount(ActionsHeader, {
@@ -9,12 +20,15 @@ const createWrapper = (props) => {
             stubs: {
                 'prime-toolbar': true,
                 'prime-button': true
-            }
+            },
+            directives
         }
     });
 }
 
 describe('ActionsHeader.vue', () => {
+    const testNote = 'test-note';
+
     it('matches snapshot', () => {
         const wrapper = mount(ActionsHeader, {
             global: {
@@ -23,7 +37,8 @@ describe('ActionsHeader.vue', () => {
                         template: '<div class="prime-toolbar-stub"><slot name="start"></slot><slot name="end"></slot></div>'
                     },
                     'prime-button': true
-                }
+                },
+                directives
             }
         });
         expect(wrapper.html()).toMatchSnapshot();
@@ -39,22 +54,26 @@ describe('ActionsHeader.vue', () => {
                 deleteNote: vi.fn()
             }));
             const wrapper = createWrapper({
-                selectedTitle: 'test-note',
-                title: 'test-note',
+                selectedTitle: testNote,
+                title: testNote,
                 content: 'some content'
             });
 
             await wrapper.vm.handleDeleteNote();
 
-            expect(deleteNote).toHaveBeenCalledWith('test-note');
+            expect(deleteNote).toHaveBeenCalledWith(testNote);
             expect(wrapper.emitted('delete')).toBeTruthy();
             expect(wrapper.emitted('delete')).toHaveLength(1);
+            expect(notificationStore.$patch).toHaveBeenCalledWith({
+                type: 'warn',
+                message: `"${testNote}" deleted successfully.`
+            });
         });
 
         it('does not call deleteNote API when selectedTitle does not match title', async () => {
             const wrapper = createWrapper({
                 selectedTitle: 'different-note',
-                title: 'test-note',
+                title: testNote,
                 content: 'some content'
             });
 
@@ -62,6 +81,7 @@ describe('ActionsHeader.vue', () => {
 
             expect(deleteNote).not.toHaveBeenCalled();
             expect(wrapper.emitted('delete')).toBeFalsy();
+            expect(notificationStore.$patch).not.toHaveBeenCalled();
         });
     });
 
@@ -75,19 +95,23 @@ describe('ActionsHeader.vue', () => {
                 saveNote: vi.fn(),
                 deleteNote: vi.fn()
             }));
-            const { saveNote, deleteNote } = await import('../api/bexNote');
+            const {saveNote, deleteNote} = await import('../api/bexNote');
             const wrapper = createWrapper({
                 selectedTitle: '',
-                title: 'new-note',
+                title: testNote,
                 content: 'new content'
             });
 
             await wrapper.vm.handleSaveNote();
 
-            expect(saveNote).toHaveBeenCalledWith('new-note', 'new content');
+            expect(saveNote).toHaveBeenCalledWith(testNote, 'new content');
             expect(deleteNote).not.toHaveBeenCalled();
             expect(wrapper.emitted('save')).toBeTruthy();
             expect(wrapper.emitted('save')).toHaveLength(1);
+            expect(notificationStore.$patch).toHaveBeenCalledWith({
+                type: 'success',
+                message: `"${testNote}" saved successfully.`
+            });
         });
 
         it('calls deleteNote and saveNote API and emits save when selectedTitle is set', async () => {
@@ -95,19 +119,23 @@ describe('ActionsHeader.vue', () => {
                 saveNote: vi.fn(),
                 deleteNote: vi.fn()
             }));
-            const { saveNote, deleteNote } = await import('../api/bexNote');
+            const {saveNote, deleteNote} = await import('../api/bexNote');
             const wrapper = createWrapper({
                 selectedTitle: 'old-note',
-                title: 'new-note',
+                title: testNote,
                 content: 'updated content'
             });
 
             await wrapper.vm.handleSaveNote();
 
             expect(deleteNote).toHaveBeenCalledWith('old-note');
-            expect(saveNote).toHaveBeenCalledWith('new-note', 'updated content');
+            expect(saveNote).toHaveBeenCalledWith(testNote, 'updated content');
             expect(wrapper.emitted('save')).toBeTruthy();
             expect(wrapper.emitted('save')).toHaveLength(1);
+            expect(notificationStore.$patch).toHaveBeenCalledWith({
+                type: 'success',
+                message: `"${testNote}" saved successfully.`
+            });
         });
     });
 

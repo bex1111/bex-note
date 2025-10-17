@@ -42,6 +42,9 @@ describe('App.vue', () => {
                     'LoginModal': {
                         template: '<div class="login-modal-stub" data-testid="login-modal"></div>',
                         emits: ['login']
+                    },
+                    'Notification': {
+                        template: '<div class="notifictation-modal-stub" data-testid="notification"></div>'
                     }
                 }
             }

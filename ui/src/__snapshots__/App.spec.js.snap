@@ -13,5 +13,6 @@ exports[`App.vue > matches snapshot 1`] = `
     <div class=\\"markdown-editor-stub\\" data-testid=\\"markdown-editor\\"></div>
   </div>
 </div>
-<div class=\\"login-modal-stub\\" data-testid=\\"login-modal\\"></div>"
+<div class=\\"login-modal-stub\\" data-testid=\\"login-modal\\"></div>
+<div class=\\"notifictation-modal-stub\\" data-testid=\\"notification\\"></div>"
 `;

@@ -19,6 +19,7 @@
     </template>
   </prime-card>
   <LoginModal @login="refreshNotes"></LoginModal>
+  <Notification></Notification>
 </template>
 
 <script setup>
@@ -30,6 +31,7 @@ import LoginModal from "./components/LoginModal.vue";
 import TitleSelector from "./components/TitleSelector.vue";
 import {ref} from "vue";
 import {getNoteList} from "./api/bexNote";
+import Notification from "./components/Notification.vue";
 
 const title = ref();
 const selectedTitle = ref();
