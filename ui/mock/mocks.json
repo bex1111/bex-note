@@ -4,9 +4,8 @@
       "path": "/api/authorize"
     },
     "httpResponse": {
-      "statusCode": 400,
       "body": {
-        "error": "Unauthorized"
+        "token": "token"
       },
       "headers": [
         {
@@ -79,7 +78,7 @@
   },
   {
     "httpRequest": {
-      "path": "/api/internal/note/content"
+      "path": "/api/internal/note/content",
     },
     "httpResponse": {
       "body": {
