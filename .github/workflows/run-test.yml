@@ -2,7 +2,8 @@ name: Run checks
 on:
   push:
     branches:
-      - main
+        - main
+        - 'dependabot/**'
 
 jobs:
   test-ui:
