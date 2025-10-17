@@ -1,55 +1,82 @@
 import axios from 'axios';
-import {tokenStore} from '../main';
+import {notificationStore, tokenStore} from '../main';
 
+
+const errorHandler = async (error) => {
+    notificationStore.$patch({
+        type: 'error',
+        message: error.response.data.error ? error.response.data.error : 'An unknown error occurred',
+    });
+    return Promise.reject(error);
+}
 
 export const getNoteList = async () => {
-    const response = await axios.get('/api/internal/note/list', {
-        headers: {
-            'x-auth-token': tokenStore.token
-        }
-    });
-    return response.data;
-}
-
-export const authorize = async (username, password) => {
-    const response = await axios.post('/api/authorize', {
-        username,
-        password
-    });
-    return response.data;
-}
-
-
-export const deleteNote = async (title) => {
-    const response = await axios.delete('/api/internal/note/delete', {
-        headers: {
-            'x-auth-token': tokenStore.token
-        },
-        data: {title}
-    });
-    return response.data;
-}
-
-export const saveNote = async (title, content) => {
-
-    const response = await axios.post('/api/internal/note/save', {
-        title, content
-    }, {
-        headers: {
-            'x-auth-token': tokenStore.token
-        }
-    });
-    return response.data;
-}
-
-export const getContent = async (title) => {
-    const response = await axios.post('/api/internal/note/content', {
-          title
-        },
-        {
+    try {
+        const response = await axios.get('/api/internal/note/list', {
             headers: {
                 'x-auth-token': tokenStore.token
             }
         });
-    return response.data;
+        return response.data;
+    } catch (error) {
+        return errorHandler(error);
+    }
 }
+
+export const authorize = async (username, password) => {
+    try {
+        const response = await axios.post('/api/authorize', {
+            username,
+            password
+        });
+        return response.data;
+    } catch (error) {
+        return errorHandler(error);
+    }
+}
+
+
+export const deleteNote = async (title) => {
+    try {
+        await axios.delete('/api/internal/note/delete', {
+            headers: {
+                'x-auth-token': tokenStore.token
+            },
+            data: {title}
+        });
+    } catch (error) {
+        return errorHandler(error);
+    }
+}
+
+export const saveNote = async (title, content) => {
+    try {
+         await axios.post('/api/internal/note/save', {
+            title, content
+        }, {
+            headers: {
+                'x-auth-token': tokenStore.token
+            }
+        });
+    } catch (error) {
+        return errorHandler(error);
+    }
+}
+
+export const getContent = async (title) => {
+    try {
+        const response = await axios.post('/api/internal/note/content', {
+                title
+            },
+            {
+                headers: {
+                    'x-auth-token': tokenStore.token
+                }
+            });
+        return response.data;
+    } catch (error) {
+        return errorHandler(error);
+    }
+}
+
+

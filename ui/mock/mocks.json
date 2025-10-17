@@ -4,8 +4,9 @@
       "path": "/api/authorize"
     },
     "httpResponse": {
+      "statusCode": 400,
       "body": {
-        "token": "token"
+        "error": "Unauthorized"
       },
       "headers": [
         {
@@ -78,7 +79,7 @@
   },
   {
     "httpRequest": {
-      "path": "/api/internal/note/content",
+      "path": "/api/internal/note/content"
     },
     "httpResponse": {
       "body": {
@@ -114,9 +115,6 @@
       "path": "/api/internal/note/save"
     },
     "httpResponse": {
-      "body": {
-        "status": "saved"
-      },
       "headers": [
         {
           "name": "Access-Control-Allow-Origin",
@@ -147,9 +145,6 @@
       "path": "/api/internal/note/delete"
     },
     "httpResponse": {
-      "body": {
-        "status": "deleted"
-      },
       "headers": [
         {
           "name": "Access-Control-Allow-Origin",
