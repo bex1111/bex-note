@@ -1,0 +1,28 @@
+name: run-test.yml
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies (ui)
+        run: npm install
+        working-directory: ./ui
+      - name: Run tests (ui)
+        run: npm run test
+        working-directory: ./ui
+
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies (backend)
+        run: npm install
+        working-directory: ./backend
+      - name: Run tests (backend)
+        run: npm run test
+        working-directory: ./backend
