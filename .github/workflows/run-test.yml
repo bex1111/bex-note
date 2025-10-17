@@ -8,7 +8,7 @@ jobs:
   test-ui:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - name: Install dependencies (ui)
         run: npm install
         working-directory: ./ui
@@ -19,7 +19,7 @@ jobs:
   test-backend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - name: Install dependencies (backend)
         run: npm install
         working-directory: ./backend
