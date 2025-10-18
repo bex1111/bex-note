@@ -43,7 +43,10 @@ const handleCreateNew = () => {
 <template>
   <prime-toolbar>
     <template #start>
+      <div class="flex items-center gap-2">
+      <prime-avatar image="/ico.png" class="avatar" />
       <span class="header-title">Bex Note</span>
+      </div>
     </template>
     <template #end>
       <prime-button v-tooltip.bottom="'New note'" icon="pi pi-plus"
@@ -61,5 +64,10 @@ const handleCreateNew = () => {
 .header-title {
   font-size: 1.5rem;
   font-weight: bold;
+}
+.avatar {
+  width: 2rem;
+  height: 2rem;
+
 }
 </style>

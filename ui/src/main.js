@@ -11,6 +11,7 @@ import Fluid from 'primevue/fluid';
 import Dialog from 'primevue/dialog';
 import Aura from '@primeuix/themes/aura';
 import Tooltip from 'primevue/tooltip';
+import Avatar from 'primevue/avatar';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import 'primeicons/primeicons.css'
@@ -42,5 +43,6 @@ app.component('prime-float-label', FloatLabel);
 app.component('prime-fluid', Fluid);
 app.component('prime-dialog', Dialog);
 app.component('prime-toast', Toast);
+app.component('prime-avatar', Avatar);
 app.directive('tooltip', Tooltip);
 app.mount('#app')

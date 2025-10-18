@@ -9,5 +9,8 @@ build-backend:
 build-docker:
 	docker build -t bex-note:latest .
 
+test:
+	cd backend && make test && cd ../ui && make test && cd ..
+
 run:
 	docker rm -f bex-note || true && docker run -p 3000:3000 -v ./temp:/data --name bex-note bex-note:latest
