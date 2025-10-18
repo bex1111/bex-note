@@ -121,8 +121,15 @@ describe('API Integration Tests', () => {
 
 
         });
-
-
     });
+
+    describe('Healthcheck', () => {
+        it('/api/healthcheck should return 200', async () => {
+            await request(app)
+                .get('/api/healthcheck')
+                .send()
+                .expect(200);
+        });
+    })
 
 });

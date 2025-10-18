@@ -29,6 +29,10 @@ app.post('/api/authorize', (req, res) => {
     res.status(result.status).json(result.body);
 });
 
+app.get('/api/healthcheck', (req, res) => {
+    res.status(200).end();
+});
+
 app.post('/api/internal/note/save', async (req, res) => {
     const {title, content} = req.body;
     const result = await handleFileSave(title, content);

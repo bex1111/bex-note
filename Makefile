@@ -7,10 +7,15 @@ build-backend:
 	cd backend && npm install && npm run build && cd ..
 
 build-docker:
-	docker build -t bex-note:latest .
+	docker build -t bex1111/bex-note:beta .
 
 test:
 	cd backend && make test && cd ../ui && make test && cd ..
 
-run:
-	docker rm -f bex-note || true && docker run -p 3000:3000 -v ./temp:/data --name bex-note bex-note:latest
+up:
+	docker compose up -d
+
+down:
+	docker compose down
+
+restart: down up

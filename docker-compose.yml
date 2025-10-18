@@ -1,0 +1,23 @@
+services:
+  bex-note:
+    image: bex1111/bex-note:beta # change it to proper version
+    container_name: bex-note
+    hostname: bex-note
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+    healthcheck:
+      test: wget --spider -q http://127.0.0.1:3000/api/healthcheck || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 2
+      start_period: 5s
+    volumes:
+      - ./temp:/data
+    ports:
+      - "3000:3000"
+    environment:
+      - USERNAME=test #change and move it to env file
+      - PASSWORD=test #change and move it to env file
