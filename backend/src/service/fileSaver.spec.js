@@ -2,15 +2,14 @@ const {handleFileSave} = require('./fileSaver');
 const fs = require('fs/promises');
 const environmentProvider = require('../environmentProvider');
 const validator = require("../validator");
-const {createBadRequestResponse} = require("./response");
 
 
 describe('handleFileSave', () => {
-    const tempDir = './temp';
+    const tempDir = './temp/save';
 
-    const testTitle = 'save/test title';
+    const testTitle = 'test/test title';
     const testContent = 'Test content';
-    const testFilePath = './temp/save/test title.md';
+    const testFilePath = `${tempDir}/test/test title.md`;
 
     beforeEach(async () => {
         jest.clearAllMocks();
@@ -24,11 +23,9 @@ describe('handleFileSave', () => {
     });
 
 
-
-
     it('calls handleFileSave with correct arguments and returns success', async () => {
         const result = await handleFileSave(testTitle, testContent);
-        expect(result).toEqual({ status: 200});
+        expect(result).toEqual({status: 200});
 
         const fileContent = await fs.readFile(testFilePath, 'utf-8');
         expect(fileContent).toBe(testContent);
@@ -39,7 +36,7 @@ describe('handleFileSave', () => {
 
     it('calls handleFileSave two times with correct arguments and returns success', async () => {
         const result1 = await handleFileSave(testTitle, testContent);
-        expect(result1).toEqual({ status: 200});
+        expect(result1).toEqual({status: 200});
 
         const fileContent1 = await fs.readFile(testFilePath, 'utf-8');
         expect(fileContent1).toBe(testContent);
@@ -47,11 +44,11 @@ describe('handleFileSave', () => {
         expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
 
-        const result2 = await handleFileSave(testTitle, testContent+'2');
-        expect(result2).toEqual({ status: 200});
+        const result2 = await handleFileSave(testTitle, testContent + '2');
+        expect(result2).toEqual({status: 200});
 
         const fileContent2 = await fs.readFile(testFilePath, 'utf-8');
-        expect(fileContent2).toBe(testContent+'2');
+        expect(fileContent2).toBe(testContent + '2');
 
         expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);

@@ -5,7 +5,7 @@ const environmentProvider = require('../environmentProvider');
 const validator = require("../validator");
 
 describe('handleFileContent', () => {
-    const tempDir = './temp';
+    const tempDir = './temp/content';
     beforeEach(async () => {
         jest.clearAllMocks();
         try {

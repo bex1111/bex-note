@@ -3,7 +3,7 @@ const OLD_ENV = process.env;
 process.env.NODE_ENV = 'test';
 process.env.USERNAME = 'testuser';
 process.env.PASSWORD = 'testpass';
-process.env.FOLDER = './temp/note';
+process.env.FOLDER = './temp/inttestnotes';
 process.env.STATIC_FOLDER_FOR_WEB = './temp/teststatic';
 
 const app = require('./app');
@@ -69,7 +69,8 @@ describe('API Integration Tests', () => {
                 .send({
                     username: 'testuser',
                     password: 'testpass'
-                });
+                })
+                .expect(200);
 
             let validToken = authResponse.body.token;
 
@@ -118,8 +119,6 @@ describe('API Integration Tests', () => {
                 .send({title: 'Test Note 3'})
                 .expect(200);
             expect(contentResponse.body).toEqual( {"content": "# Test Content 3"})
-
-
         });
     });
 
