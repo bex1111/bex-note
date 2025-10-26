@@ -1,47 +1,45 @@
 import {mount} from '@vue/test-utils';
 import {vi} from 'vitest';
 import LoginModal from './LoginModal.vue';
+import {authorize} from '../api/bexNote';
+import {tokenStore} from '../main';
 
 vi.mock('../api/bexNote', () => ({
     authorize: vi.fn().mockResolvedValue({token: 'abc'})
 }));
 
+const mockSubscriptionCallback = vi.fn();
 vi.mock('../main', () => ({
-    tokenStore: { $patch: vi.fn() }
+    tokenStore: {
+        $patch: vi.fn(),
+        $subscribe: vi.fn((callback) =>
+            mockSubscriptionCallback.mockImplementation(callback)
+        )
+    }
 }));
-
-
-import {authorize} from '../api/bexNote';
-import {tokenStore} from '../main';
 
 describe('LoginModal.vue', () => {
 
-    it('matches snapshot', () => {
-        const wrapper = mount(LoginModal, {
-            global: {
-                stubs: {
-                    'prime-dialog': {
-                        template: '<div class="prime-dialog-stub"><slot></slot></div>'
-                    },
-                    'prime-input': true,
-                    'prime-button': true
-                }
+    const createWrapper = () => mount(LoginModal, {
+        global: {
+            stubs: {
+                'prime-dialog': {
+                    template: '<div class="prime-dialog-stub"><slot></slot></div>'
+                },
+                'prime-input': true,
+                'prime-button': true
             }
-        });
+        }
+    })
+
+    it('matches snapshot', async () => {
+        const wrapper = await createWrapper();
         expect(wrapper.html()).toMatchSnapshot();
     });
 
     describe('closeCallback', () => {
         it('emits login event and hides modal when called', async () => {
-            const wrapper = mount(LoginModal, {
-                global: {
-                    stubs: {
-                        'prime-dialog': true,
-                        'prime-input': true,
-                        'prime-button': true
-                    }
-                }
-            });
+            const wrapper = await createWrapper();
 
             wrapper.vm.username = 'user';
             wrapper.vm.password = 'pass';
@@ -50,8 +48,29 @@ describe('LoginModal.vue', () => {
             expect(wrapper.emitted('login')).toBeTruthy();
             expect(wrapper.emitted('login')).toHaveLength(1);
             expect(wrapper.vm.visible).toBe(false);
-            expect(authorize).toHaveBeenCalledWith('user', 'pass');
+            expect(authorize).toHaveBeenCalledWith(wrapper.vm.username, wrapper.vm.password);
             expect(tokenStore.$patch).toHaveBeenCalledWith({token: 'abc'});
+        });
+    });
+
+    describe('tokenStore subscription', () => {
+        test.each([
+            {
+                description: 'shows modal when token becomes null',
+                tokenValue: null,
+                expectedVisible: true
+            },
+            {
+                description: 'does not show modal when token has value',
+                tokenValue: 'some-token',
+                expectedVisible: false
+            }
+        ])('$description', ({tokenValue, expectedVisible}) => {
+            const wrapper = createWrapper();
+
+            mockSubscriptionCallback(null, {token: tokenValue});
+
+            expect(wrapper.vm.visible).toBe(expectedVisible);
         });
     });
 });

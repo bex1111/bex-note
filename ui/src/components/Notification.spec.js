@@ -53,8 +53,8 @@ describe('Notification.vue', () => {
         expect(useToast).toHaveBeenCalledTimes(1);
         expect(mockAdd).toHaveBeenCalledTimes(1);
         expect(mockAdd).toHaveBeenCalledWith({
-            severity: 'success',
-            summary: 'Note saved successfully',
+            severity: mockState.type,
+            summary: mockState.message,
             life: 5000
         });
     });

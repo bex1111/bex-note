@@ -5,12 +5,16 @@ import {notificationStore} from '../main';
 
 vi.mock('../main', () => ({
     tokenStore: {
-        token: 'test-token-123'
+        token: 'test-token-123',
+        resetToken: vi.fn()
     },
     notificationStore: {
         $patch: vi.fn()
     }
 }));
+
+// Import the mocked tokenStore to access it in tests
+import {tokenStore} from '../main';
 
 describe('bex-note API integration tests', () => {
     let mock;
@@ -22,6 +26,7 @@ describe('bex-note API integration tests', () => {
 
     beforeEach(() => {
         mock = new MockAdapter(axios);
+        vi.clearAllMocks();
     });
 
     afterEach(() => {
@@ -50,6 +55,19 @@ describe('bex-note API integration tests', () => {
             expect(mock.history.get[0].url).toBe('/api/internal/note/list');
             expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
         });
+
+        test('resets token on 403 error', async () => {
+            const forbiddenError = {error: 'Forbidden'};
+            mock.onGet('/api/internal/note/list').reply(403, forbiddenError);
+
+            await expect(getNoteList()).rejects.toThrow();
+
+            expect(tokenStore.resetToken).toHaveBeenCalled();
+            expect(notificationStore.$patch).toHaveBeenCalledWith({
+                type: 'error',
+                message: 'Forbidden'
+            });
+        });
     });
 
     describe('authorize', () => {
@@ -77,6 +95,19 @@ describe('bex-note API integration tests', () => {
             expect(mock.history.post[0].url).toBe('/api/authorize');
             expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
         });
+
+        test('resets token on 403 error', async () => {
+            const forbiddenError = {error: 'Forbidden'};
+            mock.onPost('/api/authorize').reply(403, forbiddenError);
+
+            await expect(authorize('testuser', 'testpass')).rejects.toThrow();
+
+            expect(tokenStore.resetToken).toHaveBeenCalled();
+            expect(notificationStore.$patch).toHaveBeenCalledWith({
+                type: 'error',
+                message: 'Forbidden'
+            });
+        });
     });
 
     describe('deleteNote', () => {
@@ -100,6 +131,19 @@ describe('bex-note API integration tests', () => {
             expect(mock.history.delete[0].url).toBe('/api/internal/note/delete');
             expect(mock.history.delete[0].headers['x-auth-token']).toBe('test-token-123');
             expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
+        });
+
+        test('resets token on 403 error', async () => {
+            const forbiddenError = {error: 'Forbidden'};
+            mock.onDelete('/api/internal/note/delete').reply(403, forbiddenError);
+
+            await expect(deleteNote('Test Note')).rejects.toThrow();
+
+            expect(tokenStore.resetToken).toHaveBeenCalled();
+            expect(notificationStore.$patch).toHaveBeenCalledWith({
+                type: 'error',
+                message: 'Forbidden'
+            });
         });
     });
 
@@ -127,6 +171,19 @@ describe('bex-note API integration tests', () => {
             expect(mock.history.post[0].headers['x-auth-token']).toBe('test-token-123');
             expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
         });
+
+        test('resets token on 403 error', async () => {
+            const forbiddenError = {error: 'Forbidden'};
+            mock.onPost('/api/internal/note/save').reply(403, forbiddenError);
+
+            await expect(saveNote('Test Note', 'Test Content')).rejects.toThrow();
+
+            expect(tokenStore.resetToken).toHaveBeenCalled();
+            expect(notificationStore.$patch).toHaveBeenCalledWith({
+                type: 'error',
+                message: 'Forbidden'
+            });
+        });
     });
 
     describe('getContent', () => {
@@ -146,7 +203,6 @@ describe('bex-note API integration tests', () => {
         });
 
         test('throws error on API failure', async () => {
-            const errorResponse = {error: 'Note not found'};
             mock.onPost('/api/internal/note/content').reply(400, errorResponse);
 
             await expect(getContent('Nonexistent Note')).rejects.toThrow();
@@ -155,6 +211,19 @@ describe('bex-note API integration tests', () => {
             expect(mock.history.post[0].url).toBe('/api/internal/note/content');
             expect(mock.history.post[0].headers['x-auth-token']).toBe('test-token-123');
             expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
+        });
+
+        test('resets token on 403 error', async () => {
+            const forbiddenError = {error: 'Forbidden'};
+            mock.onPost('/api/internal/note/content').reply(403, forbiddenError);
+
+            await expect(getContent('Test Note')).rejects.toThrow();
+
+            expect(tokenStore.resetToken).toHaveBeenCalled();
+            expect(notificationStore.$patch).toHaveBeenCalledWith({
+                type: 'error',
+                message: 'Forbidden'
+            });
         });
     });
 });

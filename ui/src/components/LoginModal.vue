@@ -4,7 +4,7 @@ import {ref} from "vue";
 import {tokenStore} from "../main";
 import {authorize} from "../api/bexNote";
 
-const emit=defineEmits(['login'])
+const emit = defineEmits(['login'])
 
 const visible = ref(true);
 const username = ref();
@@ -16,6 +16,10 @@ const closeCallback = async () => {
   visible.value = false;
   emit("login");
 }
+
+tokenStore.$subscribe((_, state) => {
+  visible.value = !state.token;
+})
 </script>
 
 <template>

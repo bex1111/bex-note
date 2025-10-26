@@ -3,6 +3,9 @@ import {notificationStore, tokenStore} from '../main';
 
 
 const errorHandler = async (error) => {
+    if (error.response.status === 403) {
+        tokenStore.resetToken();
+    }
     notificationStore.$patch({
         type: 'error',
         message: error.response.data.error
@@ -51,7 +54,7 @@ export const deleteNote = async (title) => {
 
 export const saveNote = async (title, content) => {
     try {
-         await axios.post('/api/internal/note/save', {
+        await axios.post('/api/internal/note/save', {
             title, content
         }, {
             headers: {
