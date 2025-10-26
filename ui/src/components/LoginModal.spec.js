@@ -5,16 +5,18 @@ import {authorize} from '../api/bexNote';
 import {tokenStore} from '../main';
 
 vi.mock('../api/bexNote', () => ({
-    authorize: vi.fn().mockResolvedValue({token: 'abc'})
+    authorize: vi.fn().mockResolvedValue({token: 'abc'}),
 }));
 
 const mockSubscriptionCallback = vi.fn();
 vi.mock('../main', () => ({
     tokenStore: {
+        token: null,
         $patch: vi.fn(),
         $subscribe: vi.fn((callback) =>
             mockSubscriptionCallback.mockImplementation(callback)
-        )
+        ),
+        saveToken: vi.fn()
     }
 }));
 
@@ -49,7 +51,7 @@ describe('LoginModal.vue', () => {
             expect(wrapper.emitted('login')).toHaveLength(1);
             expect(wrapper.vm.visible).toBe(false);
             expect(authorize).toHaveBeenCalledWith(wrapper.vm.username, wrapper.vm.password);
-            expect(tokenStore.$patch).toHaveBeenCalledWith({token: 'abc'});
+            expect(tokenStore.saveToken).toHaveBeenCalledWith('abc');
         });
     });
 
@@ -67,8 +69,9 @@ describe('LoginModal.vue', () => {
             }
         ])('$description', ({tokenValue, expectedVisible}) => {
             const wrapper = createWrapper();
+            tokenStore.token = tokenValue;
 
-            mockSubscriptionCallback(null, {token: tokenValue});
+            mockSubscriptionCallback();
 
             expect(wrapper.vm.visible).toBe(expectedVisible);
         });

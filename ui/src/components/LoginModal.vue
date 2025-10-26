@@ -6,20 +6,26 @@ import {authorize} from "../api/bexNote";
 
 const emit = defineEmits(['login'])
 
-const visible = ref(true);
+
+const hasToken = () => {
+  return !!tokenStore.token;
+}
+
+const visible = ref(!hasToken());
 const username = ref();
 const password = ref();
 
 const closeCallback = async () => {
   let tokenObject = await authorize(username.value, password.value)
-  tokenStore.$patch(tokenObject);
+  tokenStore.saveToken(tokenObject.token);
   visible.value = false;
   emit("login");
 }
 
-tokenStore.$subscribe((_, state) => {
-  visible.value = !state.token;
+tokenStore.$subscribe(() => {
+  visible.value = !hasToken();
 })
+
 </script>
 
 <template>

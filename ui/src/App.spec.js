@@ -61,6 +61,23 @@ describe('App.vue', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
+    describe('onMounted', () => {
+        it('calls refreshNotes on component mount', async () => {
+            const mockNotes = [
+                {title: 'Note 1'},
+                {title: 'Note 2'}
+            ];
+            getNoteList.mockResolvedValue(mockNotes);
+
+            const wrapper = createWrapper();
+
+            await wrapper.vm.$nextTick();
+
+            expect(getNoteList).toHaveBeenCalledTimes(1);
+            expect(wrapper.vm.notes).toEqual(mockNotes);
+        });
+    });
+
     describe('createNew', () => {
 
         it('resets all form values to null when called', async () => {
@@ -98,7 +115,7 @@ describe('App.vue', () => {
             wrapper.vm.title = testTitle;
             wrapper.vm.selectedTitle = testTitle + '1';
 
-            await wrapper.vm.refreshNotes();
+            await wrapper.vm.handleRefresh();
 
             expect(wrapper.vm.selectedTitle).toBe(testTitle);
             expect(wrapper.vm.title).toBe(testTitle);
@@ -111,7 +128,7 @@ describe('App.vue', () => {
             wrapper.vm.selectedTitle = testTitle;
             wrapper.vm.content = 'Some content';
 
-            await wrapper.vm.refreshNotes();
+            await wrapper.vm.handleRefresh();
 
             expect(wrapper.vm.selectedTitle).toBeNull();
             expect(wrapper.vm.title).toBeNull();
@@ -124,7 +141,7 @@ describe('App.vue', () => {
             wrapper.vm.title = testTitle;
             wrapper.vm.selectedTitle = null;
 
-            await wrapper.vm.refreshNotes();
+            await wrapper.vm.handleRefresh();
 
             expect(wrapper.vm.selectedTitle).toEqual(testTitle);
             expect(wrapper.vm.title).toEqual(testTitle);

@@ -6,8 +6,8 @@
           :title="title"
           :content="content"
           @createNew="createNew"
-          @save="refreshNotes"
-          @delete="refreshNotes"
+          @save="handleRefresh"
+          @delete="handleRefresh"
       />
     </template>
     <template #subtitle>
@@ -18,7 +18,7 @@
       <MarkdownEditor v-model="content" :title="selectedTitle"></MarkdownEditor>
     </template>
   </prime-card>
-  <LoginModal @login="refreshNotes"></LoginModal>
+  <LoginModal @login="handleRefresh"></LoginModal>
   <Notification></Notification>
 </template>
 
@@ -29,7 +29,7 @@ import ActionsHeader from "./components/ActionsHeader.vue";
 import TitleEditor from "./components/TitleEditor.vue";
 import LoginModal from "./components/LoginModal.vue";
 import TitleSelector from "./components/TitleSelector.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {getNoteList} from "./api/bexNote";
 import Notification from "./components/Notification.vue";
 
@@ -46,11 +46,13 @@ const createNew = () => {
 
 const refreshNotes = async () => {
   notes.value = await getNoteList();
-  if (!selectedTitle.value)
-  {
-    selectedTitle.value=title.value;
-  }
-  else if (notes.value.some(note=>note.title===title.value)) {
+}
+
+const handleRefresh = async () => {
+  await refreshNotes();
+  if (!selectedTitle.value) {
+    selectedTitle.value = title.value;
+  } else if (notes.value.some(note => note.title === title.value)) {
     selectedTitle.value = title.value;
   } else {
     selectedTitle.value = null;
@@ -59,6 +61,9 @@ const refreshNotes = async () => {
   }
 }
 
+onMounted(async () => {
+  await refreshNotes();
+})
 
 </script>
 
