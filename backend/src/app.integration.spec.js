@@ -1,4 +1,5 @@
 const request = require('supertest');
+const crypto = require('crypto');
 const OLD_ENV = process.env;
 process.env.NODE_ENV = 'test';
 process.env.USERNAME = 'testuser';
@@ -72,12 +73,14 @@ describe('API Integration Tests', () => {
                 })
                 .expect(200);
 
-            let validToken = authResponse.body.token;
+            const validToken = authResponse.body.token;
+            const longText = crypto.randomBytes(4_000_000).toString('hex')
 
             for (let i = 0; i < 5; i++) {
+                const content = `# Test Content ${i} ${longText}`
                 const noteData = {
                     title: `Test Note ${i}`,
-                    content: `# Test Content ${i}`
+                    content
                 };
                 await request(app)
                     .post('/api/internal/note/save')
@@ -87,7 +90,7 @@ describe('API Integration Tests', () => {
 
             }
 
-           await request(app)
+            await request(app)
                 .delete('/api/internal/note/delete')
                 .set('x-auth-token', validToken)
                 .send({title: 'Test Note 2'})
@@ -118,7 +121,7 @@ describe('API Integration Tests', () => {
                 .set('x-auth-token', validToken)
                 .send({title: 'Test Note 3'})
                 .expect(200);
-            expect(contentResponse.body).toEqual( {"content": "# Test Content 3"})
+            expect(contentResponse.body).toEqual({"content": `# Test Content 3 ${longText}`})
         });
     });
 
