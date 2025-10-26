@@ -17,12 +17,9 @@ describe('Cookie helpers', () => {
             const mockDate = new Date('2025-10-26T00:00:00.000Z')
             vi.setSystemTime(mockDate)
 
-            setCookie('test_cookie', 'test_value', 7)
+            setCookie('cookie', 'value', 7)
 
-            const expectedExpires = new Date('2025-11-02T00:00:00.000Z').toUTCString()
-            expect(document.cookie).toContain('test_cookie=test_value')
-            expect(document.cookie).toContain('expires=' + expectedExpires)
-            expect(document.cookie).toContain('path=/')
+            expect(document.cookie).toEqual('cookie=value;expires=Sun, 02 Nov 2025 00:00:00 GMT;path=/;Secure;')
 
             vi.useRealTimers()
         })
@@ -46,7 +43,9 @@ describe('Cookie helpers', () => {
         })
 
         it('returns correct value when multiple cookies exist', () => {
-            document.cookie = 'cookie1=value1; cookie2=value2; cookie3=value3'
+            document.cookie = 'cookie1=value1;expires=Sun, 02 Nov 2025 00:00:00 GMT;path=/;Secure;' +
+                'cookie2=value2;expires=Sun, 02 Nov 2025 00:00:00 GMT;path=/;Secure;' +
+                'cookie3=value3;expires=Sun, 02 Nov 2025 00:00:00 GMT;path=/;Secure;'
 
             expect(getCookie('cookie1')).toBe('value1')
             expect(getCookie('cookie2')).toBe('value2')

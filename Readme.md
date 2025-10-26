@@ -1,16 +1,17 @@
-# Bex  Note
+# Bex Note
 
 [![Build Status](https://github.com/bex1111/bex-note/actions/workflows/run-checks.yml/badge.svg)](https://github.com/bex1111/bex-note/actions/workflows/run-checks.yml)
 
-Bex Note is a simple note-taking web application built with Vue and Express.  
+Bex Note is a simple note‑taking web application built with Vue and Express.
+
 Key features include:
-- store notes in local files (no database required)
-- very light weight
-- support multi level file structure (folder1/folder2/note)
-- markdown support
+- Stores notes in local files (no database required)
+- Very lightweight
+- Supports multi-level folder structure (folder1/folder2/note)
+- Markdown support
 
 ![Example Screenshot](example.png)
 
 ## Installation
-[Docker hub](https://hub.docker.com/r/bex1111/bex-note)  
-[Example docker-compose.yml file.](https://github.com/bex1111/bex-note/blob/main/docker-compose.yml)
+- Docker Hub: [bex1111/bex-note](https://hub.docker.com/r/bex1111/bex-note)  
+- Example `docker-compose.yml` file: [View on GitHub](https://github.com/bex1111/bex-note/blob/main/docker-compose.yml)

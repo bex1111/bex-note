@@ -72,7 +72,6 @@ describe('Authorization Store', () => {
             getCookie.mockReturnValue('existing-token')
             const store = useAuthorizationStore()
 
-            // Verify token is initially set
             expect(store.token).toBe('existing-token')
 
             store.resetToken()
@@ -97,22 +96,18 @@ describe('Authorization Store', () => {
             getCookie.mockReturnValue(null)
             const store = useAuthorizationStore()
 
-            // Save first token
             store.saveToken('token-1')
             expect(store.token).toBe('token-1')
             expect(setCookie).toHaveBeenCalledWith('auth_token', 'token-1', 30)
 
-            // Reset token
             store.resetToken()
             expect(store.token).toBeNull()
             expect(eraseCookie).toHaveBeenCalledWith('auth_token')
 
-            // Save second token
             store.saveToken('token-2')
             expect(store.token).toBe('token-2')
             expect(setCookie).toHaveBeenCalledWith('auth_token', 'token-2', 30)
 
-            // Verify call counts
             expect(setCookie).toHaveBeenCalledTimes(2)
             expect(eraseCookie).toHaveBeenCalledTimes(1)
         })
