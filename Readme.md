@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/bex1111/bex-note/actions/workflows/run-checks.yml/badge.svg)](https://github.com/bex1111/bex-note/actions/workflows/run-checks.yml)
 
-Bex Note is a simple note-taking web application built with Vue and Express.
+Bex Note is a simple note-taking web application built with Vue and Express.  
 Key features include:
 - store notes in local files (no database required)
 - very light weight
