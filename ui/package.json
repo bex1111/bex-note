@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@primeuix/themes": "^1.2.5",
-    "@vavt/cm-extension": "^1.11.1",
+    "@vavt/cm-extension": "^1.11.2",
     "@vavt/v3-extension": "^4.0.0",
     "axios": "^1.12.2",
     "core-js": "^3.46.0",
