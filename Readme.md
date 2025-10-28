@@ -5,7 +5,7 @@
 Bex Note is a simple note‑taking web application built with Vue and Express.
 
 Key features include:
-- web based
+- Web based
 - Stores notes in local files (no database required)
 - Very lightweight
 - Supports multi-level folder structure (folder1/folder2/note)
