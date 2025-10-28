@@ -1,5 +1,5 @@
-const {isAuthorized, authorize, unauthorizedResponse, checkAuthorize} = require('./auth');
-const environmentProvider = require('../environmentProvider');
+const {authorize, checkAuthorize} = require('./auth');
+const environmentProvider = require('../configProvider');
 
 describe('auth.js integration', () => {
     const unauthorizedResponse = {status: 403, body: {error: 'Unauthorized'}};
@@ -14,15 +14,15 @@ describe('auth.js integration', () => {
     ];
 
     it.each(invalidCases)('returns unauthorizedResponse if $desc', ({username, password}) => {
-        jest.spyOn(environmentProvider, 'getUsernameEnv').mockReturnValue('user');
-        jest.spyOn(environmentProvider, 'getUserPasswordEnv').mockReturnValue('pass');
+        jest.spyOn(environmentProvider, 'getUsername').mockReturnValue('user');
+        jest.spyOn(environmentProvider, 'getUserPassword').mockReturnValue('pass');
         const result = authorize(username, password);
         expect(result).toEqual(unauthorizedResponse);
     });
 
     it('returns a token if username and password are correct', () => {
-        jest.spyOn(environmentProvider, 'getUsernameEnv').mockReturnValue('user');
-        jest.spyOn(environmentProvider, 'getUserPasswordEnv').mockReturnValue('pass');
+        jest.spyOn(environmentProvider, 'getUsername').mockReturnValue('user');
+        jest.spyOn(environmentProvider, 'getUserPassword').mockReturnValue('pass');
         const tokens = []
         const numberOfTestSet = 10_000;
         for (let i = 0; i < numberOfTestSet; i++) {
@@ -33,13 +33,13 @@ describe('auth.js integration', () => {
             expect(token.status).toBe(200);
             expect(token.body.token).toMatch(/^[a-f0-9]{128}$/);
         })
-        expect(environmentProvider.getUserPasswordEnv).toHaveBeenCalledTimes(numberOfTestSet);
-        expect(environmentProvider.getUsernameEnv).toHaveBeenCalledTimes(numberOfTestSet);
+        expect(environmentProvider.getUserPassword).toHaveBeenCalledTimes(numberOfTestSet);
+        expect(environmentProvider.getUsername).toHaveBeenCalledTimes(numberOfTestSet);
     });
 
     it('checkAuthorize returns null for a valid token', () => {
-        jest.spyOn(environmentProvider, 'getUsernameEnv').mockReturnValue('user');
-        jest.spyOn(environmentProvider, 'getUserPasswordEnv').mockReturnValue('pass');
+        jest.spyOn(environmentProvider, 'getUsername').mockReturnValue('user');
+        jest.spyOn(environmentProvider, 'getUserPassword').mockReturnValue('pass');
         const {body: {token}} = authorize('user', 'pass');
         expect(checkAuthorize(token)).toBeNull();
     });

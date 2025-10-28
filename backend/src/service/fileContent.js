@@ -1,4 +1,4 @@
-const environmentProvider = require('../environmentProvider');
+const environmentProvider = require('../configProvider');
 const fs = require('fs').promises;
 const path = require('path');
 const validator = require("../validator");
@@ -6,7 +6,7 @@ const { createFileNotFoundResponse} = require("./response");
 
 const handle = async (title) => {
     validator.validateTitle(title);
-    const folderEnv = environmentProvider.getSavingLocationEnv();
+    const folderEnv = environmentProvider.getSavingLocation();
     const filePath = path.join(folderEnv, `${title}.md`);
 
     const content = await fs.readFile(filePath, 'utf8');

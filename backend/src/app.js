@@ -6,13 +6,13 @@ const express = require('express')
 
 const app = express()
 const port = 3000
-const environmentProvider = require('./environmentProvider');
-const { authorize,checkAuthorize} = require('./middleware/auth');
-const {validateAllEnvSet} = require("./environmentProvider");
+const environmentProvider = require('./configProvider');
+const {authorize, checkAuthorize} = require('./middleware/auth');
+const {getPort} = require("./configProvider");
 
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb'}));
-app.use(express.static(environmentProvider.getStaticFileForWebEnv()));
+app.use(express.static(environmentProvider.getStaticFileForWeb()));
 
 app.use('/api/internal', (req, res, next) => {
     const response = checkAuthorize(req.headers['x-auth-token']);
@@ -56,10 +56,8 @@ app.post('/api/internal/note/content', async (req, res) => {
     res.status(result.status).json(result.body);
 });
 
-validateAllEnvSet();
-
 if (require.main === module) {
-    app.listen(port, () => {
+    app.listen(getPort(), () => {
         console.log(`Bex-note started ${port}`)
     });
 }

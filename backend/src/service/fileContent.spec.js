@@ -1,7 +1,7 @@
 const { handleFileContent } = require('./fileContent');
 const { handleFileSave } = require('./fileSaver');
 const fs = require('fs/promises');
-const environmentProvider = require('../environmentProvider');
+const environmentProvider = require('../configProvider');
 const validator = require("../validator");
 
 describe('handleFileContent', () => {
@@ -14,7 +14,7 @@ describe('handleFileContent', () => {
     });
 
     it('returns file content for an existing file', async () => {
-        jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
+        jest.spyOn(environmentProvider, 'getSavingLocation').mockImplementation(() => tempDir);
         jest.spyOn(validator, 'validateTitle').mockImplementation(() => {});
 
         const testTitle = 'TestFolder/test title';
@@ -23,12 +23,12 @@ describe('handleFileContent', () => {
 
         const result = await handleFileContent(testTitle);
         expect(result).toEqual({ body: { content: testContent }, status: 200 });
-        expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
+        expect(environmentProvider.getSavingLocation).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
     });
 
     it('returns 404 if file does not exist', async () => {
-        jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
+        jest.spyOn(environmentProvider, 'getSavingLocation').mockImplementation(() => tempDir);
         jest.spyOn(validator, 'validateTitle').mockImplementation(() => {});
 
         const result = await handleFileContent('NonExistentFile');

@@ -1,7 +1,7 @@
 const {handleFileList} = require('./fileList');
 const fs = require('fs/promises');
 const path = require('path');
-const environmentProvider = require('../environmentProvider');
+const environmentProvider = require('../configProvider');
 
 describe('handleFileList (integration)', () => {
     const tempDir = './temp/list'
@@ -11,7 +11,7 @@ describe('handleFileList (integration)', () => {
         } catch {
         }
         jest.clearAllMocks();
-        jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
+        jest.spyOn(environmentProvider, 'getSavingLocation').mockImplementation(() => tempDir);
     });
 
     it('returns a list of .md files without extension', async () => {
@@ -30,7 +30,7 @@ describe('handleFileList (integration)', () => {
                 { title: 'note2' }
             ]
         });
-        expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
+        expect(environmentProvider.getSavingLocation).toHaveBeenCalled();
     });
 
     it('returns an empty list if folder does not exist (ENOENT)', async () => {

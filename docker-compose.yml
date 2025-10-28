@@ -17,7 +17,8 @@ services:
     volumes:
       - ./temp:/data
     ports:
-      - "3000:3000"
+      - "5001:5001"
     environment:
       - USERNAME=test #change and move it to env file
       - PASSWORD=test #change and move it to env file
+      - PORT=5001 #default port is 3000, change it if needed

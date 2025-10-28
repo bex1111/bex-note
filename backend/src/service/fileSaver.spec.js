@@ -1,6 +1,6 @@
 const {handleFileSave} = require('./fileSaver');
 const fs = require('fs/promises');
-const environmentProvider = require('../environmentProvider');
+const environmentProvider = require('../configProvider');
 const validator = require("../validator");
 
 
@@ -17,7 +17,7 @@ describe('handleFileSave', () => {
             await fs.rm(tempDir, {recursive: true, force: true});
         } catch {
         }
-        jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
+        jest.spyOn(environmentProvider, 'getSavingLocation').mockImplementation(() => tempDir);
         jest.spyOn(validator, 'validateTitle').mockImplementation(() => {
         });
     });
@@ -30,7 +30,7 @@ describe('handleFileSave', () => {
         const fileContent = await fs.readFile(testFilePath, 'utf-8');
         expect(fileContent).toBe(testContent);
 
-        expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
+        expect(environmentProvider.getSavingLocation).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
     });
 
@@ -41,7 +41,7 @@ describe('handleFileSave', () => {
         const fileContent1 = await fs.readFile(testFilePath, 'utf-8');
         expect(fileContent1).toBe(testContent);
 
-        expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
+        expect(environmentProvider.getSavingLocation).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
 
         const result2 = await handleFileSave(testTitle, testContent + '2');
@@ -50,7 +50,7 @@ describe('handleFileSave', () => {
         const fileContent2 = await fs.readFile(testFilePath, 'utf-8');
         expect(fileContent2).toBe(testContent + '2');
 
-        expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
+        expect(environmentProvider.getSavingLocation).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
     });
 

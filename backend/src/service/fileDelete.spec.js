@@ -1,6 +1,6 @@
 const {handleFileDelete} = require('./fileDelete');
 const fs = require('fs/promises');
-const environmentProvider = require('../environmentProvider');
+const environmentProvider = require('../configProvider');
 const validator = require('../validator');
 
 describe('handleFileDelete', () => {
@@ -14,13 +14,13 @@ describe('handleFileDelete', () => {
         } catch {
         }
         jest.clearAllMocks();
-        jest.spyOn(environmentProvider, 'getSavingLocationEnv').mockImplementation(() => tempDir);
+        jest.spyOn(environmentProvider, 'getSavingLocation').mockImplementation(() => tempDir);
         jest.spyOn(validator, 'validateTitle').mockImplementation(() => {
         });
     });
 
     afterEach(async () => {
-        expect(environmentProvider.getSavingLocationEnv).toHaveBeenCalled();
+        expect(environmentProvider.getSavingLocation).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
     });
 

@@ -1,4 +1,4 @@
-const environmentProvider = require('../environmentProvider');
+const environmentProvider = require('../configProvider');
 const fs = require('fs').promises;
 const path = require('path');
 const validator = require("../validator");
@@ -8,7 +8,7 @@ const {createInternalServerErrorResponse, createBadRequestResponse} = require(".
 const handle = async (title, content) => {
     validator.validateTitle(title);
     validateContent(content)
-    const folderEnv = environmentProvider.getSavingLocationEnv();
+    const folderEnv = environmentProvider.getSavingLocation();
     const filePath = path.join(folderEnv, `${title}.md`);
 
     await fs.mkdir(path.dirname(filePath), {recursive: true});

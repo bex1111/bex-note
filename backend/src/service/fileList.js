@@ -1,5 +1,5 @@
 const fs = require('fs').promises;
-const environmentProvider = require('../environmentProvider');
+const environmentProvider = require('../configProvider');
 const path = require('path');
 const {createInternalServerErrorResponse} = require("./response");
 
@@ -12,7 +12,7 @@ const createFileNameList = (files) => {
 }
 
 const finalNameGenerator = (name) => {
-    let savingLocation = name.replace(path.normalize(environmentProvider.getSavingLocationEnv()), '')
+    let savingLocation = name.replace(path.normalize(environmentProvider.getSavingLocation()), '')
     let withoutExtension = savingLocation.replace('.md', '');
     let parsedPath = withoutExtension.split(path.sep);
     return parsedPath.length > 2 ? parsedPath.join(path.sep) : parsedPath[1];
@@ -34,7 +34,7 @@ const createResponse = (files) => {
 
 const handleFileList = async () => {
     try {
-        const files = await getAllFilesRecursive(environmentProvider.getSavingLocationEnv());
+        const files = await getAllFilesRecursive(environmentProvider.getSavingLocation());
         return createResponse(files);
     } catch (err) {
         return handleError(err);
