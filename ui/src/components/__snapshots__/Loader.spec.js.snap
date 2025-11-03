@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Loader.vue > matches snapshot (loader hidden when loading=false) 1`] = `"<!--v-if-->"`;
+
+exports[`Loader.vue > remains hidden when loading stays false 1`] = `"<!--v-if-->"`;
+
+exports[`Loader.vue > subscribes to load store and shows loader when loading becomes true 1`] = `
+"<div data-v-db56ddf1=\\"\\" class=\\"loader-overlay\\">
+  <div data-v-db56ddf1=\\"\\" class=\\"spinner-container\\">
+    <prime-progress-spinner-stub data-v-db56ddf1=\\"\\" stroke-width=\\"4\\"></prime-progress-spinner-stub>
+  </div>
+</div>"
+`;

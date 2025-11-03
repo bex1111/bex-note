@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {authorize, deleteNote, getContent, getNoteList, saveNote} from './bexNote';
-import {notificationStore} from '../main';
+
 
 vi.mock('../main', () => ({
     tokenStore: {
@@ -10,14 +10,16 @@ vi.mock('../main', () => ({
     },
     notificationStore: {
         $patch: vi.fn()
+    },
+    loadStore: {
+        $patch: vi.fn()
     }
 }));
 
-// Import the mocked tokenStore to access it in tests
-import {tokenStore} from '../main';
+import {loadStore, notificationStore, tokenStore} from '../main';
 
 describe('bex-note API integration tests', () => {
-    let mock;
+    let mock = new MockAdapter(axios);
     const errorResponse = {error: 'Test error message'};
     const expectedNotification = {
         type: 'error',
@@ -30,7 +32,10 @@ describe('bex-note API integration tests', () => {
     });
 
     afterEach(() => {
-        mock.restore();
+        expect(loadStore.$patch).toHaveBeenCalledTimes(2);
+        expect(loadStore.$patch).toHaveBeenNthCalledWith(1, {loading: true});
+        expect(loadStore.$patch).toHaveBeenNthCalledWith(2, {loading: false});
+
     });
 
     describe('getNoteList', () => {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {notificationStore, tokenStore} from '../main';
+import {loadStore, notificationStore, tokenStore} from '../main';
 
 
 const errorHandler = async (error) => {
@@ -13,47 +13,65 @@ const errorHandler = async (error) => {
     return Promise.reject(error);
 }
 
-export const getNoteList = async () => {
+const enableLoading = () => {
+    loadStore.$patch({
+        loading: true
+    });
+}
+
+const disableLoading = () => {
+    loadStore.$patch({
+        loading: false
+    });
+}
+
+const executeRequest = async (requestFunction) => {
+    enableLoading()
     try {
+        return await requestFunction();
+    } catch (error) {
+        return errorHandler(error);
+    } finally {
+        disableLoading()
+    }
+}
+
+export const getNoteList = async () => {
+    return executeRequest(async () => {
         const response = await axios.get('/api/internal/note/list', {
             headers: {
                 'x-auth-token': tokenStore.token
             }
         });
         return response.data;
-    } catch (error) {
-        return errorHandler(error);
-    }
+    });
+
 }
 
 export const authorize = async (username, password) => {
-    try {
+    return executeRequest(async () => {
         const response = await axios.post('/api/authorize', {
             username,
             password
         });
         return response.data;
-    } catch (error) {
-        return errorHandler(error);
-    }
+    })
 }
 
 
 export const deleteNote = async (title) => {
-    try {
+    return executeRequest(async () => {
         await axios.delete('/api/internal/note/delete', {
             headers: {
                 'x-auth-token': tokenStore.token
             },
             data: {title}
         });
-    } catch (error) {
-        return errorHandler(error);
-    }
+    })
 }
 
 export const saveNote = async (title, content) => {
-    try {
+    return executeRequest(async () => {
         await axios.post('/api/internal/note/save', {
             title, content
         }, {
@@ -61,13 +79,11 @@ export const saveNote = async (title, content) => {
                 'x-auth-token': tokenStore.token
             }
         });
-    } catch (error) {
-        return errorHandler(error);
-    }
+    })
 }
 
 export const getContent = async (title) => {
-    try {
+    return executeRequest(async () => {
         const response = await axios.post('/api/internal/note/content', {
                 title
             },
@@ -77,9 +93,7 @@ export const getContent = async (title) => {
                 }
             });
         return response.data;
-    } catch (error) {
-        return errorHandler(error);
-    }
+    })
 }
 
 

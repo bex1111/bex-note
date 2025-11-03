@@ -20,6 +20,7 @@
   </prime-card>
   <LoginModal @login="handleRefresh"></LoginModal>
   <Notification></Notification>
+  <Loader></Loader>
 </template>
 
 <script setup>
@@ -32,6 +33,7 @@ import TitleSelector from "./components/TitleSelector.vue";
 import {onMounted, ref} from "vue";
 import {getNoteList} from "./api/bexNote";
 import Notification from "./components/Notification.vue";
+import Loader from "./components/Loader.vue";
 
 const title = ref();
 const selectedTitle = ref();

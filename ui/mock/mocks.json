@@ -78,9 +78,13 @@
   },
   {
     "httpRequest": {
-      "path": "/api/internal/note/content",
+      "path": "/api/internal/note/content"
     },
     "httpResponse": {
+      "delay": {
+        "timeUnit": "SECONDS",
+        "value": 1
+      },
       "body": {
         "content": "## test1\n\nThis is a test note.\n\n- item1\n- item2\n- item3"
       },

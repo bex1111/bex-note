@@ -18,8 +18,10 @@ import 'primeicons/primeicons.css'
 import { createPinia } from 'pinia'
 import {useAuthorizationStore} from "./store/authorization";
 import {useNotificationStore} from "./store/notification";
+import ProgressSpinner from 'primevue/progressspinner';
 
 import './style.css'
+import {useLoadStore} from "./store/load";
 
 const app=createApp(App)
 
@@ -27,6 +29,7 @@ const pinia = createPinia()
 app.use(pinia)
 export const notificationStore = useNotificationStore()
 export const tokenStore = useAuthorizationStore()
+export const loadStore = useLoadStore()
 
 app.use(PrimeVue,{
     theme: {
@@ -44,5 +47,6 @@ app.component('prime-fluid', Fluid);
 app.component('prime-dialog', Dialog);
 app.component('prime-toast', Toast);
 app.component('prime-avatar', Avatar);
+app.component('prime-progress-spinner', ProgressSpinner);
 app.directive('tooltip', Tooltip);
 app.mount('#app')

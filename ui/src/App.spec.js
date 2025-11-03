@@ -45,6 +45,9 @@ describe('App.vue', () => {
                     },
                     'Notification': {
                         template: '<div class="notifictation-modal-stub" data-testid="notification"></div>'
+                    },
+                    'Loader': {
+                        template: '<div class="loader-stub" data-testid="loader"></div>'
                     }
                 }
             }
