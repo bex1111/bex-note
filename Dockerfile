@@ -1,4 +1,4 @@
-FROM node:25.0.0-alpine3.22
+FROM node:25.1.0-alpine3.22
 LABEL authors="bex1111"
 
 RUN mkdir -p /ui /backend /data && chmod 550 /data
