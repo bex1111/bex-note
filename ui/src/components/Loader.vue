@@ -5,7 +5,6 @@ import {ref} from "vue";
 const loading = ref(loadStore.loading)
 loadStore.$subscribe((_, state) => {
   loading.value = state.loading
-  console.log(state.loading)
 })
 </script>
 
