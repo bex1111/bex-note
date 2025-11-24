@@ -2,7 +2,7 @@ const environmentProvider = require('../../configProvider');
 const fs = require('fs').promises;
 const path = require('path');
 const validator = require("../../validator");
-const {createInternalServerErrorResponse, createBadRequestResponse} = require("./response");
+const {createInternalServerErrorResponse, createBadRequestResponse} = require("../response");
 
 
 const handle = async (title, content) => {

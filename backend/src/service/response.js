@@ -17,5 +17,14 @@ const createBadRequestResponse = (message) => {
     return {status: 400, body: {error: message}};
 }
 
+const createUnauthorizedResponse = () => {
+    return {status: 403, body: {error: 'Unauthorized'}};
+}
 
-module.exports = { createInternalServerErrorResponse,createFileNotFoundResponse,createBadRequestResponse };
+
+module.exports = {
+    createInternalServerErrorResponse,
+    createFileNotFoundResponse,
+    createBadRequestResponse,
+    createUnauthorizedResponse
+};

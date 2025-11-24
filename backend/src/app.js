@@ -7,7 +7,8 @@ const express = require('express')
 const app = express()
 const port = 3000
 const environmentProvider = require('./configProvider');
-const {authorize, checkAuthorize} = require('./middleware/auth');
+const { checkAuthorize} = require('./middleware/auth');
+const { authorize } = require('./service/authorization/authorizeService');
 const {getPort} = require("./configProvider");
 
 app.use(express.json({limit: '50mb'}));

@@ -1,4 +1,4 @@
-const {setToken, getToken} = require("./token");
+const {setToken, getToken} = require("./tokenRepository");
 
 describe('token js int test', () => {
 

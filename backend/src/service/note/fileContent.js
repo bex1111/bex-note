@@ -2,7 +2,7 @@ const environmentProvider = require('../../configProvider');
 const fs = require('fs').promises;
 const path = require('path');
 const validator = require("../../validator");
-const { createFileNotFoundResponse} = require("./response");
+const { createFileNotFoundResponse} = require("../response");
 
 const handle = async (title) => {
     validator.validateTitle(title);
