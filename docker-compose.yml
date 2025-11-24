@@ -22,3 +22,4 @@ services:
       - USERNAME=test #change and move it to env file
       - PASSWORD=test #change and move it to env file
       - PORT=5001 #default port is 3000, change it if needed
+      - MAX_FILE_SIZE_IN_MB=128 #default max file size is 64 MB, change it if needed

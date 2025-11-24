@@ -34,6 +34,14 @@ const getPort = () => {
     return process.env.PORT ;
 }
 
+const getMaxFileSize = () => {
+    if (!process.env.MAX_FILE_SIZE_IN_MB || isNaN(Number(process.env.MAX_FILE_SIZE_IN_MB))) {
+        console.log(`${generateEnvironmentNotSetText('MAX_FILE_SIZE_IN_MB')} Use default 50.`);
+        return '64mb';
+    }
+    return process.env.MAX_FILE_SIZE_IN_MB+'mb';
+}
+
 const generateEnvironmentNotSetText=(environmentName)=>{
     return `${environmentName} environment variable is not set.`;
 }
@@ -43,5 +51,6 @@ module.exports = {
     getStaticFileForWeb,
     getUsername,
     getUserPassword,
-    getPort
+    getPort,
+    getMaxFileSize
 };

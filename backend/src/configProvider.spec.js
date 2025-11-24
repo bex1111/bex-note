@@ -3,7 +3,7 @@ const {
     getStaticFileForWeb,
     getUsername,
     getUserPassword,
-    getPort
+    getPort, getMaxFileSize
 } = require('./configProvider');
 
 
@@ -87,6 +87,39 @@ describe('configProvider', () => {
             delete process.env.PORT;
             expect(getPort()).toBe(3000);
             expect(consoleLogSpy).toHaveBeenCalledWith('PORT environment variable is not set. Use default 3000.');
+        });
+    });
+
+    describe('getMaxFileSize', () => {
+        const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {
+        });
+
+        beforeEach(() => {
+            consoleLogSpy.mockReset();
+        });
+
+        test('returns MAX_FILE_SIZE_IN_MB env var when set as number', () => {
+            process.env.MAX_FILE_SIZE_IN_MB = 10;
+            expect(getMaxFileSize()).toBe('10mb');
+            expect(consoleLogSpy).not.toHaveBeenCalled();
+        });
+
+        test('returns MAX_FILE_SIZE_IN_MB env var when set as string number', () => {
+            process.env.MAX_FILE_SIZE_IN_MB = '10';
+            expect(getMaxFileSize()).toBe('10mb');
+            expect(consoleLogSpy).not.toHaveBeenCalled();
+        });
+
+        test('returns 50mb and logs message when MAX_FILE_SIZE_IN_MB env var is not set', () => {
+            delete process.env.MAX_FILE_SIZE_IN_MB;
+            expect(getMaxFileSize()).toBe('64mb');
+            expect(consoleLogSpy).toHaveBeenCalledWith('MAX_FILE_SIZE_IN_MB environment variable is not set. Use default 50.');
+        });
+
+        test('returns 50mb and logs message when MAX_FILE_SIZE_IN_MB env var is string', () => {
+            process.env.MAX_FILE_SIZE_IN_MB = 'wrong';
+            expect(getMaxFileSize()).toBe('64mb');
+            expect(consoleLogSpy).toHaveBeenCalledWith('MAX_FILE_SIZE_IN_MB environment variable is not set. Use default 50.');
         });
     });
 });
