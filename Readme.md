@@ -16,3 +16,6 @@ Key features include:
 ## Installation
 - Docker Hub: [bex1111/bex-note](https://hub.docker.com/r/bex1111/bex-note)  
 - [Example `docker-compose.yml` file.](https://github.com/bex1111/bex-note/blob/main/docker-compose.yml)
+
+> [!WARNING]  
+> **Highly recommended:** Use a reverse proxy (such as Nginx or Caddy) with SSL/TLS enabled to securely access Bex Note.
