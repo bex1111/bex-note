@@ -7,9 +7,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 const environmentProvider = require('./configProvider');
-const { checkAuthorize} = require('./middleware/auth');
-const { authorize } = require('./service/authorization/authorizeService');
+const {checkAuthorize} = require('./middleware/auth');
+const {authorize} = require('./service/authorization/authorizeService');
 const {getPort} = require("./configProvider");
+const {logout} = require("./service/authorization/logoutService");
 
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb'}));
@@ -30,6 +31,12 @@ app.post('/api/authorize', (req, res) => {
     res.status(result.status).json(result.body);
 });
 
+app.post('/api/internal/logout', (req, res) => {
+    const {token} = req.body;
+    const result = logout(token);
+    res.status(result.status).json(result.body);
+});
+
 app.get('/api/healthcheck', (req, res) => {
     res.status(200).end();
 });
@@ -37,13 +44,13 @@ app.get('/api/healthcheck', (req, res) => {
 app.post('/api/internal/note/save', async (req, res) => {
     const {title, content} = req.body;
     const result = await handleFileSave(title, content);
-    res.status(result.status).end();
+    res.status(result.status).json(result.body);
 });
 
 app.delete('/api/internal/note/delete', async (req, res) => {
     const {title} = req.body;
     const result = await handleFileDelete(title);
-    res.status(result.status).end();
+    res.status(result.status).json(result.body);
 });
 
 app.get('/api/internal/note/list', async (req, res) => {

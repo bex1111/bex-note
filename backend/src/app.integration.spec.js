@@ -125,6 +125,37 @@ describe('API Integration Tests', () => {
         });
     });
 
+    describe('Can logout and not use token anymore', () => {
+
+        it('should save a note successfully with valid token', async () => {
+            const authResponse = await request(app)
+                .post('/api/authorize')
+                .send({
+                    username: 'testuser',
+                    password: 'testpass'
+                })
+                .expect(200);
+
+            const validToken = authResponse.body.token;
+
+            await request(app)
+                .post('/api/internal/logout')
+                .set('x-auth-token', validToken)
+                .send({
+                    token: validToken
+                })
+                .expect(200);
+
+            await request(app)
+                .post('/api/internal/logout')
+                .set('x-auth-token', validToken)
+                .send({
+                    token: validToken
+                })
+                .expect(403);
+        });
+    });
+
     describe('Healthcheck', () => {
         it('/api/healthcheck should return 200', async () => {
             await request(app)
