@@ -12,9 +12,9 @@
     "@vavt/cm-extension": "^1.11.2",
     "@vavt/v3-extension": "^4.0.0",
     "axios": "^1.13.2",
-    "core-js": "^3.46.0",
+    "core-js": "^3.47.0",
     "md-editor-v3": "^6.2.0",
-    "pinia": "^3.0.3",
+    "pinia": "^3.0.4",
     "primeicons": "^7.0.0",
     "primevue": "^4.4.1",
     "tailwindcss-primeui": "^0.6.1",
@@ -22,14 +22,14 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.17",
-    "@vitejs/plugin-vue": "^6.0.1",
+    "@vitejs/plugin-vue": "^6.0.2",
     "@vue/test-utils": "^2.4.6",
     "autoprefixer": "^10.4.21",
     "axios-mock-adapter": "^2.1.0",
     "jsdom": "^27.1.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.17",
-    "vite": "^7.1.12",
+    "vite": "^7.2.4",
     "vitest": "^4.0.8"
   },
   "browserslist": [
