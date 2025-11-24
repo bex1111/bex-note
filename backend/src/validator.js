@@ -1,4 +1,4 @@
-const {createBadRequestResponse} = require("./service/response");
+const {createBadRequestResponse} = require("./service/note/response");
 
 const validateTitle = (title) => {
     if (!title) {

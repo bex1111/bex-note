@@ -1,7 +1,7 @@
 const {handleFileList} = require('./fileList');
 const fs = require('fs/promises');
 const path = require('path');
-const environmentProvider = require('../configProvider');
+const environmentProvider = require('../../configProvider');
 
 describe('handleFileList (integration)', () => {
     const tempDir = './temp/list'

@@ -1,5 +1,5 @@
 const fs = require('fs').promises;
-const environmentProvider = require('../configProvider');
+const environmentProvider = require('../../configProvider');
 const path = require('path');
 const {createInternalServerErrorResponse} = require("./response");
 

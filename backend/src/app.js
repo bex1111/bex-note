@@ -1,7 +1,7 @@
-const {handleFileSave} = require('./service/fileSaver');
-const {handleFileDelete} = require('./service/fileDelete');
-const {handleFileList} = require('./service/fileList');
-const {handleFileContent} = require('./service/fileContent');
+const {handleFileSave} = require('./service/note/fileSaver');
+const {handleFileDelete} = require('./service/note/fileDelete');
+const {handleFileList} = require('./service/note/fileList');
+const {handleFileContent} = require('./service/note/fileContent');
 const express = require('express')
 
 const app = express()

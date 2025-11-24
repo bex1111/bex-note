@@ -1,7 +1,7 @@
 const {handleFileDelete} = require('./fileDelete');
 const fs = require('fs/promises');
-const environmentProvider = require('../configProvider');
-const validator = require('../validator');
+const environmentProvider = require('../../configProvider');
+const validator = require('../../validator');
 
 describe('handleFileDelete', () => {
     const tempDir = './temp/delete';

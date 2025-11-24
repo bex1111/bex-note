@@ -1,8 +1,8 @@
 const { handleFileContent } = require('./fileContent');
 const { handleFileSave } = require('./fileSaver');
 const fs = require('fs/promises');
-const environmentProvider = require('../configProvider');
-const validator = require("../validator");
+const environmentProvider = require('../../configProvider');
+const validator = require("../../validator");
 
 describe('handleFileContent', () => {
     const tempDir = './temp/content';
