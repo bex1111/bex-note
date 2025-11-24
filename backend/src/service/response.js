@@ -21,10 +21,20 @@ const createUnauthorizedResponse = () => {
     return {status: 403, body: {error: 'Unauthorized'}};
 }
 
+const createOkResponse = () => {
+    return {status: 200}
+}
+
+const createOkResponseWithBody = (body) => {
+    return {status: 200, body: body}
+}
+
 
 module.exports = {
     createInternalServerErrorResponse,
     createFileNotFoundResponse,
     createBadRequestResponse,
-    createUnauthorizedResponse
+    createUnauthorizedResponse,
+    createOkResponse,
+    createOkResponseWithBody
 };

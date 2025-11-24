@@ -2,7 +2,7 @@ const environmentProvider = require('../../configProvider');
 const fs = require('fs').promises;
 const path = require('path');
 const validator = require("../../validator");
-const { createFileNotFoundResponse} = require("../response");
+const { createFileNotFoundResponse, createOkResponseWithBody} = require("../response");
 
 const handle = async (title) => {
     validator.validateTitle(title);
@@ -10,7 +10,7 @@ const handle = async (title) => {
     const filePath = path.join(folderEnv, `${title}.md`);
 
     const content = await fs.readFile(filePath, 'utf8');
-    return {body: {content}, status: 200};
+    return createOkResponseWithBody({content});
 }
 
 const handleFileContent = async (title) => {

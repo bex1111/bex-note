@@ -2,7 +2,7 @@ const environmentProvider = require('../../configProvider');
 const fs = require('fs').promises;
 const path = require('path');
 const validator = require("../../validator");
-const { createFileNotFoundResponse} = require("../response");
+const { createFileNotFoundResponse, createOkResponse} = require("../response");
 
 
 const handle = async (title) => {
@@ -11,7 +11,7 @@ const handle = async (title) => {
     const filePath = path.join(folderEnv, `${title}.md`);
 
     await fs.unlink(filePath);
-    return { status: 200};
+    return createOkResponse();
 }
 
 const handleFileDelete = async (title) => {

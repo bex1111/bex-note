@@ -8,4 +8,8 @@ const setToken = (token) => {
     tokens.add(token);
 }
 
-module.exports = {getToken,setToken};
+const removeToken = (token) => {
+    tokens.delete(token);
+}
+
+module.exports = {getToken,setToken,removeToken};

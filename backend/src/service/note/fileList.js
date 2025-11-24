@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const environmentProvider = require('../../configProvider');
 const path = require('path');
-const {createInternalServerErrorResponse} = require("../response");
+const {createInternalServerErrorResponse, createOkResponseWithBody} = require("../response");
 
 const createFileNameList = (files) => {
     return files
@@ -20,22 +20,16 @@ const finalNameGenerator = (name) => {
 
 const handleError = (error) => {
     if (error.code === 'ENOENT') {
-        return {status: 200, body: []};
+       return  createOkResponseWithBody([])
     }
     return createInternalServerErrorResponse(error)
 }
 
-const createResponse = (files) => {
-    return {
-        status: 200,
-        body: createFileNameList(files)
-    };
-}
 
 const handleFileList = async () => {
     try {
         const files = await getAllFilesRecursive(environmentProvider.getSavingLocation());
-        return createResponse(files);
+        return createOkResponseWithBody(createFileNameList(files))
     } catch (err) {
         return handleError(err);
     }
