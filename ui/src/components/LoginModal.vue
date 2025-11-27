@@ -32,7 +32,7 @@ tokenStore.$subscribe(() => {
 
 <template>
   <prime-dialog v-model:visible="visible" pt:root:class="!border-0 !bg-transparent" pt:mask:class="backdrop-blur-sm"
-                :closable="false">
+                :closable="false" :base-z-index="1000" :auto-z-index="false">
     <div class="flex flex-col px-8 py-8 gap-6 rounded-2xl">
       <div class="inline-flex flex-col gap-2">
         <label for="username" class="text-primary-50 font-semibold">Username</label>

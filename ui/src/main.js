@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
@@ -15,7 +15,7 @@ import Avatar from 'primevue/avatar';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import 'primeicons/primeicons.css'
-import { createPinia } from 'pinia'
+import {createPinia} from 'pinia'
 import {useAuthorizationStore} from "./store/authorization";
 import {useNotificationStore} from "./store/notification";
 import ProgressSpinner from 'primevue/progressspinner';
@@ -23,7 +23,7 @@ import ProgressSpinner from 'primevue/progressspinner';
 import './style.css'
 import {useLoadStore} from "./store/load";
 
-const app=createApp(App)
+const app = createApp(App)
 
 const pinia = createPinia()
 app.use(pinia)
@@ -31,7 +31,7 @@ export const notificationStore = useNotificationStore()
 export const tokenStore = useAuthorizationStore()
 export const loadStore = useLoadStore()
 
-app.use(PrimeVue,{
+app.use(PrimeVue, {
     theme: {
         preset: Aura
     }

@@ -11,7 +11,7 @@ notificationStore.$subscribe((_, state) => {
 </script>
 
 <template>
-  <prime-toast/>
+  <prime-toast :auto-z-index="false" :base-z-index="1001"/>
 </template>
 
 <style scoped>
