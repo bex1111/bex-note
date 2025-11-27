@@ -70,6 +70,18 @@ export const deleteNote = async (title) => {
     })
 }
 
+export const logout = async () => {
+    return executeRequest(async () => {
+        await axios.post('/api/internal/logout', {
+            token: tokenStore.token
+        }, {
+            headers: {
+                'x-auth-token': tokenStore.token
+            }
+        });
+    })
+}
+
 export const saveNote = async (title, content) => {
     return executeRequest(async () => {
         await axios.post('/api/internal/note/save', {

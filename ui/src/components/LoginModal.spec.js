@@ -5,7 +5,7 @@ import {authorize} from '../api/bexNote';
 import {tokenStore} from '../main';
 
 vi.mock('../api/bexNote', () => ({
-    authorize: vi.fn().mockResolvedValue({token: 'abc'}),
+    authorize: vi.fn(),
 }));
 
 const mockSubscriptionCallback = vi.fn();
@@ -21,6 +21,10 @@ vi.mock('../main', () => ({
 }));
 
 describe('LoginModal.vue', () => {
+
+    beforeEach(() => {
+        authorize.mockResolvedValue({token: 'abc'})
+    })
 
     const createWrapper = () => mount(LoginModal, {
         global: {

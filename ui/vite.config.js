@@ -6,6 +6,7 @@ export default defineConfig({
     plugins: [vue(),tailwindcss()],
     test: {
         globals: true,
+        mockReset: true,
         environment: 'jsdom',
         include: ['src/**/*.spec.{js,ts}', 'tests/**/*.spec.{js,ts}'],
         snapshotFormat: {

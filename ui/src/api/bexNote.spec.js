@@ -28,7 +28,6 @@ describe('bex-note API integration tests', () => {
 
     beforeEach(() => {
         mock = new MockAdapter(axios);
-        vi.clearAllMocks();
     });
 
     afterEach(() => {

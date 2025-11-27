@@ -54,9 +54,6 @@ describe('App.vue', () => {
         });
     }
     const testTitle = 'Test Title';
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
 
     it('matches snapshot', () => {
         const wrapper = createWrapper()

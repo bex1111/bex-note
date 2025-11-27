@@ -24,10 +24,6 @@ describe('Notification.vue', () => {
         }
     });
 
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
     it('matches snapshot', () => {
         const wrapper = createWrapper();
         expect(wrapper.html()).toMatchSnapshot();

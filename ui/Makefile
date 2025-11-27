@@ -1,3 +1,7 @@
+default: help
+
+help: cat Makefile
+
 mock-up:
 	docker compose up -d
 
@@ -13,3 +17,6 @@ dev: mock-up up
 
 test:
 	npm run test
+
+update-snapshots:
+	npm run snapshot-update

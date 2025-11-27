@@ -1,6 +1,36 @@
 [
   {
     "httpRequest": {
+      "path": "/api/internal/logout"
+    },
+    "httpResponse": {
+      "headers": [
+        {
+          "name": "Access-Control-Allow-Origin",
+          "values": [
+            "*"
+          ]
+        },
+        {
+          "name": "Access-Control-Allow-Methods",
+          "values": [
+            "GET",
+            "POST",
+            "OPTIONS"
+          ]
+        },
+        {
+          "name": "Access-Control-Allow-Headers",
+          "values": [
+            "Content-Type",
+            "Authorization"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "httpRequest": {
       "path": "/api/authorize"
     },
     "httpResponse": {

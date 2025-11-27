@@ -4,9 +4,6 @@ import {nextTick} from 'vue';
 import TitleEditor from './TitleEditor.vue';
 
 describe('TitleEditor.vue', () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
 
     it('matches snapshot', () => {
         const wrapper = mount(TitleEditor, {

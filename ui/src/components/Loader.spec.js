@@ -20,10 +20,6 @@ describe('Loader.vue', () => {
         }
     });
 
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
     it('matches snapshot (loader hidden when loading=false)', () => {
         const wrapper = createWrapper();
         expect(wrapper.html()).toMatchSnapshot();

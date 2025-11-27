@@ -4,7 +4,7 @@ import { nextTick } from 'vue';
 import MarkdownEditor from './MarkdownEditor.vue';
 
 vi.mock('../api/bexNote', () => ({
-  getContent: vi.fn().mockResolvedValue({ content: 'mocked content' })
+  getContent: vi.fn()
 }));
 
 
@@ -12,7 +12,7 @@ import { getContent } from '../api/bexNote';
 
 describe('MarkdownEditor.vue', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    getContent.mockResolvedValue({ content: 'mocked content' })
   });
 
   it('renders correctly and matches snapshot', () => {

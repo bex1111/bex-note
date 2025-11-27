@@ -13,7 +13,6 @@ vi.mock('./cookie', () => ({
 describe('Authorization Store', () => {
     beforeEach(() => {
         setActivePinia(createPinia())
-        vi.clearAllMocks()
     })
 
     describe('initialization', () => {

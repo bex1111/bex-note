@@ -1,5 +1,5 @@
 <script setup>
-import {deleteNote, saveNote} from "../api/bexNote";
+import {deleteNote, logout, saveNote} from "../api/bexNote";
 import {notificationStore} from "../main";
 
 const emit = defineEmits(['createNew', 'save', 'delete']);
@@ -19,6 +19,14 @@ const handleDeleteNote = async () => {
       message: `"${props.title}" deleted successfully.`
     })
   }
+};
+
+const handleLogout = async () => {
+    await logout();
+    notificationStore.$patch({
+      type: 'success',
+      message: `Logout successful.`
+    })
 };
 
 const handleSaveNote = async () => {
@@ -56,6 +64,8 @@ const handleCreateNew = () => {
                     @click="handleSaveNote" :disabled="!title"/>
       <prime-button v-tooltip.bottom="'Delete'" icon="pi pi-trash" severity="danger" class="mr-2" text
                     @click="handleDeleteNote" :disabled="!title"/>
+      <prime-button v-tooltip.bottom="'Logout'" icon="pi pi-sign-out" severity="secondary" class="mr-2" text
+                    @click="handleLogout"/>
     </template>
   </prime-toolbar>
 </template>
