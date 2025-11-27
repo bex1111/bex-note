@@ -1,6 +1,6 @@
 <script setup>
 import {deleteNote, logout, saveNote} from "../api/bexNote";
-import {notificationStore} from "../main";
+import {notificationStore, tokenStore} from "../main";
 
 const emit = defineEmits(['createNew', 'save', 'delete']);
 
@@ -23,6 +23,7 @@ const handleDeleteNote = async () => {
 
 const handleLogout = async () => {
     await logout();
+    tokenStore.resetToken()
     notificationStore.$patch({
       type: 'success',
       message: `Logout successful.`

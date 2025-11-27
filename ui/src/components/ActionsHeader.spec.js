@@ -1,11 +1,14 @@
 import {mount} from '@vue/test-utils';
 import ActionsHeader from './ActionsHeader.vue';
-import {notificationStore} from '../main'
+import {notificationStore, tokenStore} from '../main'
 import {deleteNote, logout, saveNote} from '../api/bexNote';
 
 vi.mock('../main', () => ({
     notificationStore: {
         $patch: vi.fn()
+    },
+    tokenStore: {
+        resetToken: vi.fn()
     }
 }));
 vi.mock('../api/bexNote', () => ({
@@ -147,7 +150,8 @@ describe('ActionsHeader.vue', () => {
 
             await wrapper.vm.handleLogout();
 
-            expect(logout).toHaveBeenCalledTimes(1);
+            expect(logout).toHaveBeenCalled();
+            expect(tokenStore.resetToken).toHaveBeenCalled();
             expect(notificationStore.$patch).toHaveBeenCalledWith({
                 type: 'success',
                 message: 'Logout successful.'

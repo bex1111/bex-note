@@ -20,6 +20,8 @@ const closeCallback = async () => {
   tokenStore.saveToken(tokenObject.token);
   visible.value = false;
   emit("login");
+  username.value = null;
+  password.value = null;
 }
 
 tokenStore.$subscribe(() => {

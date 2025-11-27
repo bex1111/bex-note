@@ -46,16 +46,20 @@ describe('LoginModal.vue', () => {
     describe('closeCallback', () => {
         it('emits login event and hides modal when called', async () => {
             const wrapper = await createWrapper();
+            const username = 'user';
+            const password = 'pw';
 
-            wrapper.vm.username = 'user';
-            wrapper.vm.password = 'pass';
+            wrapper.vm.username = username;
+            wrapper.vm.password = password;
             await wrapper.vm.closeCallback();
 
             expect(wrapper.emitted('login')).toBeTruthy();
             expect(wrapper.emitted('login')).toHaveLength(1);
             expect(wrapper.vm.visible).toBe(false);
-            expect(authorize).toHaveBeenCalledWith(wrapper.vm.username, wrapper.vm.password);
+            expect(authorize).toHaveBeenCalledWith(username, password);
             expect(tokenStore.saveToken).toHaveBeenCalledWith('abc');
+            expect(wrapper.vm.username).toBeNull();
+            expect(wrapper.vm.password).toBeNull();
         });
     });
 
