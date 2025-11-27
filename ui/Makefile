@@ -1,6 +1,7 @@
 default: help
 
-help: cat Makefile
+help:
+	cat Makefile
 
 mock-up:
 	docker compose up -d
