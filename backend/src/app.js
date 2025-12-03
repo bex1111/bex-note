@@ -9,11 +9,11 @@ const port = 3000
 const environmentProvider = require('./configProvider');
 const {checkAuthorize} = require('./middleware/auth');
 const {authorize} = require('./service/authorization/authorizeService');
-const {getPort} = require("./configProvider");
+const {getPort, getMaxFileSize} = require("./configProvider");
 const {logout} = require("./service/authorization/logoutService");
 
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+app.use(express.json({limit: getMaxFileSize()}));
+app.use(express.urlencoded({limit: getMaxFileSize()}));
 app.use(express.static(environmentProvider.getStaticFileForWeb()));
 
 app.use('/api/internal', (req, res, next) => {
