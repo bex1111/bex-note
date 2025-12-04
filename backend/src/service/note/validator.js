@@ -27,7 +27,7 @@ const validateFileExists = async (filePath) => {
 
 const validateContent = (content) => {
     if (content === null || content === undefined || content.trim() === '') {
-        throw createBadRequestResponse('Content required.');
+        throw createBadRequestResponse('Content required!');
     }
 }
 

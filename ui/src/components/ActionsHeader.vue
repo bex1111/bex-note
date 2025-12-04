@@ -1,5 +1,5 @@
 <script setup>
-import {deleteNote, logout, saveNote} from "../api/bexNote";
+import {deleteNote, logout, saveNote, updateNote} from "../api/bexNote";
 import {notificationStore, tokenStore} from "../main";
 
 const emit = defineEmits(['createNew', 'save', 'delete']);
@@ -22,20 +22,19 @@ const handleDeleteNote = async () => {
 };
 
 const handleLogout = async () => {
-    await logout();
-    tokenStore.resetToken()
-    notificationStore.$patch({
-      type: 'success',
-      message: `Logout successful.`
-    })
+  await logout();
+  tokenStore.resetToken()
+  notificationStore.$patch({
+    type: 'success',
+    message: `Logout successful.`
+  })
 };
 
 const handleSaveNote = async () => {
   if (!props.selectedTitle) {
     await saveNote(props.title, props.content);
   } else {
-    await deleteNote(props.selectedTitle);
-    await saveNote(props.title, props.content);
+    await updateNote(props.title, props.selectedTitle, props.content);
   }
   emit('save')
   notificationStore.$patch({
@@ -53,14 +52,14 @@ const handleCreateNew = () => {
   <prime-toolbar>
     <template #start>
       <div class="flex items-center gap-2">
-      <prime-avatar image="/ico.png" class="avatar" />
-      <span class="header-title">Bex Note</span>
+        <prime-avatar image="/ico.png" class="avatar"/>
+        <span class="header-title">Bex Note</span>
       </div>
     </template>
     <template #end>
       <prime-button v-tooltip.bottom="'New note'" icon="pi pi-plus"
                     severity="secondary" class="mr-2" text
-                    @click="handleCreateNew" />
+                    @click="handleCreateNew"/>
       <prime-button v-tooltip.bottom="'Save'" icon="pi pi-save" severity="secondary" class="mr-2" text
                     @click="handleSaveNote" :disabled="!title"/>
       <prime-button v-tooltip.bottom="'Delete'" icon="pi pi-trash" severity="danger" class="mr-2" text
@@ -76,6 +75,7 @@ const handleCreateNew = () => {
   font-size: 1.5rem;
   font-weight: bold;
 }
+
 .avatar {
   width: 2rem;
   height: 2rem;

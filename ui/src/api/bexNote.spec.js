@@ -1,6 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import {authorize, deleteNote, getContent, getNoteList, saveNote, logout} from './bexNote';
+import {authorize, deleteNote, getContent, getNoteList, saveNote, logout, updateNote} from './bexNote';
 
 
 vi.mock('../main', () => ({
@@ -26,6 +26,8 @@ describe('bex-note API integration tests', () => {
         message: 'Test error message'
     };
     const forbiddenError = {error: 'Forbidden'};
+    const authHeaderName = 'x-auth-token';
+    const testToken = 'test-token-123';
 
     beforeEach(() => {
         mock = new MockAdapter(axios);
@@ -47,7 +49,7 @@ describe('bex-note API integration tests', () => {
 
             expect(mock.history.get).toHaveLength(1);
             expect(mock.history.get[0].url).toBe('/api/internal/note/list');
-            expect(mock.history.get[0].headers['x-auth-token']).toBe('test-token-123');
+            expect(mock.history.get[0].headers[authHeaderName]).toBe(testToken);
             expect(result).toEqual(mockData);
         });
 
@@ -58,7 +60,7 @@ describe('bex-note API integration tests', () => {
 
             expect(mock.history.get).toHaveLength(1);
             expect(mock.history.get[0].url).toBe('/api/internal/note/list');
-            expect(mock.history.get[0].headers['x-auth-token']).toBe('test-token-123');
+            expect(mock.history.get[0].headers[authHeaderName]).toBe(testToken);
             expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
             expect(tokenStore.resetToken).not.toHaveBeenCalled();
         });
@@ -124,7 +126,7 @@ describe('bex-note API integration tests', () => {
 
             expect(mock.history.delete).toHaveLength(1);
             expect(mock.history.delete[0].url).toBe('/api/internal/note/delete');
-            expect(mock.history.delete[0].headers['x-auth-token']).toBe('test-token-123');
+            expect(mock.history.delete[0].headers[authHeaderName]).toBe(testToken);
             expect(JSON.parse(mock.history.delete[0].data)).toEqual({title: 'Test Note'});
         });
 
@@ -135,7 +137,7 @@ describe('bex-note API integration tests', () => {
 
             expect(mock.history.delete).toHaveLength(1);
             expect(mock.history.delete[0].url).toBe('/api/internal/note/delete');
-            expect(mock.history.delete[0].headers['x-auth-token']).toBe('test-token-123');
+            expect(mock.history.delete[0].headers[authHeaderName]).toBe(testToken);
             expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
             expect(tokenStore.resetToken).not.toHaveBeenCalled();
         });
@@ -161,7 +163,7 @@ describe('bex-note API integration tests', () => {
 
             expect(mock.history.post).toHaveLength(1);
             expect(mock.history.post[0].url).toBe('/api/internal/note/save');
-            expect(mock.history.post[0].headers['x-auth-token']).toBe('test-token-123');
+            expect(mock.history.post[0].headers[authHeaderName]).toBe(testToken);
             expect(JSON.parse(mock.history.post[0].data)).toEqual(
                 {title: 'Test Note', content: 'Test Content'}
             );
@@ -174,7 +176,7 @@ describe('bex-note API integration tests', () => {
 
             expect(mock.history.post).toHaveLength(1);
             expect(mock.history.post[0].url).toBe('/api/internal/note/save');
-            expect(mock.history.post[0].headers['x-auth-token']).toBe('test-token-123');
+            expect(mock.history.post[0].headers[authHeaderName]).toBe(testToken);
             expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
             expect(tokenStore.resetToken).not.toHaveBeenCalled();
         });
@@ -201,7 +203,7 @@ describe('bex-note API integration tests', () => {
 
             expect(mock.history.post).toHaveLength(1);
             expect(mock.history.post[0].url).toBe('/api/internal/note/content');
-            expect(mock.history.post[0].headers['x-auth-token']).toBe('test-token-123');
+            expect(mock.history.post[0].headers[authHeaderName]).toBe(testToken);
             expect(JSON.parse(mock.history.post[0].data)).toEqual(
                 {title: 'Test Note'}
             );
@@ -215,7 +217,7 @@ describe('bex-note API integration tests', () => {
 
             expect(mock.history.post).toHaveLength(1);
             expect(mock.history.post[0].url).toBe('/api/internal/note/content');
-            expect(mock.history.post[0].headers['x-auth-token']).toBe('test-token-123');
+            expect(mock.history.post[0].headers[authHeaderName]).toBe(testToken);
             expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
             expect(tokenStore.resetToken).not.toHaveBeenCalled();
         });
@@ -233,6 +235,46 @@ describe('bex-note API integration tests', () => {
         });
     });
 
+    // CAR: Test updateNote function to verify it makes correct API calls with newTitle, oldTitle, and content
+    describe('updateNote', () => {
+        test('makes correct API call', async () => {
+            mock.onPut('/api/internal/note/update').reply(200);
+
+            await updateNote('New Test Note', 'Old Test Note', 'Updated Content');
+
+            expect(mock.history.put).toHaveLength(1);
+            expect(mock.history.put[0].url).toBe('/api/internal/note/update');
+            expect(mock.history.put[0].headers[authHeaderName]).toBe(testToken);
+            expect(JSON.parse(mock.history.put[0].data)).toEqual(
+                {newTitle: 'New Test Note', oldTitle: 'Old Test Note', content: 'Updated Content'}
+            );
+        });
+
+        test('throws error on API failure', async () => {
+            mock.onPut('/api/internal/note/update').reply(400, errorResponse);
+
+            await expect(updateNote('New Test Note', 'Old Test Note', 'Updated Content')).rejects.toThrow();
+
+            expect(mock.history.put).toHaveLength(1);
+            expect(mock.history.put[0].url).toBe('/api/internal/note/update');
+            expect(mock.history.put[0].headers[authHeaderName]).toBe(testToken);
+            expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
+            expect(tokenStore.resetToken).not.toHaveBeenCalled();
+        });
+
+        test('resets token on 403 error', async () => {
+            mock.onPut('/api/internal/note/update').reply(403, forbiddenError);
+
+            await expect(updateNote('New Test Note', 'Old Test Note', 'Updated Content')).rejects.toThrow();
+
+            expect(tokenStore.resetToken).toHaveBeenCalled();
+            expect(notificationStore.$patch).toHaveBeenCalledWith({
+                type: 'error',
+                message: 'Forbidden'
+            });
+        });
+    });
+
     describe('logout', () => {
         test('makes correct API call', async () => {
             mock.onPost('/api/internal/logout').reply(200);
@@ -241,8 +283,8 @@ describe('bex-note API integration tests', () => {
 
             expect(mock.history.post).toHaveLength(1);
             expect(mock.history.post[0].url).toBe('/api/internal/logout');
-            expect(JSON.parse(mock.history.post[0].data)).toEqual({token: 'test-token-123'});
-            expect(mock.history.post[0].headers['x-auth-token']).toBe('test-token-123');
+            expect(JSON.parse(mock.history.post[0].data)).toEqual({token: testToken});
+            expect(mock.history.post[0].headers[authHeaderName]).toBe(testToken);
         });
 
         test('handles API errors correctly', async () => {
@@ -252,7 +294,7 @@ describe('bex-note API integration tests', () => {
 
             expect(mock.history.post).toHaveLength(1);
             expect(mock.history.post[0].url).toBe('/api/internal/logout');
-            expect(mock.history.post[0].headers['x-auth-token']).toBe('test-token-123');
+            expect(mock.history.post[0].headers[authHeaderName]).toBe(testToken);
             expect(notificationStore.$patch).toHaveBeenCalledWith(expectedNotification);
             expect(tokenStore.resetToken).not.toHaveBeenCalled();
         });

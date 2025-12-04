@@ -19,14 +19,12 @@ app.use('/api/internal', (req, res, next) => {
     next();
 });
 
-if (require.main === module) {
-    app.listen(getPort(), () => {
-        console.log(`Bex-note started ${getPort()}`)
-    });
-}
-
 module.exports = app;
 
 require('./controller/noteController');
 require('./controller/authorizationController');
 require('./controller/healthController');
+
+app.listen(getPort(), () => {
+        console.log(`Bex-note started ${getPort()}`)
+});

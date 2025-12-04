@@ -39,7 +39,7 @@ describe('validator', () => {
                 validateContent(invalidContent)
             } catch (error) {
                 expect(error).toEqual({
-                    body: {error: 'Content required.'},
+                    body: {error: 'Content required!'},
                     status: 400
                 })
             }

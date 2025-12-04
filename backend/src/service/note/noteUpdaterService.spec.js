@@ -30,8 +30,22 @@ describe('noteUpdaterService', () => {
         });
     });
 
+    it('calls only update content', async () => {
+        const result = await handleUpdate(oldTestTitle, oldTestTitle, testContent);
+        expect(result).toEqual({status: 200});
 
-    it('calls handleFileSave with correct arguments and returns success', async () => {
+        const fileContent = await fs.readFile(oldTestFilePath, 'utf-8');
+        expect(fileContent).toBe(testContent);
+
+        expect(environmentProvider.getSavingLocation).toHaveBeenCalled();
+        expect(validator.validateTitle).toHaveBeenNthCalledWith(1, oldTestTitle);
+        expect(validator.validateTitle).toHaveBeenNthCalledWith(2, oldTestTitle);
+        expect(validator.validateFileNotExists).not.toHaveBeenCalledWith(oldTestFilePath);
+        expect(validator.validateFileExists).toHaveBeenCalledWith(oldTestFilePath);
+        expect(validator.validateContent).toHaveBeenCalledWith(testContent);
+    });
+
+    it('calls new title and content', async () => {
         const result = await handleUpdate(newTestTitle, oldTestTitle, testContent);
         expect(result).toEqual({status: 200});
 
@@ -46,7 +60,7 @@ describe('noteUpdaterService', () => {
         expect(validator.validateContent).toHaveBeenCalledWith(testContent);
     });
 
-    it('calls handleFileSave two times with correct arguments and returns success', async () => {
+    it('calls two times with correct arguments and returns success', async () => {
         const result1 = await handleUpdate(newTestTitle, oldTestTitle, testContent);
         expect(result1).toEqual({status: 200});
 

@@ -13,14 +13,14 @@ const handle = async (newTitle, oldTitle, content) => {
     const oldFilepath = createFilePath(oldTitle);
 
     await validator.validateFileExists(oldFilepath);
-    await validator.validateFileNotExists(newFilepath)
 
+    if (newTitle !== oldTitle) {
+        await validator.validateFileNotExists(newFilepath)
+        await fs.unlink(oldFilepath);
+    }
 
     await fs.mkdir(path.dirname(newFilepath), {recursive: true});
     await fs.writeFile(newFilepath, content, 'utf8');
-    if (newTitle !== oldTitle) {
-        await fs.unlink(oldFilepath);
-    }
 
     return createOkResponse();
 }

@@ -133,7 +133,7 @@ describe('API Integration Tests', () => {
                     oldTitle: `Test Note 3`,
                     content: `# Test Content 6 ${longText}`
                 })
-                .expect(res=>console.log(res.body)                );
+                .expect(200);
 
             const updatedContentResponse = await request(app)
                 .post('/api/internal/note/content')

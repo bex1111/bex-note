@@ -94,6 +94,18 @@ export const saveNote = async (title, content) => {
     })
 }
 
+export const updateNote = async (newTitle,oldTitle, content) => {
+    return executeRequest(async () => {
+        await axios.put('/api/internal/note/update', {
+            newTitle,oldTitle, content
+        }, {
+            headers: {
+                'x-auth-token': tokenStore.token
+            }
+        });
+    })
+}
+
 export const getContent = async (title) => {
     return executeRequest(async () => {
         const response = await axios.post('/api/internal/note/content', {

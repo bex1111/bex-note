@@ -1,7 +1,7 @@
 import {mount} from '@vue/test-utils';
 import ActionsHeader from './ActionsHeader.vue';
 import {notificationStore, tokenStore} from '../main'
-import {deleteNote, logout, saveNote} from '../api/bexNote';
+import {deleteNote, logout, saveNote, updateNote} from '../api/bexNote';
 
 vi.mock('../main', () => ({
     notificationStore: {
@@ -14,6 +14,7 @@ vi.mock('../main', () => ({
 vi.mock('../api/bexNote', () => ({
     saveNote: vi.fn(),
     deleteNote: vi.fn(),
+    updateNote: vi.fn(),
     logout: vi.fn(),
 }));
 
@@ -106,7 +107,7 @@ describe('ActionsHeader.vue', () => {
             expect(deleteNote).not.toHaveBeenCalled();
         });
 
-        it('calls deleteNote and saveNote API and emits save when selectedTitle is set', async () => {
+        it('calls updateNote API and emits save when selectedTitle is set', async () => {
             const wrapper = createWrapper({
                 selectedTitle: 'old-note',
                 title: testNote,
@@ -121,8 +122,8 @@ describe('ActionsHeader.vue', () => {
                 type: 'success',
                 message: `"${testNote}" saved successfully.`
             });
-            expect(saveNote).toHaveBeenCalledWith(testNote, 'updated content');
-            expect(deleteNote).toHaveBeenCalledWith('old-note');
+            expect(updateNote).toHaveBeenCalledWith(testNote,'old-note', 'updated content');
+
         });
     });
 
