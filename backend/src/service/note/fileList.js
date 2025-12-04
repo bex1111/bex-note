@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const environmentProvider = require('../../configProvider');
 const path = require('path');
-const {createInternalServerErrorResponse, createOkResponseWithBody} = require("../response");
+const {unboxErrorOrCreateInternalServerError, createOkResponseWithBody} = require("../response");
 
 const createFileNameList = (files) => {
     return files
@@ -22,7 +22,7 @@ const handleError = (error) => {
     if (error.code === 'ENOENT') {
        return  createOkResponseWithBody([])
     }
-    return createInternalServerErrorResponse(error)
+    return unboxErrorOrCreateInternalServerError(error)
 }
 
 

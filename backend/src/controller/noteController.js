@@ -1,18 +1,25 @@
-const {handleFileSave} = require("../service/note/fileSaver");
-const {handleFileDelete} = require("../service/note/fileDelete");
+const {handleSave} = require("../service/note/newFileSaverService");
+const {handleDelete} = require("../service/note/fileDelete");
 const {handleFileList} = require("../service/note/fileList");
 const {handleFileContent} = require("../service/note/fileContent");
 const app = require("../app");
+const {handleUpdate} = require("../service/note/noteUpdaterService");
 
 app.post('/api/internal/note/save', async (req, res) => {
     const {title, content} = req.body;
-    const result = await handleFileSave(title, content);
+    const result = await handleSave(title, content);
+    res.status(result.status).json(result.body);
+});
+
+app.put('/api/internal/note/update', async (req, res) => {
+    const {newTitle, oldTitle, content} = req.body;
+    const result = await handleUpdate(newTitle, oldTitle, content);
     res.status(result.status).json(result.body);
 });
 
 app.delete('/api/internal/note/delete', async (req, res) => {
     const {title} = req.body;
-    const result = await handleFileDelete(title);
+    const result = await handleDelete(title);
     res.status(result.status).json(result.body);
 });
 

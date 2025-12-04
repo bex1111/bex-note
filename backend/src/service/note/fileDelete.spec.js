@@ -1,7 +1,7 @@
-const {handleFileDelete} = require('./fileDelete');
+const {handleDelete} = require('./fileDelete');
 const fs = require('fs/promises');
 const environmentProvider = require('../../configProvider');
-const validator = require('../../validator');
+const validator = require('./validator');
 
 describe('handleFileDelete', () => {
     const tempDir = './temp/delete';
@@ -27,7 +27,7 @@ describe('handleFileDelete', () => {
     it('deletes file and returns success', async () => {
         await fs.mkdir(`${tempDir}/TestFolder`, {recursive: true});
         await fs.writeFile(testFilePath, 'Test content', 'utf-8');
-        const result = await handleFileDelete(testTitle);
+        const result = await handleDelete(testTitle);
         expect(result).toEqual({status: 200});
     });
 
@@ -39,7 +39,7 @@ describe('handleFileDelete', () => {
         await fs.writeFile(testFilePath, 'Test content', 'utf-8');
         await fs.writeFile(testFilePath1, expectedTestContent1, 'utf-8');
 
-        const result = await handleFileDelete(testTitle);
+        const result = await handleDelete(testTitle);
         expect(result).toEqual({status: 200});
         const actualTestFileContent1 = await fs.readFile(testFilePath1, 'utf8');
         expect(actualTestFileContent1).toEqual(expectedTestContent1);
@@ -47,7 +47,7 @@ describe('handleFileDelete', () => {
     });
 
     it('returns 404 if file does not exist', async () => {
-        const result = await handleFileDelete(testTitle);
+        const result = await handleDelete(testTitle);
         expect(result).toEqual({body: {error: 'File not found'}, status: 404});
     });
 });

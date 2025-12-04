@@ -1,8 +1,8 @@
 const { handleFileContent } = require('./fileContent');
-const { handleFileSave } = require('./fileSaver');
+const { handleSave } = require('./newFileSaverService');
 const fs = require('fs/promises');
 const environmentProvider = require('../../configProvider');
-const validator = require("../../validator");
+const validator = require("./validator");
 
 describe('handleFileContent', () => {
     const tempDir = './temp/content';
@@ -19,7 +19,7 @@ describe('handleFileContent', () => {
 
         const testTitle = 'TestFolder/test title';
         const testContent = 'Test content for reading';
-        await handleFileSave(testTitle, testContent);
+        await handleSave(testTitle, testContent);
 
         const result = await handleFileContent(testTitle);
         expect(result).toEqual({ body: { content: testContent }, status: 200 });

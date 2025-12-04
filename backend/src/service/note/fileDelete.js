@@ -1,7 +1,7 @@
 const environmentProvider = require('../../configProvider');
 const fs = require('fs').promises;
 const path = require('path');
-const validator = require("../../validator");
+const validator = require("./validator");
 const { createFileNotFoundResponse, createOkResponse} = require("../response");
 
 
@@ -14,7 +14,7 @@ const handle = async (title) => {
     return createOkResponse();
 }
 
-const handleFileDelete = async (title) => {
+const handleDelete = async (title) => {
     try {
         return await handle(title);
     } catch (error) {
@@ -22,5 +22,5 @@ const handleFileDelete = async (title) => {
     }
 };
 
-module.exports = {handleFileDelete};
+module.exports = {handleDelete};
 

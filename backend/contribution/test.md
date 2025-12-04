@@ -3,3 +3,4 @@
 - always start with "CAR" comment
 - use jest for mocking
 - use filename.spec.js for test files
+- not run test in agent mode

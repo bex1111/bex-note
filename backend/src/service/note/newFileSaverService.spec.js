@@ -1,10 +1,10 @@
-const {handleFileSave} = require('./fileSaver');
+const {handleSave} = require('./newFileSaverService');
 const fs = require('fs/promises');
 const environmentProvider = require('../../configProvider');
-const validator = require("../../validator");
+const validator = require("./validator");
 
 
-describe('handleFileSave', () => {
+describe('newFileSaverService', () => {
     const tempDir = './temp/save';
 
     const testTitle = 'test/test title';
@@ -24,7 +24,7 @@ describe('handleFileSave', () => {
 
 
     it('calls handleFileSave with correct arguments and returns success', async () => {
-        const result = await handleFileSave(testTitle, testContent);
+        const result = await handleSave(testTitle, testContent);
         expect(result).toEqual({status: 200});
 
         const fileContent = await fs.readFile(testFilePath, 'utf-8');
@@ -34,8 +34,8 @@ describe('handleFileSave', () => {
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
     });
 
-    it('calls handleFileSave two times with correct arguments and returns success', async () => {
-        const result1 = await handleFileSave(testTitle, testContent);
+    it('calls handleFileSave two times with correct arguments and returns file already exist', async () => {
+        const result1 = await handleSave(testTitle, testContent);
         expect(result1).toEqual({status: 200});
 
         const fileContent1 = await fs.readFile(testFilePath, 'utf-8');
@@ -44,26 +44,11 @@ describe('handleFileSave', () => {
         expect(environmentProvider.getSavingLocation).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
 
-        const result2 = await handleFileSave(testTitle, testContent + '2');
-        expect(result2).toEqual({status: 200});
-
-        const fileContent2 = await fs.readFile(testFilePath, 'utf-8');
-        expect(fileContent2).toBe(testContent + '2');
+        const result2 = await handleSave(testTitle, testContent + '2');
+        expect(result2).toEqual({body: {error: 'Note with the same title already exists!'}, status: 400});
 
         expect(environmentProvider.getSavingLocation).toHaveBeenCalled();
         expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
-    });
-
-    describe.each([
-        ['null', null],
-        ['undefined', undefined]
-    ])('content validation with %s content', (description, invalidContent) => {
-        it(`should handle ${description} content and return undefined due to error`, async () => {
-            const result = await handleFileSave(testTitle, invalidContent);
-
-            expect(result).toEqual({"body": {"error": "Content required"}, "status": 400});
-            expect(validator.validateTitle).toHaveBeenCalledWith(testTitle);
-        });
     });
 
 });

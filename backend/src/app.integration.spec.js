@@ -8,6 +8,7 @@ process.env.FOLDER = './temp/inttestnotes';
 process.env.STATIC_FOLDER_FOR_WEB = './temp/teststatic';
 
 const app = require('./app');
+const fs = require("fs/promises");
 
 describe('API Integration Tests', () => {
 
@@ -65,6 +66,7 @@ describe('API Integration Tests', () => {
     describe('Valid token', () => {
 
         it('should save a note successfully with valid token', async () => {
+            await fs.rm(process.env.FOLDER, {recursive: true, force: true});
             const authResponse = await request(app)
                 .post('/api/authorize')
                 .send({
@@ -122,6 +124,23 @@ describe('API Integration Tests', () => {
                 .send({title: 'Test Note 3'})
                 .expect(200);
             expect(contentResponse.body).toEqual({"content": `# Test Content 3 ${longText}`})
+
+            await request(app)
+                .put('/api/internal/note/update')
+                .set('x-auth-token', validToken)
+                .send({
+                    newTitle: `Test Note 6`,
+                    oldTitle: `Test Note 3`,
+                    content: `# Test Content 6 ${longText}`
+                })
+                .expect(res=>console.log(res.body)                );
+
+            const updatedContentResponse = await request(app)
+                .post('/api/internal/note/content')
+                .set('x-auth-token', validToken)
+                .send({title:`Test Note 6`})
+                .expect(200);
+            expect(updatedContentResponse.body).toEqual({"content": `# Test Content 6 ${longText}`})
         });
     });
 

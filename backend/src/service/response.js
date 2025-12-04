@@ -1,4 +1,4 @@
-const createInternalServerErrorResponse = (error) => {
+const unboxErrorOrCreateInternalServerError = (error) => {
     if (error.status && error.body) {
         return error;
     }
@@ -10,7 +10,7 @@ const createFileNotFoundResponse = (error) => {
     if (error.code === 'ENOENT') {
         return {body: {error: 'File not found'}, status: 404};
     }
-    return createInternalServerErrorResponse(error)
+    return unboxErrorOrCreateInternalServerError(error)
 }
 
 const createBadRequestResponse = (message) => {
@@ -31,7 +31,7 @@ const createOkResponseWithBody = (body) => {
 
 
 module.exports = {
-    createInternalServerErrorResponse,
+    unboxErrorOrCreateInternalServerError,
     createFileNotFoundResponse,
     createBadRequestResponse,
     createUnauthorizedResponse,
