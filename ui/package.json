@@ -28,7 +28,7 @@
     "axios-mock-adapter": "^2.1.0",
     "jsdom": "^27.2.0",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.17",
+    "tailwindcss": "^4.1.18",
     "vite": "^7.2.7",
     "vitest": "^4.0.15"
   },
