@@ -22,6 +22,6 @@ Key features include:
 
 # Development
 
-> [!INFO]
+> [!NOTE]
 > AI was used in the development of this project.
  
