@@ -1,5 +1,6 @@
 const {
     getSavingLocation,
+    getCacheLocation,
     getStaticFileForWeb,
     getUsername,
     getUserPassword,
@@ -27,6 +28,19 @@ describe('configProvider', () => {
             delete process.env.FOLDER;
             expect(getSavingLocation()).toBeUndefined();
             expect(consoleErrorSpy).toHaveBeenCalledWith("FOLDER environment variable is not set.");
+        });
+    });
+
+    describe('getCacheLocation', () => {
+        test('returns CACHE env var when set', () => {
+            process.env.CACHE = '/tmp/cache';
+            expect(getCacheLocation()).toBe('/tmp/cache');
+            expect(consoleErrorSpy).not.toHaveBeenCalled();
+        });
+        test('returns undefined and logs error when CACHE env var is not set', () => {
+            delete process.env.CACHE;
+            expect(getCacheLocation()).toBeUndefined();
+            expect(consoleErrorSpy).toHaveBeenCalledWith("CACHE environment variable is not set.");
         });
     });
 

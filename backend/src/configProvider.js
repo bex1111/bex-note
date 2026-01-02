@@ -5,6 +5,13 @@ const getSavingLocation = () => {
     return process.env.FOLDER;
 };
 
+const getCacheLocation = () => {
+    if (!process.env.CACHE) {
+        console.error(generateEnvironmentNotSetText('CACHE'));
+    }
+    return process.env.CACHE;
+};
+
 const getStaticFileForWeb = () => {
     if (!process.env.STATIC_FOLDER_FOR_WEB) {
         console.error(generateEnvironmentNotSetText('STATIC_FOLDER_FOR_WEB'));
@@ -48,6 +55,7 @@ const generateEnvironmentNotSetText=(environmentName)=>{
 
 module.exports = {
     getSavingLocation,
+    getCacheLocation,
     getStaticFileForWeb,
     getUsername,
     getUserPassword,
