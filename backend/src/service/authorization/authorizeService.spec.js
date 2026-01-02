@@ -23,17 +23,17 @@ describe('authorizeService', () => {
             });
         });
 
-        it.each(invalidCases)('returns unauthorizedResponse if $desc', ({username, password}) => {
-            const result = authorize(username, password);
+        it.each(invalidCases)('returns unauthorizedResponse if $desc', async ({username, password}) => {
+            const result = await authorize(username, password);
             expect(result).toEqual(unauthorizedResponse);
             expect(tokenRepository.setToken).not.toHaveBeenCalled();
         });
 
-        it('returns a token if username and password are correct', () => {
+        it('returns a token if username and password are correct', async () => {
             const tokens = []
             const numberOfTestSet = 10_000;
             for (let i = 0; i < numberOfTestSet; i++) {
-                tokens.push(authorize('user', 'pass'));
+                tokens.push(await authorize('user', 'pass'));
             }
             expect(new Set(tokens.map(t => t.body.token)).size).toBe(numberOfTestSet)
             tokens.forEach(token => {

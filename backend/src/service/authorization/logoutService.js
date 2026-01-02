@@ -1,11 +1,11 @@
 const tokenRepository = require("../../repository/tokenRepository");
 const {createBadRequestResponse, createOkResponse} = require("../response");
 
-const logout = (token) => {
+const logout = async (token) => {
     if (!token || !tokenRepository.getToken().includes(token)) {
         return createBadRequestResponse("Token not exist")
     }
-    tokenRepository.removeToken(token)
+    await tokenRepository.removeToken(token)
     return createOkResponse()
 }
 

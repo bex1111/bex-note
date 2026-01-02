@@ -8,24 +8,24 @@ describe('logoutService', () => {
         jest.spyOn(tokenRepository, 'removeToken').mockImplementation(() => {});
     });
 
-    it('returns bad request if token does not exist', () => {
-        const result = logout('not-present');
+    it('returns bad request if token does not exist',async () => {
+        const result = await logout('not-present');
         expect(result).toEqual({status: 400, body: {error: 'Token not exist'}});
         expect(tokenRepository.getToken).toHaveBeenCalledTimes(1);
         expect(tokenRepository.removeToken).not.toHaveBeenCalled();
     });
 
-    it('returns bad request if input token empty', () => {
-        const result = logout();
+    it('returns bad request if input token empty',async () => {
+        const result =await logout();
         expect(result).toEqual({status: 400, body: {error: 'Token not exist'}});
         expect(tokenRepository.getToken).not.toHaveBeenCalled();
         expect(tokenRepository.removeToken).not.toHaveBeenCalled();
     });
 
 
-    it('removes token and returns ok if token exists', () => {
+    it('removes token and returns ok if token exists',async () => {
 
-        const result = logout('token1');
+        const result = await logout('token1');
         expect(tokenRepository.removeToken).toHaveBeenCalledWith('token1');
         expect(result).toEqual({status: 200});
     });
