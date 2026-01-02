@@ -6,6 +6,7 @@ process.env.USERNAME = 'testuser';
 process.env.PASSWORD = 'testpass';
 process.env.FOLDER = './temp/inttestnotes';
 process.env.STATIC_FOLDER_FOR_WEB = './temp/teststatic';
+process.env.CACHE='./temp/inttestcache';
 
 const app = require('./app');
 const fs = require("fs/promises");
