@@ -1,9 +1,8 @@
-import { setActivePinia, createPinia } from 'pinia'
-import { vi } from 'vitest'
-import { useAuthorizationStore } from './authorization'
-import { getCookie, setCookie, eraseCookie } from './cookie'
+import {createPinia, setActivePinia} from 'pinia'
+import {vi} from 'vitest'
+import {useAuthorizationStore} from './authorization'
+import {eraseCookie, getCookie, setCookie} from './cookie'
 
-// Mock the cookie module
 vi.mock('./cookie', () => ({
     getCookie: vi.fn(),
     setCookie: vi.fn(),
@@ -11,6 +10,7 @@ vi.mock('./cookie', () => ({
 }))
 
 describe('Authorization Store', () => {
+    const expirationDays = 180;
     beforeEach(() => {
         setActivePinia(createPinia())
     })
@@ -52,7 +52,7 @@ describe('Authorization Store', () => {
             store.saveToken('new-token-456')
 
             expect(store.token).toBe('new-token-456')
-            expect(setCookie).toHaveBeenCalledWith('auth_token', 'new-token-456', 30)
+            expect(setCookie).toHaveBeenCalledWith('auth_token', 'new-token-456', expirationDays)
         })
 
         it('overwrites existing token', () => {
@@ -62,7 +62,7 @@ describe('Authorization Store', () => {
             store.saveToken('updated-token')
 
             expect(store.token).toBe('updated-token')
-            expect(setCookie).toHaveBeenCalledWith('auth_token', 'updated-token', 30)
+            expect(setCookie).toHaveBeenCalledWith('auth_token', 'updated-token', expirationDays)
         })
     })
 
@@ -97,7 +97,7 @@ describe('Authorization Store', () => {
 
             store.saveToken('token-1')
             expect(store.token).toBe('token-1')
-            expect(setCookie).toHaveBeenCalledWith('auth_token', 'token-1', 30)
+            expect(setCookie).toHaveBeenCalledWith('auth_token', 'token-1', expirationDays)
 
             store.resetToken()
             expect(store.token).toBeNull()
@@ -105,7 +105,7 @@ describe('Authorization Store', () => {
 
             store.saveToken('token-2')
             expect(store.token).toBe('token-2')
-            expect(setCookie).toHaveBeenCalledWith('auth_token', 'token-2', 30)
+            expect(setCookie).toHaveBeenCalledWith('auth_token', 'token-2', expirationDays)
 
             expect(setCookie).toHaveBeenCalledTimes(2)
             expect(eraseCookie).toHaveBeenCalledTimes(1)

@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import {getCookie, setCookie, eraseCookie} from './cookie'
+import {eraseCookie, getCookie, setCookie} from './cookie'
 
 const COOKIE_NAME = 'auth_token';
 
@@ -14,7 +14,7 @@ export const useAuthorizationStore = defineStore('authorization', {
         },
         saveToken(token) {
             this.token = token
-            setCookie(COOKIE_NAME, token, 30) // expires in 30 days
+            setCookie(COOKIE_NAME, token, 180)
         }
     }
 })
