@@ -8,7 +8,7 @@ const getToken = () => {
     return [...tokens];
 }
 
-const setToken =  (token) => {
+const setToken = (token) => {
     tokens.add(token);
 }
 
@@ -38,7 +38,9 @@ const readTokens = async () => {
         const filePath = path.join(environmentProvider.getCacheLocation(), tokenFileName);
         return new Set(JSON.parse(await fs.readFile(filePath, 'utf8')));
     } catch (err) {
-        console.error('Error happen while load tokens' + err);
+        if (err.code !== 'ENOENT') {
+            console.error('Error happen while load tokens' + err);
+        }
         return new Set();
     }
 }
