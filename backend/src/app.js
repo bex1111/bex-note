@@ -1,10 +1,15 @@
 const express = require('express')
-
-const app = express()
-
+const {handleInit} = require("./service/initService");
+const {handleShutdown} = require("./service/shutdownService");
 const environmentProvider = require('./configProvider');
 const {checkAuthorize} = require('./middleware/auth');
 const {getPort, getMaxFileSize} = require("./configProvider");
+const {useNoteController} = require("./controller/noteController");
+const {useAuthorizationController} = require("./controller/authorizationController");
+const {useHealthController} = require("./controller/healthController");
+
+
+const app = express()
 
 app.use(express.json({limit: getMaxFileSize()}));
 app.use(express.urlencoded({limit: getMaxFileSize()}));
@@ -19,17 +24,13 @@ app.use('/api/internal', (req, res, next) => {
     next();
 });
 
-module.exports = app;
+useNoteController(app);
+useAuthorizationController(app);
+useHealthController(app);
 
-require('./controller/noteController');
-require('./controller/authorizationController');
-require('./controller/healthController');
-const {handleInit} = require("./service/initService");
-const {handleShutdown} = require("./service/shutdownService");
-
-
-app.listen(getPort(), handleInit);
+const server = app.listen(getPort(), handleInit);
 
 process.on('SIGTERM', handleShutdown);
-
 process.on('SIGINT', handleShutdown);
+
+module.exports = {app, server};

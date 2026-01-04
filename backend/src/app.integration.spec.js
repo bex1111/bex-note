@@ -6,15 +6,16 @@ process.env.USERNAME = 'testuser';
 process.env.PASSWORD = 'testpass';
 process.env.FOLDER = './temp/inttestnotes';
 process.env.STATIC_FOLDER_FOR_WEB = './temp/teststatic';
-process.env.CACHE='./temp/inttestcache';
+process.env.CACHE = './temp/inttestcache';
 
-const app = require('./app');
 const fs = require("fs/promises");
+const {server, app} = require("./app");
 
 describe('API Integration Tests', () => {
 
     afterAll(() => {
         process.env = OLD_ENV;
+        server.close();
     });
 
     describe('Invalid token', () => {
@@ -139,7 +140,7 @@ describe('API Integration Tests', () => {
             const updatedContentResponse = await request(app)
                 .post('/api/internal/note/content')
                 .set('x-auth-token', validToken)
-                .send({title:`Test Note 6`})
+                .send({title: `Test Note 6`})
                 .expect(200);
             expect(updatedContentResponse.body).toEqual({"content": `# Test Content 6 ${longText}`})
         });
