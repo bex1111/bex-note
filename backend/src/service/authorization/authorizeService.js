@@ -4,11 +4,11 @@ const environmentProvider = require("../../configProvider");
 const tokenRepository = require("../../repository/tokenRepository");
 
 
-const authorize = async (username, password) => {
+const authorize = (username, password) => {
     if (environmentProvider.getUsername() === username &&
         environmentProvider.getUserPassword() === password) {
         const uniqueString = crypto.randomBytes(128).toString('hex');
-        await tokenRepository.setToken(uniqueString);
+        tokenRepository.setToken(uniqueString);
         return {status: 200, body: {token: uniqueString}};
     }
     return createUnauthorizedResponse();

@@ -8,29 +8,29 @@ const getToken = () => {
     return [...tokens];
 }
 
-const setToken = async (token) => {
+const setToken =  (token) => {
     tokens.add(token);
-    await persistTokens()
 }
 
-const removeToken = async (token) => {
+const removeToken = (token) => {
     tokens.delete(token);
-    await persistTokens();
 }
 
 const persistTokens = async () => {
-    if (tokens.size > 0) {
-        const content = JSON.stringify([...tokens])
-        const filePath = path.join(environmentProvider.getCacheLocation(), tokenFileName);
-        await fs.mkdir(environmentProvider.getCacheLocation(), {recursive: true});
-        await fs.writeFile(filePath, content, 'utf8');
-    }
+    const content = JSON.stringify([...tokens])
+    const filePath = path.join(environmentProvider.getCacheLocation(), tokenFileName);
+    await fs.mkdir(environmentProvider.getCacheLocation(), {recursive: true});
+    await fs.writeFile(filePath, content, 'utf8');
 }
 
 const loadTokens = async () => {
     const loadedTokens = await readTokens();
     loadedTokens.forEach(tokens.add, tokens)
     console.log(`${tokens.size} tokens loaded.`)
+}
+
+const resetTokens = () => {
+    tokens.clear();
 }
 
 const readTokens = async () => {
@@ -43,4 +43,8 @@ const readTokens = async () => {
     }
 }
 
-module.exports = {getToken, setToken, removeToken, loadTokens};
+module.exports = {
+    getToken, setToken,
+    removeToken, persistTokens,
+    loadTokens, resetTokens
+};

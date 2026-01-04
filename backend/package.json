@@ -8,7 +8,7 @@
   "main": "src/app.js",
   "scripts": {
     "build": "esbuild src/app.js --bundle --platform=node --outfile=dist/bundle.js",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "serve": "node src/app.js"
   },
   "dependencies": {

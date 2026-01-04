@@ -15,7 +15,8 @@ services:
       retries: 2
       start_period: 5s
     volumes:
-      - ./temp:/data
+      - ./temp/data:/data
+      - ./temp/cache:/cache # Optional if you want to stay log in after docker restart
     ports:
       - "5001:5001"
     environment:

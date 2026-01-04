@@ -1,5 +1,4 @@
 const express = require('express')
-const {loadTokens} = require("./repository/tokenRepository");
 
 const app = express()
 
@@ -25,11 +24,12 @@ module.exports = app;
 require('./controller/noteController');
 require('./controller/authorizationController');
 require('./controller/healthController');
+const {handleInit} = require("./service/initService");
+const {handleShutdown} = require("./service/shutdownService");
 
 
-app.listen(getPort(), async () => {
-        await loadTokens()
-        console.log(`Bex-note started ${getPort()}`)
-    }
-)
-;
+app.listen(getPort(), handleInit);
+
+process.on('SIGTERM', handleShutdown);
+
+process.on('SIGINT', handleShutdown);

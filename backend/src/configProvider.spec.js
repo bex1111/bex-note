@@ -14,7 +14,6 @@ describe('configProvider', () => {
     });
 
     beforeEach(() => {
-        consoleErrorSpy.mockReset();
         process.env = OLD_ENV
     });
 
@@ -87,10 +86,6 @@ describe('configProvider', () => {
         const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {
         });
 
-        beforeEach(() => {
-            consoleLogSpy.mockReset();
-        });
-
         test('returns PORT env var when set', () => {
             process.env.PORT = '8080';
             expect(getPort()).toBe('8080');
@@ -106,10 +101,6 @@ describe('configProvider', () => {
 
     describe('getMaxFileSize', () => {
         const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {
-        });
-
-        beforeEach(() => {
-            consoleLogSpy.mockReset();
         });
 
         test('returns MAX_FILE_SIZE_IN_MB env var when set as number', () => {

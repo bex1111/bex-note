@@ -4,3 +4,5 @@
 - use jest for mocking
 - use filename.spec.js for test files
 - not run test in agent mode
+- not reset mock, jest config contains it
+- use ```  const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});``` mock style

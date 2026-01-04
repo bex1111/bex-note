@@ -1,4 +1,4 @@
-const {setToken, getToken, removeToken, loadTokens} = require("./tokenRepository");
+const {setToken, getToken, removeToken, loadTokens,resetTokens, persistTokens} = require("./tokenRepository");
 const environmentProvider = require('../configProvider');
 const path = require("path");
 const {promises: fs} = require("fs");
@@ -9,25 +9,38 @@ describe('tokenRepository', () => {
     const tokenFile = path.join(tempDir, 'token');
     const token = 'token'
 
-    it('set remove and get token', async () => {
+    beforeEach(async () => {
+        resetTokens();
         jest.spyOn(environmentProvider, 'getCacheLocation').mockImplementation(() => tempDir);
+        try {
+            await fs.rm(tempDir, {recursive: true, force: true});
+        } catch {
+        }
+    });
 
-        await setToken(token);
-        await setToken(token);
-        await setToken(token + '1');
+    it('set remove and get token', async () => {
+        setToken(token);
+        setToken(token);
+        setToken(token + '1');
         expect(getToken()).toEqual([token, token + '1'])
+        await persistTokens();
         expect(await fs.readFile(tokenFile, 'utf8')).toEqual(`["${token}","${token + 1}"]`);
-        await removeToken(token);
+        removeToken(token);
+        await persistTokens();
         expect(getToken()).toEqual([token + '1'])
         expect(await fs.readFile(tokenFile, 'utf8')).toEqual(`["${token + 1}"]`);
     });
 
     it('load token and get token', async () => {
-        jest.spyOn(environmentProvider, 'getCacheLocation').mockImplementation(() => tempDir);
         await fs.mkdir(tempDir, {recursive: true});
         await fs.writeFile(tokenFile, `["${token}","${token + 1}"]`, 'utf8');
         await loadTokens();
-        expect(getToken()).toEqual([ token + '1',token])
+        expect(getToken()).toEqual([ token,token + '1'])
+    });
+
+    it('token file not exist, load token return empty set', async () => {
+        await loadTokens();
+        expect(getToken()).toEqual([])
     });
 
 

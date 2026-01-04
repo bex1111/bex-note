@@ -2,14 +2,14 @@ const {authorize} = require("../service/authorization/authorizeService");
 const {logout} = require("../service/authorization/logoutService");
 const app = require("../app");
 
-app.post('/api/authorize', async (req, res) => {
+app.post('/api/authorize', (req, res) => {
     const {username, password} = req.body;
-    const result = await authorize(username, password);
+    const result = authorize(username, password);
     res.status(result.status).json(result.body);
 });
 
-app.post('/api/internal/logout', async (req, res) => {
+app.post('/api/internal/logout', (req, res) => {
     const {token} = req.body;
-    const result = await logout(token);
+    const result = logout(token);
     res.status(result.status).json(result.body);
 });
