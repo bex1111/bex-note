@@ -14,13 +14,14 @@ const createFileNameList = (files) => {
 const finalNameGenerator = (name) => {
     let savingLocation = name.replace(path.normalize(environmentProvider.getSavingLocation()), '')
     let withoutExtension = savingLocation.replace('.md', '');
-    let parsedPath = withoutExtension.split(path.sep);
-    return parsedPath.length > 2 ? parsedPath.join(path.sep) : parsedPath[1];
+    let parsedPath = withoutExtension.split(path.sep).filter(x => x !== "");
+    return parsedPath.length > 1 ? parsedPath.join(path.sep) : parsedPath[0];
+
 }
 
 const handleError = (error) => {
     if (error.code === 'ENOENT') {
-       return  createOkResponseWithBody([])
+        return createOkResponseWithBody([])
     }
     return unboxErrorOrCreateInternalServerError(error)
 }
