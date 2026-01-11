@@ -1,4 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`MarkdownEditor.vue > renders correctly and matches snapshot 1`] = `
 "<div id=\\"md-editor-v-0\\" class=\\"md-editor\\">
