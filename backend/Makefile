@@ -1,2 +1,2 @@
 test:
-	npm run test
+	npm install && npm run test

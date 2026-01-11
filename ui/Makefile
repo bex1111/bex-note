@@ -17,7 +17,7 @@ up:
 dev: mock-up up
 
 test:
-	npm run test
+	npm install && npm run test
 
 update-snapshots:
 	npm run snapshot-update
