@@ -1,13 +1,13 @@
-const {handleFileList} = require('./fileList');
+const { handleFileList } = require('./fileList');
 const fs = require('fs/promises');
 const path = require('path');
 const environmentProvider = require('../../configProvider');
 
 describe('handleFileList (integration)', () => {
-    const tempDir = './temp/list'
+    const tempDir = './temp/list';
     beforeEach(async () => {
         try {
-            await fs.rm(tempDir, {recursive: true, force: true});
+            await fs.rm(tempDir, { recursive: true, force: true });
         } catch {
         }
         jest.clearAllMocks();
@@ -15,19 +15,23 @@ describe('handleFileList (integration)', () => {
     });
 
     it('returns a list of .md files without extension', async () => {
-        await fs.mkdir(path.join(tempDir, 'test/test2'), {recursive: true});
+        await fs.mkdir(path.join(tempDir, 'test/test2'), { recursive: true });
         await fs.writeFile(path.join(tempDir, 'test/note1.md'), '');
         await fs.writeFile(path.join(tempDir, 'note2.md'), '');
+        await fs.writeFile(path.join(tempDir, 'note1.md'), '');
         await fs.writeFile(path.join(tempDir, 'test/notMarkdown.txt'), '');
         await fs.writeFile(path.join(tempDir, 'test/test2/README.md'), '');
+        await fs.writeFile(path.join(tempDir, 'test/asd.md'), '');
 
         const result = await handleFileList();
         expect(result).toEqual({
             status: 200,
             body: [
-                {title: 'note2'},
-                {title: 'test/note1'},
-                {title: 'test/test2/README'}
+                { title: 'note1' },
+                { title: 'note2' },
+                { title: 'test/asd' },
+                { title: 'test/note1' },
+                { title: 'test/test2/README' }
             ]
         });
         expect(environmentProvider.getSavingLocation).toHaveBeenCalled();
@@ -35,6 +39,6 @@ describe('handleFileList (integration)', () => {
 
     it('returns an empty list if folder does not exist (ENOENT)', async () => {
         const result = await handleFileList();
-        expect(result).toEqual({status: 200, body: []});
+        expect(result).toEqual({ status: 200, body: [] });
     });
 });
