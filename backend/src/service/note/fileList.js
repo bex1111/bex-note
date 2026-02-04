@@ -3,18 +3,20 @@ const environmentProvider = require('../../configProvider');
 const path = require('path');
 const { unboxErrorOrCreateInternalServerError, createOkResponseWithBody } = require('../response');
 
+const compareFiles = (file1, file2) => {
+    const file1Depth = file1.split(path.sep).length;
+    const file2Depth = file2.split(path.sep).length;
+    if (file1Depth !== file2Depth) {
+        return file1Depth - file2Depth;
+    }
+    return file1.toLowerCase().localeCompare(file2.toLowerCase());
+};
+
 const createFileNameList = (files) => {
     return files
         .filter(file => file.includes('.md'))
         .map(file => finalNameGenerator(file))
-        .sort((a, b) => {
-            const aDepth = a.split(path.sep).length;
-            const bDepth = b.split(path.sep).length;
-            if (aDepth !== bDepth) {
-                return aDepth - bDepth;
-            }
-            return a.toLowerCase().localeCompare(b.toLowerCase());
-        })
+        .sort(compareFiles)
         .map(file => ({ title: file }));
 };
 
