@@ -12,7 +12,7 @@
     "@vavt/cm-extension": "^1.11.2",
     "@vavt/v3-extension": "^4.0.0",
     "axios": "^1.13.4",
-    "core-js": "^3.47.0",
+    "core-js": "^3.48.0",
     "md-editor-v3": "^6.3.1",
     "pinia": "^3.0.4",
     "primeicons": "^7.0.0",
