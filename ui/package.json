@@ -29,7 +29,7 @@
     "jsdom": "^29.0.1",
     "postcss": "^8.5.8",
     "tailwindcss": "^4.2.2",
-    "vite": "^8.0.1",
+    "vite": "^8.0.10",
     "vitest": "^4.1.2"
   },
   "browserslist": [
