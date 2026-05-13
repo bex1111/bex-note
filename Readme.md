@@ -12,7 +12,7 @@ Key features include:
 - Stores notes in local files (no database required)
 - Very lightweight
 - Supports multi-level folder structure (folder1/folder2/note)
-- Markdown support
+- Markdown support (pure text, no image supported)
 
 ![Example Screenshot](example.png)
 
