@@ -1,4 +1,4 @@
-FROM node:25.9.0-alpine3.22
+FROM node:26.1.0-alpine3.22
 LABEL authors="bex1111"
 
 RUN mkdir -p /ui /backend /data /cache && \
