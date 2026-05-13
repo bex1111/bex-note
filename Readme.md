@@ -28,7 +28,18 @@ Key features include:
 
 Bex Note stores notes in the `data` directory. To back up your notes, simply backup this directory.
 
+# Diagram
+
+```mermaid
+flowchart LR
+    Frontend[Vue Frontend] -->|http communication| Backend[Express Backend]
+    Backend -->|File Operations| LocalFileSystem[(Local File System)]
+```
+
 # Development
 
 > [!NOTE]
 > AI was used in the development of this project.
+
+
+
