@@ -16,7 +16,7 @@ services:
       start_period: 5s
     volumes:
       - ./temp/data:/data
-      - ./temp/cache:/cache # Optional if you want to stay log in after docker restart
+      - ./temp/cache:/cache # Optional if you want to stay log in after docker, but keep it in a safe place.
     ports:
       - "5001:5001"
     environment:

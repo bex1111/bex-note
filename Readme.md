@@ -36,10 +36,24 @@ flowchart LR
     Backend -->|file operations| LocalFileSystem[(Local File System)]
 ```
 
+## AI support / API documentation
+
+Bex Note exposes a REST API that AI assistants and automation tools can use to manage notes programmatically.
+
+The API is documented via Swagger and available at:
+
+```
+GET /api/docs/swagger.json
+```
+
+> [!TIP]
+> If you are using an AI assistant (e.g. Claude, ChatGPT) to interact with the API during a session,
+> you can pick token from cache folder.
+> Provide your password and username for AI not recommended.
+
+todo create a skill for AI assistants to interact with Bex Note API.
+
 # Development
 
 > [!NOTE]
 > AI was used in the development of this project.
-
-
-
