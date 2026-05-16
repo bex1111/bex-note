@@ -1,19 +1,21 @@
-const express = require('express')
-const {handleInit} = require("./service/initService");
-const {handleShutdown} = require("./service/shutdownService");
+const express = require('express');
+const { handleInit } = require('./service/initService');
+const { handleShutdown } = require('./service/shutdownService');
 const environmentProvider = require('./configProvider');
-const {checkAuthorize} = require('./middleware/auth');
-const {getPort, getMaxFileSize} = require("./configProvider");
-const {useNoteController} = require("./controller/noteController");
-const {useAuthorizationController} = require("./controller/authorizationController");
-const {useHealthController} = require("./controller/healthController");
+const { checkAuthorize } = require('./middleware/auth');
+const { getPort, getMaxFileSize } = require('./configProvider');
+const { useNoteController } = require('./controller/noteController');
+const { useAuthorizationController } = require('./controller/authorizationController');
+const { useHealthController } = require('./controller/healthController');
+const { useSwaggerController } = require('./controller/swaggerController');
 
+const app = express();
 
-const app = express()
-
-app.use(express.json({limit: getMaxFileSize()}));
-app.use(express.urlencoded({limit: getMaxFileSize()}));
+app.use(express.json({ limit: getMaxFileSize() }));
+app.use(express.urlencoded({ limit: getMaxFileSize() }));
 app.use(express.static(environmentProvider.getStaticFileForWeb()));
+
+useSwaggerController(app);
 
 app.use('/api/internal', (req, res, next) => {
     const response = checkAuthorize(req.headers['x-auth-token']);
@@ -33,4 +35,4 @@ const server = app.listen(getPort(), handleInit);
 process.on('SIGTERM', handleShutdown);
 process.on('SIGINT', handleShutdown);
 
-module.exports = {app, server};
+module.exports = { app, server };

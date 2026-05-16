@@ -8,8 +8,8 @@ process.env.FOLDER = './temp/inttestnotes';
 process.env.STATIC_FOLDER_FOR_WEB = './temp/teststatic';
 process.env.CACHE = './temp/inttestcache';
 
-const fs = require("fs/promises");
-const {server, app} = require("./app");
+const fs = require('fs/promises');
+const { server, app } = require('./app');
 
 describe('API Integration Tests', () => {
 
@@ -19,7 +19,6 @@ describe('API Integration Tests', () => {
     });
 
     describe('Invalid token', () => {
-
 
         it('/api/authorize should return 403 for invalid user data', async () => {
             const response = await request(app)
@@ -68,7 +67,7 @@ describe('API Integration Tests', () => {
     describe('Valid token', () => {
 
         it('should save a note successfully with valid token', async () => {
-            await fs.rm(process.env.FOLDER, {recursive: true, force: true});
+            await fs.rm(process.env.FOLDER, { recursive: true, force: true });
             const authResponse = await request(app)
                 .post('/api/authorize')
                 .send({
@@ -78,10 +77,10 @@ describe('API Integration Tests', () => {
                 .expect(200);
 
             const validToken = authResponse.body.token;
-            const longText = crypto.randomBytes(4_000_000).toString('hex')
+            const longText = crypto.randomBytes(4_000_000).toString('hex');
 
             for (let i = 0; i < 5; i++) {
-                const content = `# Test Content ${i} ${longText}`
+                const content = `# Test Content ${i} ${longText}`;
                 const noteData = {
                     title: `Test Note ${i}`,
                     content
@@ -97,7 +96,7 @@ describe('API Integration Tests', () => {
             await request(app)
                 .delete('/api/internal/note/delete')
                 .set('x-auth-token', validToken)
-                .send({title: 'Test Note 2'})
+                .send({ title: 'Test Note 2' })
                 .expect(200);
 
             const listResponse = await request(app)
@@ -107,25 +106,25 @@ describe('API Integration Tests', () => {
 
             expect(listResponse.body).toEqual([
                 {
-                    "title": "Test Note 0"
+                    'title': 'Test Note 0'
                 },
                 {
-                    "title": "Test Note 1"
+                    'title': 'Test Note 1'
                 },
                 {
-                    "title": "Test Note 3"
+                    'title': 'Test Note 3'
                 },
                 {
-                    "title": "Test Note 4"
+                    'title': 'Test Note 4'
                 }
             ]);
 
             const contentResponse = await request(app)
                 .post('/api/internal/note/content')
                 .set('x-auth-token', validToken)
-                .send({title: 'Test Note 3'})
+                .send({ title: 'Test Note 3' })
                 .expect(200);
-            expect(contentResponse.body).toEqual({"content": `# Test Content 3 ${longText}`})
+            expect(contentResponse.body).toEqual({ 'content': `# Test Content 3 ${longText}` });
 
             await request(app)
                 .put('/api/internal/note/update')
@@ -140,9 +139,9 @@ describe('API Integration Tests', () => {
             const updatedContentResponse = await request(app)
                 .post('/api/internal/note/content')
                 .set('x-auth-token', validToken)
-                .send({title: `Test Note 6`})
+                .send({ title: `Test Note 6` })
                 .expect(200);
-            expect(updatedContentResponse.body).toEqual({"content": `# Test Content 6 ${longText}`})
+            expect(updatedContentResponse.body).toEqual({ 'content': `# Test Content 6 ${longText}` });
         });
     });
 
@@ -184,6 +183,27 @@ describe('API Integration Tests', () => {
                 .send()
                 .expect(200);
         });
-    })
+    });
+
+    describe('Swagger', () => {
+        it('/api/docs/swagger.json should return a valid OpenAPI spec with all routes', async () => {
+            const response = await request(app)
+                .get('/api/docs/swagger.json')
+                .expect(200);
+
+            expect(response.body.openapi).toBe('3.0.0');
+            expect(response.body.paths).toBeDefined();
+
+            const paths = Object.keys(response.body.paths);
+            expect(paths).toContain('/api/authorize');
+            expect(paths).toContain('/api/internal/logout');
+            expect(paths).toContain('/api/internal/note/save');
+            expect(paths).toContain('/api/internal/note/update');
+            expect(paths).toContain('/api/internal/note/delete');
+            expect(paths).toContain('/api/internal/note/list');
+            expect(paths).toContain('/api/internal/note/content');
+            expect(paths).toContain('/api/healthcheck');
+        });
+    });
 
 });
