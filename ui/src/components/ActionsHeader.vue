@@ -1,84 +1,88 @@
 <script setup>
-import {deleteNote, logout, saveNote, updateNote} from "../api/bexNote";
-import {notificationStore, tokenStore} from "../main";
+import { deleteNote, logout, saveNote, updateNote } from '../api/bexNote';
+import { notificationStore, tokenStore } from '../main';
 
 const emit = defineEmits(['createNew', 'save', 'delete']);
 
 const props = defineProps({
-  selectedTitle: String,
-  title: String,
-  content: String
-})
+    selectedTitle: String,
+    title: String,
+    content: String
+});
 
 const handleDeleteNote = async () => {
-  if (props.selectedTitle === props.title) {
-    await deleteNote(props.title);
-    emit('delete')
-    notificationStore.$patch({
-      type: 'warn',
-      message: `"${props.title}" deleted successfully.`
-    })
-  }
+    if (props.selectedTitle === props.title) {
+        await deleteNote(props.title);
+        emit('delete');
+        notificationStore.$patch({
+            type: 'warn',
+            message: `"${props.title}" deleted successfully.`
+        });
+    }
 };
 
 const handleLogout = async () => {
-  await logout();
-  tokenStore.resetToken()
-  notificationStore.$patch({
-    type: 'success',
-    message: `Logout successful.`
-  })
+    await logout();
+    tokenStore.resetToken();
+    notificationStore.$patch({
+        type: 'success',
+        message: `Logout successful.`
+    });
 };
 
 const handleSaveNote = async () => {
-  if (!props.selectedTitle) {
-    await saveNote(props.title, props.content);
-  } else {
-    await updateNote(props.title, props.selectedTitle, props.content);
-  }
-  emit('save')
-  notificationStore.$patch({
-    type: 'success',
-    message: `"${props.title}" saved successfully.`
-  })
-}
+    if (!props.selectedTitle) {
+        await saveNote(props.title, props.content);
+    } else {
+        await updateNote(props.title, props.selectedTitle, props.content);
+    }
+    emit('save');
+    notificationStore.$patch({
+        type: 'success',
+        message: `"${props.title}" saved successfully.`
+    });
+};
 
 const handleCreateNew = () => {
-  emit('createNew');
-}
+    emit('createNew');
+};
 </script>
 
 <template>
-  <prime-toolbar>
-    <template #start>
-      <div class="flex items-center gap-2">
-        <prime-avatar image="/ico.png" class="avatar"/>
-        <span class="header-title">Bex Note</span>
-      </div>
-    </template>
-    <template #end>
-      <prime-button v-tooltip.bottom="'New note'" icon="pi pi-plus"
-                    severity="secondary" class="mr-2" text
-                    @click="handleCreateNew"/>
-      <prime-button v-tooltip.bottom="'Save'" icon="pi pi-save" severity="secondary" class="mr-2" text
-                    @click="handleSaveNote" :disabled="!title"/>
-      <prime-button v-tooltip.bottom="'Delete'" icon="pi pi-trash" severity="danger" class="mr-2" text
-                    @click="handleDeleteNote" :disabled="!title"/>
-      <prime-button v-tooltip.bottom="'Logout'" icon="pi pi-sign-out" severity="secondary" class="mr-2" text
-                    @click="handleLogout"/>
-    </template>
-  </prime-toolbar>
+    <prime-toolbar>
+        <template #start>
+            <div class="flex items-center gap-2">
+                <prime-avatar image="/ico.png" class="avatar"/>
+                <span class="header-title">Bex Note</span>
+            </div>
+        </template>
+        <template #end>
+            <prime-button v-tooltip.bottom="'New note'" icon="pi pi-plus"
+                          severity="secondary" class="mr-2" text
+                          data-test-id="new-note"
+                          @click="handleCreateNew"/>
+            <prime-button v-tooltip.bottom="'Save'" icon="pi pi-save" severity="secondary" class="mr-2" text
+                          data-test-id="save-note"
+                          @click="handleSaveNote" :disabled="!title"/>
+            <prime-button v-tooltip.bottom="'Delete'" icon="pi pi-trash" severity="danger" class="mr-2" text
+                          data-test-id="delete-note"
+                          @click="handleDeleteNote" :disabled="!title"/>
+            <prime-button v-tooltip.bottom="'Logout'" icon="pi pi-sign-out" severity="secondary" class="mr-2" text
+                          data-test-id="logout"
+                          @click="handleLogout"/>
+        </template>
+    </prime-toolbar>
 </template>
 
 <style scoped>
 .header-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .avatar {
-  width: 2rem;
-  height: 2rem;
+    width: 2rem;
+    height: 2rem;
 
 }
 </style>

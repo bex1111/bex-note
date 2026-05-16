@@ -2,8 +2,8 @@ name: Run checks
 on:
   push:
     branches:
-        - main
-        - 'dependabot/**'
+      - main
+      - 'dependabot/**'
 
 jobs:
   test-ui:
@@ -27,3 +27,24 @@ jobs:
       - name: Run tests (backend)
         run: npm run test
         working-directory: ./backend
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: [ test-ui, test-backend ]
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run E2E tests
+        run: make test-e2e
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: e2e/playwright-report/
+          retention-days: 7
+
+      - name: Stop app
+        if: always()
+        run: make down

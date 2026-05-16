@@ -33,7 +33,7 @@ Bex Note stores notes in the `data` directory. To back up your notes, simply bac
 ```mermaid
 flowchart LR
     Frontend[Vue Frontend] -->|http communication| Backend[Express Backend]
-    Backend -->|File Operations| LocalFileSystem[(Local File System)]
+    Backend -->|file operations| LocalFileSystem[(Local File System)]
 ```
 
 # Development

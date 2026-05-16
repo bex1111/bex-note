@@ -15,6 +15,7 @@ defineProps({
       filter
       placeholder="Select a note"
       fluid
+      data-test-id="title-selector"
   />
 </template>
 

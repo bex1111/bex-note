@@ -2,6 +2,7 @@
   <MdEditor v-model="content"
             language="en-Us"
             :toolbars="toolbar"
+            data-test-id="markdown-editor"
   />
 </template>
 
