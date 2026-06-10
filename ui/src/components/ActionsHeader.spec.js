@@ -1,7 +1,7 @@
-import {mount} from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import ActionsHeader from './ActionsHeader.vue';
-import {notificationStore, tokenStore} from '../main'
-import {deleteNote, logout, saveNote, updateNote} from '../api/bexNote';
+import { notificationStore, tokenStore } from '../main';
+import { deleteNote, logout, saveNote, updateNote } from '../api/bexNote';
 
 vi.mock('../main', () => ({
     notificationStore: {
@@ -34,7 +34,7 @@ const createWrapper = (props) => {
             directives
         }
     });
-}
+};
 
 describe('ActionsHeader.vue', () => {
     const testNote = 'test-note';
@@ -123,7 +123,7 @@ describe('ActionsHeader.vue', () => {
                 type: 'success',
                 message: `"${testNote}" saved successfully.`
             });
-            expect(updateNote).toHaveBeenCalledWith(testNote,'old-note', 'updated content');
+            expect(updateNote).toHaveBeenCalledWith(testNote, 'old-note', 'updated content');
 
         });
     });
@@ -177,7 +177,7 @@ describe('ActionsHeader.vue', () => {
             expect(writeText).toHaveBeenCalledWith('test-token');
             expect(notificationStore.$patch).toHaveBeenCalledWith({
                 type: 'success',
-                message: 'Token copied to clipboard.'
+                message: 'Api token copied to clipboard.'
             });
         });
     });

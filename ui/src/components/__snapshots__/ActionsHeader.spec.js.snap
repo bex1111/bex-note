@@ -5,10 +5,10 @@ exports[`ActionsHeader.vue > matches snapshot 1`] = `
   <div data-v-5adaa0a9=\\"\\" class=\\"flex items-center gap-2\\">
     <prime-avatar data-v-5adaa0a9=\\"\\" image=\\"/ico.png\\" class=\\"avatar\\"></prime-avatar><span data-v-5adaa0a9=\\"\\" class=\\"header-title\\">Bex Note</span>
   </div>
+  <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-clipboard\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\" data-test-id=\\"copy-token\\"></prime-button-stub>
   <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-plus\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\" data-test-id=\\"new-note\\"></prime-button-stub>
   <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-save\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\" data-test-id=\\"save-note\\" disabled=\\"true\\"></prime-button-stub>
   <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-trash\\" severity=\\"danger\\" class=\\"mr-2\\" text=\\"\\" data-test-id=\\"delete-note\\" disabled=\\"true\\"></prime-button-stub>
   <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-sign-out\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\" data-test-id=\\"logout\\"></prime-button-stub>
-  <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-clipboard\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\" data-test-id=\\"copy-token\\"></prime-button-stub>
 </div>"
 `;

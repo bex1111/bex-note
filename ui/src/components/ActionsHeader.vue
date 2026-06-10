@@ -51,7 +51,7 @@ const handleCopyToken = () => {
     navigator.clipboard.writeText(tokenStore.token);
     notificationStore.$patch({
         type: 'success',
-        message: 'Token copied to clipboard.'
+        message: 'Api token copied to clipboard.'
     });
 };
 </script>
@@ -65,6 +65,9 @@ const handleCopyToken = () => {
             </div>
         </template>
         <template #end>
+            <prime-button v-tooltip.bottom="'Copy token'" icon="pi pi-clipboard" severity="secondary" class="mr-2" text
+                          data-test-id="copy-token"
+                          @click="handleCopyToken"/>
             <prime-button v-tooltip.bottom="'New note'" icon="pi pi-plus"
                           severity="secondary" class="mr-2" text
                           data-test-id="new-note"
@@ -78,9 +81,6 @@ const handleCopyToken = () => {
             <prime-button v-tooltip.bottom="'Logout'" icon="pi pi-sign-out" severity="secondary" class="mr-2" text
                           data-test-id="logout"
                           @click="handleLogout"/>
-            <prime-button v-tooltip.bottom="'Copy token'" icon="pi pi-clipboard" severity="secondary" class="mr-2" text
-                          data-test-id="copy-token"
-                          @click="handleCopyToken"/>
         </template>
     </prime-toolbar>
 </template>
