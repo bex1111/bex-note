@@ -9,5 +9,6 @@ exports[`ActionsHeader.vue > matches snapshot 1`] = `
   <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-save\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\" data-test-id=\\"save-note\\" disabled=\\"true\\"></prime-button-stub>
   <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-trash\\" severity=\\"danger\\" class=\\"mr-2\\" text=\\"\\" data-test-id=\\"delete-note\\" disabled=\\"true\\"></prime-button-stub>
   <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-sign-out\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\" data-test-id=\\"logout\\"></prime-button-stub>
+  <prime-button-stub data-v-5adaa0a9=\\"\\" icon=\\"pi pi-clipboard\\" severity=\\"secondary\\" class=\\"mr-2\\" text=\\"\\" data-test-id=\\"copy-token\\"></prime-button-stub>
 </div>"
 `;

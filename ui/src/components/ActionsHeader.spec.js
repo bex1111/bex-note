@@ -8,6 +8,7 @@ vi.mock('../main', () => ({
         $patch: vi.fn()
     },
     tokenStore: {
+        token: 'test-token',
         resetToken: vi.fn()
     }
 }));
@@ -156,6 +157,27 @@ describe('ActionsHeader.vue', () => {
             expect(notificationStore.$patch).toHaveBeenCalledWith({
                 type: 'success',
                 message: 'Logout successful.'
+            });
+        });
+    });
+
+    describe('handleCopyToken', () => {
+        it('copies token to clipboard and patches notification store with success message', async () => {
+            const writeText = vi.fn();
+            Object.assign(navigator, { clipboard: { writeText } });
+
+            const wrapper = createWrapper({
+                selectedTitle: '',
+                title: '',
+                content: ''
+            });
+
+            await wrapper.vm.handleCopyToken();
+
+            expect(writeText).toHaveBeenCalledWith('test-token');
+            expect(notificationStore.$patch).toHaveBeenCalledWith({
+                type: 'success',
+                message: 'Token copied to clipboard.'
             });
         });
     });

@@ -46,6 +46,14 @@ const handleSaveNote = async () => {
 const handleCreateNew = () => {
     emit('createNew');
 };
+
+const handleCopyToken = () => {
+    navigator.clipboard.writeText(tokenStore.token);
+    notificationStore.$patch({
+        type: 'success',
+        message: 'Token copied to clipboard.'
+    });
+};
 </script>
 
 <template>
@@ -70,6 +78,9 @@ const handleCreateNew = () => {
             <prime-button v-tooltip.bottom="'Logout'" icon="pi pi-sign-out" severity="secondary" class="mr-2" text
                           data-test-id="logout"
                           @click="handleLogout"/>
+            <prime-button v-tooltip.bottom="'Copy token'" icon="pi pi-clipboard" severity="secondary" class="mr-2" text
+                          data-test-id="copy-token"
+                          @click="handleCopyToken"/>
         </template>
     </prime-toolbar>
 </template>
