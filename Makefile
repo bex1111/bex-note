@@ -21,6 +21,8 @@ test-e2e: build
 	docker compose up -d bex-note
 	docker compose run --rm playwright sh -c "npm ci && npx playwright test"
 
+test: test-unit test-e2e
+
 e2e-ui:
 	docker compose up -d bex-note
 	docker compose run --rm -p 9323:9323 playwright sh -c "npm ci && npx playwright test --ui-host=0.0.0.0 --ui-port=9323"
