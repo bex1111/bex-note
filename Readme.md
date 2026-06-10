@@ -46,12 +46,8 @@ The API is documented via Swagger and available at:
 GET /api/docs/swagger.json
 ```
 
-> [!TIP]
-> If you are using an AI assistant (e.g. Claude, ChatGPT) to interact with the API during a session,
-> you can pick token from cache folder.
-> Provide your password and username for AI not recommended.
-
-todo create a skill for AI assistants to interact with Bex Note API.
+You can copy token from UI and use it to authenticate API requests.
+If you logout from UI, the token will be invalidated and you need to login again to get a new token.
 
 # Development
 
