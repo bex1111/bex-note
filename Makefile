@@ -33,3 +33,6 @@ down:
 	docker compose down
 
 restart: down up
+
+update-video:
+	cp e2e/test-results/notes-create-a-note---appears-in-title-selector-chromium/video.webm video.webm

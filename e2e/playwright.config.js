@@ -8,6 +8,7 @@ export default defineConfig({
     use: {
         baseURL: 'http://bex-note:5001',
         trace: 'on-first-retry',
+        video: 'on',
     },
     projects: [
         {
