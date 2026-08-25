@@ -8,7 +8,7 @@
     "snapshot-update": "vitest --run --update"
   },
   "dependencies": {
-    "@primeuix/themes": "^2.0.3",
+    "@primeuix/themes": "^3.0.0",
     "@vavt/cm-extension": "^1.11.2",
     "@vavt/v3-extension": "^5.0.0",
     "axios": "^1.19.0",
