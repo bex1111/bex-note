@@ -35,4 +35,5 @@ down:
 restart: down up
 
 update-video:
-	cp e2e/test-results/notes-create-a-note---appears-in-title-selector-chromium/video.webm video.webm
+	docker compose run --rm ffmpeg -y -i e2e/test-results/notes-create-a-note---appears-in-title-selector-chromium/video.webm -vf "fps=10,scale=1200:-1:flags=lanczos" video.gif
+

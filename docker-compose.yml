@@ -32,3 +32,11 @@ services:
     volumes:
       - ./e2e:/e2e
     working_dir: /e2e
+
+  # Remove this service,its development purpose only!
+  ffmpeg:
+    image: jrottenberg/ffmpeg:6.1-alpine
+    volumes:
+      - ./:/work
+    working_dir: /work
+
