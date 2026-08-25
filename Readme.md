@@ -13,7 +13,7 @@ Key features include:
 - Supports multi-level folder structure (folder1/folder2/note)
 - Markdown support (pure text, no image supported)
 
-![Example test video](video.webm)
+[Demo video](video.webm)
 
 ## Installation
 
