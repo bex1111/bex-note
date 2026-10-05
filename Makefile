@@ -6,16 +6,16 @@ help:
 build: build-ui build-backend build-docker
 
 build-ui:
-	cd ui && npm install && npm run build && cd ..
+	docker compose run --rm builder sh -c "cd ui && npm install && npm run build"
 
 build-backend:
-	cd backend && npm install && npm run build && cd ..
+	docker compose run --rm builder sh -c "cd backend && npm install && npm run build"
 
 build-docker:
 	docker build -t bex1111/bex-note:beta .
 
 test-unit:
-	cd backend && make test && cd ../ui && make test && cd ..
+	docker compose run --rm builder sh -c "cd backend && make test && cd ../ui && make test"
 
 test-e2e: build
 	docker compose up -d bex-note
