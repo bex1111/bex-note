@@ -25,6 +25,12 @@ services:
       - PORT=5001 #default port is 3000, change it if needed
       - MAX_FILE_SIZE_IN_MB=128 #default max file size is 64 MB, change it if needed
 
+  # Remove this service, its for testing purpose only!
+  builder:
+    image: node:26.3.0
+    working_dir: /work
+    volumes:
+      - ./:/work
 
   # Remove this service, its for testing purpose only!
   playwright:
