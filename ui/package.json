@@ -24,7 +24,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-vue": "^6.0.9",
     "@vue/test-utils": "^2.4.11",
-    "autoprefixer": "^10.5.2",
+    "autoprefixer": "^10.6.2",
     "axios-mock-adapter": "^2.1.0",
     "jsdom": "^30.0.1",
     "postcss": "^8.5.26",
